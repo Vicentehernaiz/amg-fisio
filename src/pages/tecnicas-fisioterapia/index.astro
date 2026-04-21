@@ -1,0 +1,337 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Técnicas de Fisioterapia', url: '/tecnicas-fisioterapia/' },
+];
+
+const faqs = [
+  {
+    question: '¿Qué técnica de fisioterapia es mejor para el dolor de espalda?',
+    answer: 'No existe una técnica única ideal para todos. Alberto combina varias según el diagnóstico: terapia manual para restaurar movilidad, ejercicio terapéutico para fortalecer la musculatura y electroestimulación TENS para el control del dolor. La combinación adecuada depende de tu caso concreto.',
+  },
+  {
+    question: '¿La punción seca duele mucho?',
+    answer: 'Durante la punción seca es habitual sentir una contracción muscular (twitch response) que puede ser algo intensa pero breve. La mayoría de pacientes describen la sensación como un calambre pasajero. Las horas posteriores puede haber algo de agujetas. La técnica es segura en manos de un fisioterapeuta formado.',
+  },
+  {
+    question: '¿Qué diferencia hay entre terapia manual y un masaje?',
+    answer: 'La terapia manual es una técnica fisioterapéutica basada en evidencia científica que incluye movilizaciones articulares, manipulaciones vertebrales y trabajo sobre el sistema nervioso. Un masaje convencional trabaja principalmente el tejido blando. La terapia manual requiere diagnóstico previo y formación especializada.',
+  },
+  {
+    question: '¿El ejercicio terapéutico es como ir al gimnasio?',
+    answer: 'No. El ejercicio terapéutico es prescrito y supervisado por Alberto en función de tu patología específica. No se trata de entrenamiento general sino de ejercicios concretos para restaurar función, corregir patrones de movimiento y fortalecer estructuras lesionadas. Es una parte fundamental del tratamiento fisioterapéutico moderno.',
+  },
+  {
+    question: '¿Para qué sirve la presoterapia?',
+    answer: 'La presoterapia neumática mejora la circulación linfática y venosa, reduce la retención de líquidos e inflamación y acelera la recuperación muscular tras el esfuerzo deportivo. Es muy utilizada por deportistas y personas con insuficiencia venosa o edemas.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Técnicas de Fisioterapia Avanzadas en Valladolid',
+  description: 'Terapia manual, ejercicio terapéutico, electroestimulación TENS, presoterapia y punción seca. Técnicas basadas en evidencia científica en Valladolid.',
+  url: '/tecnicas-fisioterapia/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre las técnicas de fisioterapia en AMG.');
+
+const tecnicas = [
+  {
+    nombre: 'Terapia Manual',
+    descripcion: 'Movilizaciones articulares, manipulaciones vertebrales y masoterapia terapéutica. Técnica de referencia para dolor articular y muscular con respaldo científico sólido.',
+    url: '/tecnicas-fisioterapia/terapia-manual-valladolid/',
+    tag: 'Más solicitada',
+  },
+  {
+    nombre: 'Ejercicio Terapéutico',
+    descripcion: 'Ejercicio clínico supervisado para restaurar la función, fortalecer estructuras lesionadas y corregir patrones de movimiento. Clave en la rehabilitación moderna.',
+    url: '/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/',
+    tag: null,
+  },
+  {
+    nombre: 'Electroestimulación TENS',
+    descripcion: 'Corrientes eléctricas de baja frecuencia para el control del dolor, reducción de la inflamación y recuperación muscular. Segura, indolora y con evidencia científica.',
+    url: '/tecnicas-fisioterapia/tens-electroestimulacion-valladolid/',
+    tag: null,
+  },
+  {
+    nombre: 'Presoterapia',
+    descripcion: 'Terapia de compresión neumática para mejorar la circulación linfática y venosa. Ideal para deportistas, post-intervención y personas con problemas circulatorios.',
+    url: '/tecnicas-fisioterapia/presoterapia-valladolid/',
+    tag: null,
+  },
+  {
+    nombre: 'Punción Seca',
+    descripcion: 'Tratamiento de puntos gatillo miofasciales con agujas finas. Muy eficaz para contracturas profundas, dolor referido y patologías musculares crónicas.',
+    url: '/tecnicas-fisioterapia/puncion-seca-valladolid/',
+    tag: 'Alta eficacia',
+  },
+];
+---
+
+<BaseLayout
+  title="Técnicas de Fisioterapia en Valladolid | AMG Fisioterapia"
+  description="Terapia manual, ejercicio terapéutico, punción seca, TENS y presoterapia en Valladolid. Técnicas avanzadas de fisioterapia basadas en evidencia científica. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Técnicas de Fisioterapia</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Técnicas de Fisioterapia Avanzadas en Valladolid</h1>
+      <p class="page-hero__subtitle">Seleccionamos las mejores herramientas terapéuticas para cada caso. Siempre con base científica. Siempre adaptadas a ti.</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Enfoque Basado en Evidencia</h2>
+      <div class="prose">
+        <p>En AMG Fisioterapia usamos únicamente técnicas con respaldo científico demostrado. No creemos en terapias milagrosas ni en protocolos de copia-pega. Cada técnica que aplicamos tiene una indicación concreta, una justificación clínica y un objetivo terapéutico medible.</p>
+
+        <p>Alberto se mantiene en formación continua para incorporar los avances más recientes de la fisioterapia basada en evidencia. Combinamos las técnicas clásicas más contrastadas con las herramientas más innovadoras según las necesidades de cada paciente en Valladolid.</p>
+
+        <p>Lo habitual es que en cada sesión se combinen dos o tres técnicas complementarias. Por ejemplo, una sesión para lumbalgia crónica puede incluir terapia manual para restaurar movilidad articular, punción seca para liberar puntos gatillo en la musculatura paravertebral y ejercicio terapéutico para estabilizar la zona lumbar. El resultado es sinérgico: el conjunto supera a cada técnica por separado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de técnicas -->
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Nuestras Técnicas en Valladolid</h2>
+      <div class="tecnicas-grid">
+        {tecnicas.map((tecnica) => (
+          <a href={tecnica.url} class="tecnica-card">
+            {tecnica.tag && <span class="tecnica-card__tag">{tecnica.tag}</span>}
+            <h3 class="tecnica-card__title">{tecnica.nombre}</h3>
+            <p class="tecnica-card__desc">{tecnica.descripcion}</p>
+            <span class="tecnica-card__link">Saber más →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Técnicas de Fisioterapia</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-tecnicas">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Quieres saber qué técnica es la adecuada para ti?</h2>
+      <p class="cta-section__subtitle">Cuéntanos tu caso y te orientamos sin compromiso. Primera valoración incluida en la sesión.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita ahora
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: var(--color-white);
+    padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl);
+  }
+
+  .page-hero__title {
+    font-size: var(--text-5xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+    max-width: 700px;
+  }
+
+  .page-hero__subtitle {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 580px;
+    line-height: var(--leading-relaxed);
+  }
+
+  .breadcrumb ol {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    list-style: none;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--space-xl);
+  }
+
+  .breadcrumb a { color: rgba(255, 255, 255, 0.7); transition: color var(--duration-fast); }
+  .breadcrumb a:hover { color: var(--color-white); }
+
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+
+  .section__title {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-lg);
+  }
+
+  .prose p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .tecnicas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+
+  .tecnica-card {
+    position: relative;
+    display: block;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+    transition: all var(--duration-normal) var(--ease-out);
+    text-decoration: none;
+  }
+
+  .tecnica-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .tecnica-card__tag {
+    display: inline-block;
+    padding: 2px 10px;
+    background: var(--color-primary-100);
+    color: var(--color-primary-dark);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-md);
+  }
+
+  .tecnica-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-md);
+  }
+
+  .tecnica-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  .tecnica-card__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+
+  .faq-item {
+    background: var(--color-cream);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .faq-item__question {
+    padding: var(--space-lg) var(--space-xl);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-2xl);
+    background: var(--color-white);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    font-size: var(--text-base);
+    border-radius: var(--radius-full);
+    transition: all var(--duration-fast);
+  }
+
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+
+  @media (max-width: 1024px) {
+    .tecnicas-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero__title { font-size: var(--text-3xl); }
+    .tecnicas-grid { grid-template-columns: 1fr; }
+  }
+</style>

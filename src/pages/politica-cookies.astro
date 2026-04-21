@@ -1,0 +1,269 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+const title = "Politica de Cookies | AMG Fisioterapia";
+const description = "Politica de cookies de AMG Fisioterapia. Informacion sobre los tipos de cookies utilizadas y como gestionarlas.";
+const today = new Date();
+const updateDate = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <!-- Hero pequeño -->
+  <section class="legal-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegacion">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">Politica de Cookies</span>
+      </nav>
+      <h1>Politica de Cookies</h1>
+    </div>
+  </section>
+
+  <!-- Contenido -->
+  <section class="legal-content">
+    <div class="container--narrow">
+
+      <h2>1. Que son las cookies</h2>
+      <p>
+        Las cookies son pequenos archivos de texto que los sitios web almacenan en el navegador del usuario cuando este visita una pagina. Las cookies permiten que el sitio recuerde informacion sobre su visita (como el idioma preferido u otras configuraciones), lo que puede facilitar su proxima visita y hacer que el sitio le resulte mas util.
+      </p>
+
+      <h2>2. Cookies que utiliza este sitio web</h2>
+      <p>El sitio web de AMG Fisioterapia (<strong>amgfisio.es</strong>) utiliza los siguientes tipos de cookies:</p>
+
+      <h3>2.1 Cookies tecnicas (necesarias)</h3>
+      <p>
+        Son imprescindibles para el funcionamiento basico del sitio web. Sin ellas, algunos servicios o funcionalidades podrian no estar disponibles. No requieren consentimiento del usuario segun el art. 22.2 de la LSSICE.
+      </p>
+
+      <h3>2.2 Cookies analiticas</h3>
+      <p>
+        Si se configura Google Analytics 4 (GA4), se utilizan cookies analiticas para obtener estadisticas anonimas sobre el uso del sitio web (paginas visitadas, tiempo de permanencia, procedencia del trafico). Los datos se recogen de forma anonimizada con la opcion <em>anonymize_ip</em> activada.
+      </p>
+
+      <h3>2.3 Cookies de terceros</h3>
+      <p>
+        Si el sitio incluye un mapa de Google Maps, Google puede establecer cookies propias para gestionar el servicio de mapas. Consulte la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">politica de privacidad de Google</a> para mas informacion.
+      </p>
+
+      <h2>3. Tabla de cookies</h2>
+      <div class="cookies-table-wrapper">
+        <table class="cookies-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Finalidad</th>
+              <th>Caducidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>amg-admin-auth</code></td>
+              <td>Tecnica</td>
+              <td>Autenticacion del panel de administracion (solo accesible para el titular)</td>
+              <td>7 dias</td>
+            </tr>
+            <tr>
+              <td><code>_ga</code></td>
+              <td>Analitica</td>
+              <td>Google Analytics: distingue usuarios unicos de forma anonimizada</td>
+              <td>2 anos</td>
+            </tr>
+            <tr>
+              <td><code>_ga_*</code></td>
+              <td>Analitica</td>
+              <td>Google Analytics 4: mantiene el estado de la sesion</td>
+              <td>2 anos</td>
+            </tr>
+            <tr>
+              <td>Cookies de Google Maps</td>
+              <td>Terceros</td>
+              <td>Funcionamiento del mapa interactivo (si se utiliza embed)</td>
+              <td>Variable</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>4. Como gestionar las cookies</h2>
+      <p>
+        Puede configurar su navegador para que acepte o rechace todas o algunas cookies, o para que le avise cuando un sitio web quiera establecer o acceder a una cookie. Tenga en cuenta que si desactiva o rechaza las cookies, algunas partes del sitio pueden quedar inaccesibles o no funcionar correctamente.
+      </p>
+      <p>A continuacion encontrara instrucciones para los navegadores mas comunes:</p>
+      <ul>
+        <li>
+          <strong>Google Chrome:</strong> Ajustes &rarr; Privacidad y seguridad &rarr; Cookies y otros datos de sitios.
+          (<a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Ver instrucciones</a>)
+        </li>
+        <li>
+          <strong>Mozilla Firefox:</strong> Opciones &rarr; Privacidad y Seguridad &rarr; Cookies y datos del sitio.
+          (<a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener noreferrer">Ver instrucciones</a>)
+        </li>
+        <li>
+          <strong>Safari:</strong> Preferencias &rarr; Privacidad &rarr; Cookies y datos de sitios web.
+          (<a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Ver instrucciones</a>)
+        </li>
+        <li>
+          <strong>Microsoft Edge:</strong> Configuracion &rarr; Privacidad, busqueda y servicios &rarr; Cookies.
+          (<a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Ver instrucciones</a>)
+        </li>
+      </ul>
+
+      <h2>5. Opt-out de Google Analytics</h2>
+      <p>
+        Si desea impedir que Google Analytics recopile datos sobre su actividad en todos los sitios web, puede instalar el complemento de inhabilitacion de Google Analytics para navegadores en:
+        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.
+      </p>
+
+      <h2>6. Mas informacion</h2>
+      <p>
+        Para cualquier consulta sobre nuestra Politica de Cookies, puede contactarnos en: <a href="mailto:info@amgfisio.es">info@amgfisio.es</a>.
+      </p>
+      <p>
+        Tambien puede consultar nuestra <a href="/politica-privacidad/">Politica de Privacidad</a> y el <a href="/aviso-legal/">Aviso Legal</a>.
+      </p>
+
+      <p class="legal-date">
+        <strong>Ultima actualizacion:</strong> {updateDate}
+      </p>
+
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    background-color: var(--color-gray-50);
+    padding-block: var(--space-2xl) var(--space-xl);
+    margin-top: 72px;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .legal-hero h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-top: var(--space-sm);
+  }
+
+  .breadcrumb {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .legal-content {
+    padding-block: var(--space-4xl);
+  }
+
+  .container--narrow {
+    max-width: 720px;
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+  }
+
+  .container--narrow h2 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-top: var(--space-3xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .container--narrow p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow ul {
+    padding-left: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow li {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .container--narrow a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  /* TABLA COOKIES */
+  .cookies-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .cookies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .cookies-table th,
+  .cookies-table td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .cookies-table th {
+    background-color: var(--color-gray-50);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .cookies-table td {
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .cookies-table tr:last-child td { border-bottom: none; }
+
+  .cookies-table code {
+    background: var(--color-gray-100);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--color-secondary);
+  }
+
+  .legal-date {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-gray-200);
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+  }
+</style>

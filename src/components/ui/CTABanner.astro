@@ -1,0 +1,143 @@
+---
+import { getWhatsAppLink } from '@utils/config';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  variant?: 'green' | 'purple' | 'cream';
+}
+
+const {
+  title = '¿Listo para recuperarte?',
+  subtitle = 'Primera consulta sin compromiso. Cuéntanos qué te duele.',
+  buttonText = 'Pedir cita por WhatsApp',
+  buttonLink,
+  variant = 'green',
+} = Astro.props;
+
+const link = buttonLink || getWhatsAppLink();
+---
+
+<div class={`cta-banner cta-banner--${variant}`}>
+  <div class="cta-banner__inner container">
+    <div class="cta-banner__text">
+      <h2 class="cta-banner__title font-display">{title}</h2>
+      <p class="cta-banner__subtitle">{subtitle}</p>
+    </div>
+    <a href={link} target="_blank" rel="noopener noreferrer" class={`cta-banner__btn cta-banner__btn--${variant}`}>
+      {buttonText}
+    </a>
+  </div>
+</div>
+
+<style>
+  .cta-banner {
+    padding-block: var(--space-3xl);
+  }
+
+  .cta-banner--green {
+    background: linear-gradient(54deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
+    border-radius: 32px;
+    margin: 10px;
+  }
+
+  .cta-banner--green .cta-banner__title {
+    color: #fff;
+  }
+
+  .cta-banner--green .cta-banner__subtitle {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .cta-banner--purple {
+    background: var(--color-secondary-50);
+    border-top: 1px solid var(--color-secondary-100);
+    border-bottom: 1px solid var(--color-secondary-100);
+  }
+
+  .cta-banner--cream {
+    background: var(--bg-tertiary);
+    border-top: 1px solid var(--color-sand);
+    border-bottom: 1px solid var(--color-sand);
+  }
+
+  .cta-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2xl);
+  }
+
+  .cta-banner__text {
+    max-width: 560px;
+  }
+
+  .cta-banner__title {
+    font-size: var(--text-2xl);
+    letter-spacing: 0.03em;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+    line-height: var(--leading-tight);
+  }
+
+  .cta-banner__subtitle {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .cta-banner__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 28px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .cta-banner__btn--green {
+    background: #ffffff;
+    color: #181428;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.08), 0px 5px 29.2px 0px rgba(0,0,0,0.10);
+  }
+
+  .cta-banner__btn--green:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .cta-banner__btn--purple {
+    background: var(--color-secondary);
+    color: white;
+  }
+
+  .cta-banner__btn--purple:hover {
+    background: var(--color-secondary-dark);
+    transform: translateY(-1px);
+  }
+
+  .cta-banner__btn--cream {
+    background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
+    color: #181428;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
+  }
+
+  .cta-banner__btn--cream:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .cta-banner__inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

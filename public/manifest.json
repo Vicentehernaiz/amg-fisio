@@ -1,0 +1,19 @@
+{
+  "name": "AMG Fisioterapia Valladolid",
+  "short_name": "AMG Fisio",
+  "description": "Clinica de fisioterapia premium en Valladolid Centro",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#77B483",
+  "background_color": "#FFFFFF",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/images/isotipo-main.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

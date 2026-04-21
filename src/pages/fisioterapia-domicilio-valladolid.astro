@@ -1,0 +1,221 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisioterapia a Domicilio Valladolid', url: '/fisioterapia-domicilio-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Qué zonas de Valladolid cubrís con el servicio a domicilio?',
+    answer: 'Cubrimos todo el término municipal de Valladolid y municipios limítrofes de la provincia. Consulta disponibilidad para tu zona concreta por WhatsApp o teléfono. Los desplazamientos están incluidos en el precio de 45€/sesión.',
+  },
+  {
+    question: '¿Qué diferencia hay entre la sesión en clínica y la sesión a domicilio?',
+    answer: 'La calidad del tratamiento es idéntica. La diferencia es el entorno: en clínica disponemos de mayor variedad de equipos (TENS, presoterapia, camilla profesional). En domicilio trabajamos con el material portátil que Alberto lleva y con los recursos del entorno del paciente. Para la mayoría de tratamientos, la diferencia es mínima.',
+  },
+  {
+    question: '¿Se puede hacer fisioterapia a domicilio después de una operación?',
+    answer: 'Sí, y es una de las indicaciones más frecuentes. Tras una operación de rodilla, cadera, columna o cualquier otra intervención, la fisioterapia a domicilio permite empezar la rehabilitación antes, sin la incomodidad de trasladarse a la clínica cuando la movilidad todavía es limitada. En coordinación con el servicio de traumatología.',
+  },
+  {
+    question: '¿Con qué antelación hay que solicitar el servicio?',
+    answer: 'Intentamos ajustarnos a la urgencia de cada caso. Para programas de rehabilitación planificados, recomendamos contactar con 2-3 días de antelación. Para urgencias (dolor agudo, paciente que no puede moverse), intentamos dar respuesta lo antes posible. Contáctanos por WhatsApp para concretar.',
+  },
+  {
+    question: '¿Qué debo preparar en casa para la sesión de fisioterapia?',
+    answer: 'Alberto trae todo el material necesario. Solo necesitas: una estancia con espacio suficiente (al menos 2x2 metros), una cama o superficie firme donde tumbarte (si no tienes, Alberto puede traer una camilla plegable), y ropa cómoda que permita acceder a la zona a tratar.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Fisioterapia a Domicilio en Valladolid',
+  description: 'Fisioterapia a domicilio en Valladolid. Alberto Muñoz González, fisioterapeuta colegiado, se desplaza a tu casa. 45€/sesión.',
+  url: '/fisioterapia-domicilio-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre el servicio de fisioterapia a domicilio en Valladolid.');
+
+const beneficios = [
+  { titulo: 'Comodidad total', desc: 'Sin desplazamientos, sin parking, sin salas de espera. La fisioterapia llega a tu casa.' },
+  { titulo: 'Ideal tras operaciones', desc: 'Empieza la rehabilitación antes, sin la incomodidad del traslado cuando la movilidad es limitada.' },
+  { titulo: 'Para personas con movilidad reducida', desc: 'Mayores, personas con discapacidad o patologías crónicas que dificultan salir de casa.' },
+  { titulo: 'Mismo profesional, mismo tratamiento', desc: 'Alberto aplica las mismas técnicas de calidad que en clínica, adaptadas al entorno domiciliario.' },
+  { titulo: 'Familia incluida', desc: 'El entorno familiar facilita la comprensión del tratamiento y la implicación de los cuidadores.' },
+  { titulo: 'Rehabilitación neurológica', desc: 'Para pacientes con ictus o Parkinson, trabajar en el entorno habitual facilita la transferencia de los logros a las actividades cotidianas.' },
+];
+---
+
+<BaseLayout
+  title="Fisioterapia a Domicilio Valladolid | AMG Fisioterapia"
+  description="Fisioterapia a domicilio en Valladolid y provincia. Alberto Muñoz González, fisioterapeuta colegiado, se desplaza a tu casa. 45€/sesión. Post-operatorio, movilidad reducida."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Fisioterapia a Domicilio</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Fisioterapia a Domicilio en Valladolid</h1>
+      <p class="page-hero__subtitle">La calidad de la fisioterapia de clínica, en la comodidad de tu hogar. Alberto se desplaza a donde lo necesites en Valladolid y provincia.</p>
+      <div class="price-badge">
+        <span class="price-badge__label">Precio</span>
+        <span class="price-badge__price font-display">45€</span>
+        <span class="price-badge__unit">/sesión</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Fisioterapia Profesional en Tu Casa en Valladolid</h2>
+      <div class="prose">
+        <p>No siempre es posible, o conveniente, desplazarse a una clínica de fisioterapia. Hay personas mayores con dificultad para moverse, pacientes en fase de post-operatorio que todavía no pueden conducir, situaciones de dolor agudo que hacen complicado salir de casa, o simplemente personas que prefieren la comodidad y privacidad de recibir el tratamiento en su hogar.</p>
+
+        <p>Para todas esas situaciones, AMG Fisioterapia ofrece el servicio de fisioterapia a domicilio en Valladolid y municipios de la provincia. Alberto Muñoz González, fisioterapeuta colegiado con más de 7 años de experiencia, se desplaza a tu casa con todo el material necesario para ofrecerte el mismo tratamiento de calidad que en el centro.</p>
+
+        <p>El precio de la sesión a domicilio es de <strong>45€</strong> (frente a los 35€ de la sesión en clínica), que incluye el desplazamiento dentro de Valladolid. La duración de la sesión es la misma: 45-60 minutos de tratamiento individualizado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">¿Para Quién es la Fisioterapia a Domicilio?</h2>
+      <div class="beneficios-grid">
+        {beneficios.map((b) => (
+          <div class="beneficio-card">
+            <h3 class="beneficio-card__title">{b.titulo}</h3>
+            <p class="beneficio-card__desc">{b.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="precio-section">
+        <div class="precio-card">
+          <h3 class="precio-card__title font-display">Sesión a Domicilio</h3>
+          <div class="precio-card__price font-display">45€</div>
+          <ul class="precio-card__features">
+            <li>45-60 minutos de sesión</li>
+            <li>Valoración incluida en la primera sesión</li>
+            <li>Desplazamiento incluido en Valladolid</li>
+            <li>Mismo fisioterapeuta en todas las sesiones</li>
+            <li>Plan de ejercicio domiciliario</li>
+          </ul>
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="precio-card__cta">
+            Reservar sesión
+          </a>
+        </div>
+        <div class="precio-info">
+          <h3 class="section__title">Lo Que Incluye cada Sesión</h3>
+          <p>Cada sesión de fisioterapia a domicilio en Valladolid es exactamente igual que en clínica en cuanto a contenido y calidad. Alberto lleva su material portátil (electroterapia, material de punción seca, vendajes) y trabaja con toda la atención puesta en ti.</p>
+          <p>La primera sesión incluye siempre la valoración fisioterapéutica completa: historia clínica, exploración, diagnóstico y plan de tratamiento. No empezamos a tratar sin saber exactamente qué hay que tratar.</p>
+          <p>Al final de cada sesión, Alberto te explica los ejercicios que puedes hacer en casa entre sesiones para acelerar tu recuperación y te resuelve cualquier duda sobre tu proceso.</p>
+          <p><strong>Zona de cobertura:</strong> todo Valladolid capital y municipios limítrofes. Para zonas más alejadas de la provincia, consúltanos disponibilidad y posible suplemento de desplazamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Fisioterapia a Domicilio</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-domicilio">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Necesitas fisioterapia en casa?</h2>
+      <p class="cta-section__subtitle">Escríbenos o llama para concretar tu primera sesión. Sin complicaciones.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita a domicilio por WhatsApp
+      </a>
+      <p class="cta-section__note">O llama al <a href={`tel:${config.contact.phone.replace(/\s/g, '')}`}>{config.contact.phoneDisplay}</a></p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); margin-bottom: var(--space-xl); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .price-badge { display: inline-flex; align-items: baseline; gap: var(--space-sm); background: var(--color-primary); padding: var(--space-md) var(--space-xl); border-radius: var(--radius-full); }
+  .price-badge__label { font-size: var(--text-sm); color: rgba(255,255,255,0.8); }
+  .price-badge__price { font-size: var(--text-4xl); color: var(--color-white); }
+  .price-badge__unit { font-size: var(--text-sm); color: rgba(255,255,255,0.8); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-lg); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose strong { color: var(--color-gray-800); }
+  .beneficios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); margin-top: var(--space-2xl); }
+  .beneficio-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); }
+  .beneficio-card__title { font-size: var(--text-base); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .beneficio-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .precio-section { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-3xl); align-items: start; }
+  .precio-card { background: var(--color-secondary); border-radius: var(--radius-2xl); padding: var(--space-2xl); text-align: center; }
+  .precio-card__title { font-size: var(--text-xl); color: rgba(255,255,255,0.8); margin-bottom: var(--space-md); }
+  .precio-card__price { font-size: var(--text-6xl); color: var(--color-white); line-height: 1; margin-bottom: var(--space-md); }
+  .precio-card__features { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-xl); }
+  .precio-card__features li { font-size: var(--text-sm); color: rgba(255,255,255,0.8); padding: var(--space-sm) 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .precio-card__cta { display: flex; align-items: center; justify-content: center; height: 44px; padding: 0 var(--space-xl); background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%); color: #181428; font-weight: 700; border-radius: var(--radius-full); box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32); transition: opacity var(--duration-fast), transform var(--duration-fast); }
+  .precio-card__cta:hover { opacity: 0.9; transform: translateY(-1px); }
+  .precio-info p { font-size: var(--text-base); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-lg); }
+  .precio-info strong { color: var(--color-gray-900); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  .cta-section__note { margin-top: var(--space-lg); font-size: var(--text-sm); color: rgba(255,255,255,0.7); }
+  .cta-section__note a { color: var(--color-white); font-weight: 600; }
+  @media (max-width: 1024px) { .beneficios-grid { grid-template-columns: repeat(2, 1fr); } .precio-section { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .beneficios-grid { grid-template-columns: 1fr; } }
+</style>

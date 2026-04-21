@@ -1,0 +1,188 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisio Deportiva', url: '/fisioterapia-deportiva-valladolid/' },
+  { name: 'Readaptación Deportiva', url: '/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/' },
+];
+
+const faqs = [
+  {
+    question: '¿Cuándo puedo volver a entrenar después de una lesión?',
+    answer: 'El retorno al entrenamiento depende del tipo de lesión, su severidad y el nivel deportivo del atleta. No existe una fecha fija: la vuelta al deporte se produce cuando se cumplen criterios objetivos de seguridad (fuerza, movilidad, dolor, coordinación), no solo cuando pasa un tiempo determinado. Esto es lo que diferencia el return to play profesional del "espera seis semanas y ya veremos".',
+  },
+  {
+    question: '¿Qué es el return to play (RTP)?',
+    answer: 'El return to play es el protocolo de retorno progresivo al deporte tras una lesión. Se divide en fases: de rehabilitación (sin deporte), de readaptación funcional (ejercicio sin especificidad deportiva), de readaptación deportiva (ejercicio específico del deporte) y de retorno a la competición. Cada fase tiene criterios de progresión objetivos.',
+  },
+  {
+    question: '¿La vuelta al deporte después de una lesión de LCA es segura?',
+    answer: 'Con un protocolo de readaptación correcto, sí. El problema es que muchos deportistas vuelven demasiado pronto, sin haber recuperado la fuerza, la propiocepción y la confianza psicológica necesarias. Esto multiplica el riesgo de re-lesión. En AMG seguimos protocolos de retorno al deporte basados en criterios funcionales, no solo en el tiempo transcurrido desde la cirugía.',
+  },
+  {
+    question: '¿La readaptación deportiva es para todos los deportistas?',
+    answer: 'Sí. La readaptación deportiva se aplica tanto a deportistas de élite como a deportistas populares y amateurs. Si corres, pedaleas, juegas al fútbol o practicas cualquier deporte y has tenido una lesión significativa, un programa de readaptación estructurado te ayudará a volver más seguro y con menos riesgo de recaída.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Readaptación Deportiva en Valladolid',
+  description: 'Readaptación deportiva y return to play en Valladolid. Protocolo de vuelta al deporte tras lesiones musculares, articulares y postquirúrgicas. AMG Fisioterapia.',
+  url: '/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre readaptación deportiva en AMG Fisioterapia Valladolid.');
+
+const fases = [
+  { num: '01', titulo: 'Rehabilitación', desc: 'Reducción del dolor e inflamación, recuperación de movilidad y fuerza básica. Sin actividad deportiva específica.' },
+  { num: '02', titulo: 'Readaptación Funcional', desc: 'Ejercicio progresivo de fuerza, coordinación y propiocepción. Sin gestos deportivos específicos todavía.' },
+  { num: '03', titulo: 'Readaptación Deportiva', desc: 'Ejercicios específicos del deporte: gestos técnicos, cambios de dirección, aceleraciones. Integración del gesto deportivo.' },
+  { num: '04', titulo: 'Return to Play', desc: 'Entrenamiento completo con el equipo/grupo. Competición controlada. Alta deportiva con criterios objetivos cumplidos.' },
+];
+---
+
+<BaseLayout
+  title="Readaptación Deportiva Valladolid | Return to Play | AMG"
+  description="Readaptación deportiva y return to play en Valladolid. Protocolo de vuelta al deporte tras lesiones. Criterios objetivos de seguridad. AMG Fisioterapia. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/fisioterapia-deportiva-valladolid/">Fisio Deportiva</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Readaptación Deportiva</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Readaptación Deportiva en Valladolid</h1>
+          <p class="page-hero__subtitle">La vuelta al deporte después de una lesión no es un acto de fe: es un proceso estructurado con criterios objetivos. Así se hace bien. Así se hace en AMG.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/readaptacion.jpg" alt="Readaptación deportiva return to play Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Return to Play: La Vuelta al Deporte con Criterios</h2>
+      <div class="prose">
+        <p>Una de las fases más críticas del proceso de recuperación de cualquier lesión deportiva es la vuelta al entrenamiento y la competición. Volver demasiado pronto aumenta exponencialmente el riesgo de re-lesión. Volver demasiado tarde genera pérdida de forma física y un retroceso psicológico que puede afectar al rendimiento durante meses.</p>
+
+        <p>El return to play (RTP) es el protocolo científico de vuelta al deporte que en AMG Fisioterapia aplicamos de forma individualizada para cada deportista. No existe "espera X semanas y ya puedes volver". La vuelta al deporte se produce cuando el deportista cumple una serie de criterios objetivos que demuestran que el tejido lesionado está lo suficientemente recuperado para soportar las cargas del deporte, y que el resto del cuerpo está preparado para compensar y proteger la zona lesionada.</p>
+
+        <p>Los criterios de return to play que evaluamos incluyen: recuperación del rango de movimiento completo, simetría de fuerza entre el lado lesionado y el sano (generalmente >90%), ausencia de dolor durante los gestos deportivos específicos, adecuada respuesta propioceptiva (control neuromuscular), y confianza psicológica para ejecutar los gestos de riesgo sin miedo.</p>
+
+        <h3>Lesiones Musculares: Timing de Vuelta</h3>
+        <p>Las roturas musculares son las lesiones deportivas más frecuentes. El retorno demasiado precoz es la principal causa de re-rotura, que es más grave que la original. En AMG establecemos un plan de readaptación muscular progresivo: de los ejercicios isométricos a los concéntricos, de los concéntricos a los excéntricos, de los excéntricos a los pliométricos, y finalmente al gesto deportivo específico. Cada fase tiene criterios de progresión objetivos.</p>
+
+        <p>Para lesiones articulares (esguinces, roturas ligamentosas) y postquirúrgicas (LCA, menisco, prótesis), el protocolo de readaptación es más largo y complejo, pero los principios son los mismos: progresar de forma controlada, medir criterios objetivos y no precipitarse.</p>
+
+        <p>En Valladolid, AMG Fisioterapia ofrece un servicio de readaptación deportiva que combina la experiencia clínica de Alberto con los últimos avances en ciencias del ejercicio aplicado. El resultado: deportistas que vuelven antes, más seguros y más preparados que antes de lesionarse.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Fases del Return to Play</h2>
+      <div class="fases-grid">
+        {fases.map((fase) => (
+          <div class="fase-card">
+            <span class="fase-card__num">{fase.num}</span>
+            <h3 class="fase-card__titulo">{fase.titulo}</h3>
+            <p class="fase-card__desc">{fase.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Readaptación Deportiva</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-readaptacion">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Quieres volver a tu deporte?</h2>
+      <p class="cta-section__subtitle">Hazlo bien, hazlo seguro. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .fases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .fase-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); text-align: center; }
+  .fase-card__num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-md); }
+  .fase-card__titulo { font-size: var(--text-lg); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .fase-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-cream); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 1024px) { .fases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .fases-grid { grid-template-columns: 1fr; } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

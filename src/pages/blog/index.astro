@@ -1,0 +1,121 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Blog de Fisioterapia | AMG Fisioterapia Valladolid"
+  description="Articulos sobre fisioterapia, ejercicios, prevencion de lesiones y salud. Consejos de nuestro fisioterapeuta en Valladolid."
+>
+  <Header slot="header" />
+
+  <section class="blog-hero section--sm" style="padding-top: calc(72px + var(--space-3xl));">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__label font-display">Blog</p>
+        <h1 class="section__title">Articulos de Fisioterapia</h1>
+        <p style="color: var(--text-secondary); margin-top: var(--space-sm);">Consejos, ejercicios y novedades del mundo de la fisioterapia</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--sm">
+    <div class="container">
+      {posts.length === 0 ? (
+        <p style="text-align: center; color: var(--text-secondary);">Proximamente publicaremos contenido. Vuelve pronto.</p>
+      ) : (
+        <div class="blog-grid">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}/`} class="blog-card">
+              {post.data.image && (
+                <div class="blog-card__image">
+                  <img src={post.data.image} alt={post.data.imageAlt || post.data.title} loading="lazy" />
+                </div>
+              )}
+              <div class="blog-card__body">
+                <time class="blog-card__date" datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                <h2 class="blog-card__title">{post.data.title}</h2>
+                <p class="blog-card__desc">{post.data.description}</p>
+                <span class="blog-card__link">Leer articulo &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .blog-card {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    border: 1px solid var(--color-gray-200);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .blog-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  .blog-card__image {
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .blog-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .blog-card__body {
+    padding: var(--space-xl);
+  }
+
+  .blog-card__date {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .blog-card__title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .blog-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-md);
+  }
+
+  .blog-card__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+</style>

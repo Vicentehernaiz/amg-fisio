@@ -1,0 +1,130 @@
+---
+interface Props {
+  variant?: 'mini' | 'full';
+}
+const { variant = 'mini' } = Astro.props;
+
+const testimonials = [
+  {
+    text: 'Llevaba meses con dolor lumbar y en 6 sesiones con Alberto prácticamente ha desaparecido el dolor. Muy profesional y cercano.',
+    name: 'María G.',
+    detail: '45 años · Lumbalgia crónica',
+  },
+  {
+    text: 'Corredor amateur. Me lesioné el tendón de Aquiles y pensé que no podría correr más. Alberto me devolvió a los 3 meses al entrenamiento.',
+    name: 'Carlos M.',
+    detail: '38 años · Tendinopatía aquílea',
+  },
+  {
+    text: 'Después de mi operación de rodilla, la recuperación con Alberto fue mucho mejor de lo esperado. Trato personalizado, muy recomendable.',
+    name: 'Ana L.',
+    detail: '52 años · Post-operatorio rodilla',
+  },
+];
+---
+
+{variant === 'mini' && (
+  <div class="social-mini" aria-label="Valoración de pacientes">
+    <span class="social-mini__stars" aria-hidden="true">⭐⭐⭐⭐⭐</span>
+    <span class="social-mini__text">4.9 · +200 pacientes satisfechos</span>
+  </div>
+)}
+
+{variant === 'full' && (
+  <section class="social-full" aria-label="Testimonios de pacientes">
+    <div class="social-full__header">
+      <p class="social-full__rating" aria-label="Valoración 4.9 de 5 estrellas">
+        <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
+        4.9/5 — Más de 200 pacientes satisfechos
+      </p>
+    </div>
+    <div class="social-full__grid">
+      {testimonials.map((t) => (
+        <blockquote class="testimonial">
+          <p class="testimonial__text">"{t.text}"</p>
+          <footer class="testimonial__footer">
+            <strong class="testimonial__name">{t.name}</strong>
+            <span class="testimonial__detail">{t.detail}</span>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  /* Mini */
+  .social-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255, 200, 0, 0.08);
+    border: 1px solid rgba(255, 200, 0, 0.25);
+    border-radius: var(--radius-full);
+  }
+
+  .social-mini__stars { font-size: 0.85em; }
+
+  .social-mini__text {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* Full */
+  .social-full__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .social-full__rating {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .social-full__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .testimonial {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: 16px;
+    padding: var(--space-xl);
+  }
+
+  .testimonial__text {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+    font-style: italic;
+  }
+
+  .testimonial__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .testimonial__name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .testimonial__detail {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 768px) {
+    .social-full__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

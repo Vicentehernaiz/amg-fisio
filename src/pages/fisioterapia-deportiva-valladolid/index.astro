@@ -1,0 +1,272 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisioterapia Deportiva Valladolid', url: '/fisioterapia-deportiva-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Necesito ser deportista de élite para ir a fisioterapia deportiva?',
+    answer: 'No. La fisioterapia deportiva está diseñada para cualquier persona físicamente activa: desde el corredor popular que entrena 3 veces por semana hasta el ciclista amateur del fin de semana. Si haces deporte y tienes una lesión o quieres prevenirla, la fisioterapia deportiva es para ti.',
+  },
+  {
+    question: '¿Cuánto tarda en recuperarse una lesión muscular?',
+    answer: 'Depende del tipo y grado de lesión. Un desgarro de grado I puede recuperarse en 10-15 días con fisioterapia adecuada. Un grado II requiere 3-6 semanas. Un grado III (rotura completa) puede llevar 2-4 meses. En AMG establecemos un plan de retorno progresivo al deporte para evitar recaídas.',
+  },
+  {
+    question: '¿Puedo hacer fisioterapia mientras sigo entrenando?',
+    answer: 'En muchos casos sí, con las adaptaciones necesarias. Alberto evaluará qué actividades puedes continuar y cuáles debes modificar temporalmente. El objetivo es que tu rendimiento se vea afectado lo mínimo posible durante la recuperación.',
+  },
+  {
+    question: '¿Qué es el return to play?',
+    answer: 'El retorno al juego o return to play es el protocolo de vuelta al deporte tras una lesión. Incluye criterios funcionales, de fuerza, de dolor y psicológicos que deben cumplirse antes de volver a la actividad completa. En AMG lo realizamos de forma individualizada y progresiva para minimizar el riesgo de recaída.',
+  },
+  {
+    question: '¿Ofrecéis fisioterapia preventiva para deportistas?',
+    answer: 'Sí. La fisioterapia preventiva es una de las mejores inversiones que puede hacer un deportista. Incluye valoración biomecánica, identificación de desequilibrios musculares, corrección de patrones de movimiento y ejercicio terapéutico preventivo. Mucho más eficaz y económico que tratar lesiones cuando ya han aparecido.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Fisioterapia Deportiva en Valladolid',
+  description: 'Fisioterapia deportiva especializada en Valladolid: lesiones de running, ciclismo, readaptación deportiva y return to play. Alberto Muñoz González.',
+  url: '/fisioterapia-deportiva-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre fisioterapia deportiva en AMG Fisioterapia.');
+
+const modalidades = [
+  {
+    nombre: 'Running y Atletismo',
+    descripcion: 'Tratamiento de lesiones del corredor: fascia plantar, periostitis, rodilla del corredor, tendón de Aquiles, síndrome de la cintilla iliotibial. Análisis biomecánico y vuelta al entrenamiento.',
+    url: '/fisioterapia-deportiva-valladolid/fisioterapia-running-corredores/',
+    deportes: ['Running', 'Marcha atlética', 'Trail running'],
+  },
+  {
+    nombre: 'Ciclismo',
+    descripcion: 'Fisioterapia para ciclistas: rodilla del ciclista, tendinitis rotuliana, lumbalgia postural en bici, cervicalgias y lesiones por overuse. Optimización de la posición en bicicleta.',
+    url: '/fisioterapia-deportiva-valladolid/fisioterapia-ciclismo-ciclistas/',
+    deportes: ['Ciclismo de carretera', 'MTB', 'Triatlón'],
+  },
+  {
+    nombre: 'Readaptación Deportiva',
+    descripcion: 'Protocolo de retorno al deporte tras lesiones musculares, ligamentosas o quirúrgicas. Return to play individualizado con criterios funcionales objetivos para volver a entrenar con seguridad.',
+    url: '/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/',
+    deportes: ['Todos los deportes'],
+  },
+];
+
+const lesiones = [
+  'Esguinces y lesiones ligamentosas',
+  'Roturas musculares (grado I, II y III)',
+  'Tendinopatías (Aquiles, rotuliana, manguito rotador)',
+  'Síndrome de la cintilla iliotibial',
+  'Fascitis plantar y periostitis',
+  'Lesiones de rodilla (LCA, meniscos)',
+  'Lumbalgias y cervicalgias del deportista',
+  'Fracturas por estrés',
+  'Post-operatorio deportivo',
+  'Overtraining y fatiga muscular crónica',
+];
+---
+
+<BaseLayout
+  title="Fisioterapia Deportiva Valladolid | AMG Fisioterapia"
+  description="Fisioterapia deportiva en Valladolid para corredores, ciclistas y deportistas. Tratamiento de lesiones, readaptación y return to play. Alberto Muñoz González. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Fisioterapia Deportiva</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Fisioterapia Deportiva en Valladolid</h1>
+      <p class="page-hero__subtitle">Recupera tu rendimiento. Vuelve a entrenar antes y con menos riesgo de recaída. Fisioterapia especializada para deportistas en Valladolid.</p>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Especialistas en Lesiones Deportivas en Valladolid</h2>
+      <div class="prose">
+        <p>La fisioterapia deportiva es mucho más que curar lesiones. Es entender el gesto deportivo, la biomecánica del movimiento, las cargas de entrenamiento y los factores que llevan a que una estructura corporal se sobrecargue hasta lesionarse. En AMG Fisioterapia, en Valladolid, aplicamos ese conocimiento integral para ayudarte a recuperarte más rápido y volver al deporte que amas.</p>
+
+        <p>Alberto Muñoz González lleva más de 7 años tratando deportistas de todos los niveles en Valladolid: desde el corredor popular que hace su primera media maratón hasta el ciclista que compite en cicloturistas de larga distancia. Conoce los patrones de lesión propios de cada deporte y diseña planes de tratamiento adaptados al calendario deportivo de cada paciente.</p>
+
+        <p>La gran diferencia de la fisioterapia deportiva respecto a la fisioterapia general es el enfoque en el rendimiento: no solo queremos que dejes de tener dolor, queremos que vuelvas a rendir al nivel que tenías antes de la lesión, o incluso que mejores gracias a la corrección de los factores que te llevaron a lesionarte.</p>
+
+        <p>En Valladolid existe una comunidad deportiva muy activa, especialmente en running y ciclismo. AMG Fisioterapia atiende a deportistas de todos los clubes y grupos de entrenamiento de la ciudad. Si tienes una lesión que te impide entrenar o competir, no lo dejes pasar: cuanto antes se trata, mejor y más rápida es la recuperación.</p>
+
+        <p>Cada lesión deportiva es una oportunidad para analizar qué falló y corregirlo. Así evitamos que la misma lesión se repita, que es el gran riesgo del deportista que no hace bien la rehabilitación.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Especialidades Deportivas</h2>
+      <div class="modalidades-grid">
+        {modalidades.map((m) => (
+          <a href={m.url} class="modalidad-card">
+            <h3 class="modalidad-card__title">{m.nombre}</h3>
+            <p class="modalidad-card__desc">{m.descripcion}</p>
+            <div class="modalidad-card__tags">
+              {m.deportes.map((d) => <span class="tag">{d}</span>)}
+            </div>
+            <span class="modalidad-card__link">Ver más →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="lesiones-section">
+        <div>
+          <h2 class="section__title">Lesiones que Tratamos en Valladolid</h2>
+          <p style="font-size: var(--text-base); color: var(--text-secondary); margin-bottom: var(--space-xl); line-height: var(--leading-relaxed);">En AMG Fisioterapia tratamos todo el espectro de lesiones deportivas del aparato locomotor. Si tu lesión no está en la lista, consúltanos igualmente.</p>
+          <ul class="lesiones-list">
+            {lesiones.map((l) => (
+              <li class="lesiones-list__item">
+                <span class="lesiones-list__check">✓</span>
+                {l}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="proceso-box">
+          <h3 class="proceso-box__title">Nuestro Proceso</h3>
+          <ol class="proceso-steps">
+            <li class="proceso-step">
+              <span class="proceso-step__num">01</span>
+              <div>
+                <strong>Valoración completa</strong>
+                <p>Anamnesis deportiva, exploración física y análisis del gesto deportivo.</p>
+              </div>
+            </li>
+            <li class="proceso-step">
+              <span class="proceso-step__num">02</span>
+              <div>
+                <strong>Diagnóstico y plan</strong>
+                <p>Te explicamos qué tienes, cuánto tardará y qué haremos en cada fase.</p>
+              </div>
+            </li>
+            <li class="proceso-step">
+              <span class="proceso-step__num">03</span>
+              <div>
+                <strong>Tratamiento activo</strong>
+                <p>Combinación de técnicas manuales, ejercicio terapéutico y electroterapia.</p>
+              </div>
+            </li>
+            <li class="proceso-step">
+              <span class="proceso-step__num">04</span>
+              <div>
+                <strong>Return to play</strong>
+                <p>Protocolo progresivo de vuelta al deporte con criterios objetivos.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Fisioterapia Deportiva</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-deportiva">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes una lesión deportiva?</h2>
+      <p class="cta-section__subtitle">No esperes a que empeore. Cuanto antes empezamos, antes vuelves a entrenar.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita ahora
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .breadcrumb a:hover { color: var(--color-white); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-lg); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .modalidades-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); margin-top: var(--space-2xl); }
+  .modalidad-card { display: block; background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-2xl); transition: all var(--duration-normal) var(--ease-out); text-decoration: none; }
+  .modalidad-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+  .modalidad-card__title { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-md); }
+  .modalidad-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-lg); }
+  .modalidad-card__tags { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
+  .tag { padding: 2px 10px; background: var(--color-primary-100); color: var(--color-primary-dark); font-size: var(--text-xs); border-radius: var(--radius-full); font-weight: 500; }
+  .modalidad-card__link { font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); }
+  .lesiones-section { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: start; }
+  .lesiones-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); }
+  .lesiones-list__item { display: flex; align-items: center; gap: var(--space-md); font-size: var(--text-sm); color: var(--text-secondary); }
+  .lesiones-list__check { color: var(--color-primary); font-weight: 700; }
+  .proceso-box { background: var(--color-secondary); border-radius: var(--radius-xl); padding: var(--space-2xl); }
+  .proceso-box__title { font-size: var(--text-xl); font-weight: 700; color: var(--color-white); margin-bottom: var(--space-xl); }
+  .proceso-steps { list-style: none; display: flex; flex-direction: column; gap: var(--space-lg); }
+  .proceso-step { display: flex; gap: var(--space-md); align-items: flex-start; }
+  .proceso-step__num { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 700; flex-shrink: 0; }
+  .proceso-step strong { display: block; color: var(--color-white); margin-bottom: 4px; font-size: var(--text-sm); }
+  .proceso-step p { color: rgba(255,255,255,0.7); font-size: var(--text-xs); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 1024px) { .modalidades-grid { grid-template-columns: 1fr; } .lesiones-section { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } }
+</style>

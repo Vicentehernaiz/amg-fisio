@@ -1,0 +1,167 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Sobre Nosotros', url: '/sobre-nosotros/' },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría pedir cita en AMG Fisioterapia.');
+
+const valores = [
+  { titulo: 'Rigor Científico', desc: 'Solo aplicamos técnicas con evidencia científica demostrada. Nos formamos continuamente para estar al día con los últimos avances.' },
+  { titulo: 'Atención Individual', desc: 'Cada paciente es único. No existen protocolos genéricos: cada plan de tratamiento se diseña desde cero para cada persona.' },
+  { titulo: 'Honestidad', desc: 'Te decimos lo que tienes, cuánto tardará y qué puedes esperar. Sin promesas exageradas, sin tratamientos innecesarios.' },
+  { titulo: 'Empoderamiento', desc: 'El objetivo es que aprendas a cuidarte tú mismo. No queremos que dependas de nosotros indefinidamente.' },
+];
+---
+
+<BaseLayout
+  title="Sobre Nosotros | AMG Fisioterapia Valladolid"
+  description="Conoce a Alberto Muñoz González, fisioterapeuta colegiado en Valladolid. 7+ años de experiencia, formación continua y tratamiento personalizado. AMG Fisioterapia."
+  schema={[breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Sobre Nosotros</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Conoce a Alberto Muñoz González</h1>
+      <p class="page-hero__subtitle">Fisioterapeuta colegiado. Más de 7 años de experiencia en Valladolid. Especialista en fisioterapia musculoesquelética y deportiva.</p>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="bio-section">
+        <div class="bio-image">
+          <div class="bio-image__placeholder">
+            <img src="/images/og-default.jpg" alt="Alberto Muñoz González, fisioterapeuta colegiado en Valladolid, en la clínica AMG Fisioterapia" width="400" height="500" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div class="bio-stats">
+            <div class="bio-stat">
+              <span class="bio-stat__num font-display">7+</span>
+              <span class="bio-stat__label">Años de experiencia</span>
+            </div>
+            <div class="bio-stat">
+              <span class="bio-stat__num font-display">+450</span>
+              <span class="bio-stat__label">Pacientes recuperados</span>
+            </div>
+            <div class="bio-stat">
+              <span class="bio-stat__num font-display">4.9★</span>
+              <span class="bio-stat__label">Valoración Google</span>
+            </div>
+          </div>
+        </div>
+        <div class="bio-content">
+          <h2 class="section__title">Un Fisioterapeuta que Escucha</h2>
+          <div class="prose">
+            <p>Alberto Muñoz González es el fundador y único fisioterapeuta de AMG Fisioterapia, la clínica que lleva su sello personal desde el primer día. Graduado en Fisioterapia y colegiado en el Colegio de Fisioterapeutas de Castilla y León, Alberto acumula más de 7 años de experiencia clínica en el tratamiento de patologías musculoesqueléticas, neurológicas y deportivas.</p>
+
+            <p>Su filosofía de trabajo es simple: cada paciente merece una hora (o más) de atención real, sin prisas y sin distracciones. En AMG no hay turnos de 15 minutos ni fisioterapeutas rotativos que no conocen tu historial. Hay una persona que te conoce, que recuerda lo que hablasteis en la última sesión y que piensa en tu caso también fuera de las horas de clínica.</p>
+
+            <p>Alberto se formó en algunas de las mejores escuelas de fisioterapia española, especializándose en terapia manual ortopédica, fisioterapia deportiva y punción seca. Se mantiene en formación continua: cursos, congresos, lectura de revistas científicas. Cree que un fisioterapeuta que deja de formarse es un fisioterapeuta que empieza a quedarse obsoleto.</p>
+
+            <p>Antes de abrir AMG Fisioterapia en Valladolid, Alberto trabajó en diferentes contextos clínicos que le permitieron ampliar su visión: centros de salud, clínicas privadas, trabajo con equipos deportivos. Esa variedad de experiencias se refleja en la versatilidad de su práctica clínica: sabe tratar igual de bien al anciano con artrosis que al triatleta con una lesión de menisco.</p>
+
+            <p>Valladolid es su ciudad, y AMG Fisioterapia es su proyecto. Cuando vienes a la clínica, estás hablando directamente con el responsable: no hay intermediarios, no hay comerciales, no hay protocolos corporativos que seguir. Solo un fisioterapeuta apasionado por su trabajo, comprometido con la salud de sus pacientes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Nuestros Valores</h2>
+      <div class="valores-grid">
+        {valores.map((v) => (
+          <div class="valor-card">
+            <h3 class="valor-card__title">{v.titulo}</h3>
+            <p class="valor-card__desc">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Nuestra Filosofía de Tratamiento</h2>
+      <div class="prose">
+        <p>En AMG Fisioterapia creemos en tres principios que guían cada sesión:</p>
+
+        <p><strong>Primero, diagnosticar.</strong> No se puede tratar lo que no se entiende. Por eso, la primera sesión siempre empieza con una valoración exhaustiva: historial, exploración física, pruebas funcionales. Solo cuando tenemos un cuadro clínico claro empezamos a tratar. Esto nos diferencia del masajista que aplica el mismo protocolo a todo el mundo.</p>
+
+        <p><strong>Segundo, tratar activamente.</strong> La fisioterapia moderna es una disciplina activa, no pasiva. No se trata de ponerte el calor y esperar. Se trata de aplicar las técnicas correctas, con la dosis correcta y en el momento correcto. Y de implicarte a ti, el paciente, en tu propia recuperación mediante el ejercicio terapéutico.</p>
+
+        <p><strong>Tercero, prevenir recaídas.</strong> El objetivo no es solo que el dolor desaparezca: es que no vuelva. Por eso, en cada tratamiento hay un componente educativo importante: te enseñamos qué ha pasado en tu cuerpo, qué factores contribuyeron a la lesión y qué puedes hacer para que no se repita. La fisioterapia que no educa está incompleta.</p>
+
+        <p>Esta es la fisioterapia que practicamos en Valladolid. Si buscas un profesional que te trate como un número y te dé el alta cuando el dolor ha bajado lo suficiente, AMG no es para ti. Si buscas a alguien que te entienda, te explique y te acompañe hasta la recuperación completa, estás en el lugar correcto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Empezamos?</h2>
+      <p class="cta-section__subtitle">Primera sesión con valoración completa incluida. Sin compromiso. Sin listas de espera.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .bio-section { display: grid; grid-template-columns: 380px 1fr; gap: var(--space-4xl); align-items: start; }
+  .bio-image__placeholder { height: 380px; background: var(--color-gray-100); border-radius: var(--radius-2xl); overflow: hidden; margin-bottom: var(--space-xl); }
+  .bio-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+  .bio-stat { text-align: center; background: var(--color-cream); border-radius: var(--radius-lg); padding: var(--space-md); }
+  .bio-stat__num { display: block; font-size: var(--text-2xl); color: var(--color-primary); line-height: 1; margin-bottom: 4px; }
+  .bio-stat__label { font-size: var(--text-xs); color: var(--text-secondary); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose strong { color: var(--color-gray-900); }
+  .valores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); margin-top: var(--space-2xl); }
+  .valor-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); }
+  .valor-card__title { font-size: var(--text-lg); font-weight: 700; color: var(--color-primary); margin-bottom: var(--space-md); }
+  .valor-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 1024px) { .bio-section { grid-template-columns: 1fr; } .valores-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .valores-grid { grid-template-columns: 1fr; } }
+</style>

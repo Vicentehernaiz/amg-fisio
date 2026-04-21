@@ -1,0 +1,230 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Servicios de Fisioterapia', url: '/servicios-fisioterapia/' },
+];
+
+const faqs = [
+  {
+    question: '¿Qué incluye la primera sesión de fisioterapia?',
+    answer: 'La primera sesión dura entre 60 y 75 minutos. Alberto realiza una valoración completa: anamnesis (historial clínico), exploración física, pruebas de movilidad y fuerza, y establece un diagnóstico fisioterapéutico. A continuación, inicia el tratamiento ese mismo día y te explica el plan de recuperación personalizado.',
+  },
+  {
+    question: '¿Cuántas sesiones de fisioterapia necesito?',
+    answer: 'Depende de la lesión y de cada persona. Lesiones agudas (tortícolis, esguince leve) pueden resolverse en 3-5 sesiones. Dolores crónicos o rehabilitaciones postquirúrgicas suelen requerir 8-15 sesiones. Alberto te dará una estimación realista en la primera valoración.',
+  },
+  {
+    question: '¿Atendéis deportistas?',
+    answer: 'Sí. AMG Fisioterapia está especializada en fisioterapia deportiva. Tratamos lesiones de running, ciclismo, fútbol, natación y cualquier deporte. Ofrecemos readaptación deportiva y planes de retorno a la actividad (return to play).',
+  },
+  {
+    question: '¿Tenéis fisioterapia a domicilio en Valladolid?',
+    answer: 'Sí, disponemos de servicio de fisioterapia a domicilio en Valladolid y su provincia. El precio es de 45€/sesión. Ideal para personas con movilidad reducida, post-operatorio o quienes prefieren la comodidad de su hogar.',
+  },
+  {
+    question: '¿Cuál es el precio de la fisioterapia en AMG?',
+    answer: 'La sesión en clínica tiene un precio de 35€ (45-60 minutos). La sesión a domicilio cuesta 45€. También disponemos de bonos de varias sesiones con precio reducido. Consulta sin compromiso.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Servicios de Fisioterapia en Valladolid',
+  description: 'Fisioterapia especializada en Valladolid Centro: dolor cervical, lumbar, rodilla, cadera y rehabilitación neurológica. Tratamientos personalizados de 45-60 minutos.',
+  url: '/servicios-fisioterapia/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+
+const whatsappLink = getWhatsAppLink('Hola, me gustaría pedir cita en AMG Fisioterapia para informarme sobre vuestros servicios.');
+
+const servicios = [
+  {
+    nombre: 'Dolor Cervical',
+    descripcion: 'Tratamiento del dolor de cuello, cervicalgia y contracturas cervicales. Aliviamos la tensión muscular, mejoramos la movilidad y tratamos hernias cervicales con terapia manual y electroestimulación.',
+    url: '/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/',
+  },
+  {
+    nombre: 'Dolor Lumbar',
+    descripcion: 'Fisioterapia para lumbalgia aguda y crónica, ciática y hernia discal. Reducimos el dolor, restauramos la función y te enseñamos a prevenir recaídas con ejercicio terapéutico.',
+    url: '/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/',
+  },
+  {
+    nombre: 'Rehabilitación de Rodilla',
+    descripcion: 'Recuperación de lesiones de rodilla: ligamento cruzado, menisco, condromalacia y rodilla del corredor. Tratamiento conservador y postquirúrgico adaptado a tu nivel de actividad.',
+    url: '/servicios-fisioterapia/rehabilitacion-rodilla-valladolid/',
+  },
+  {
+    nombre: 'Fisioterapia de Cadera',
+    descripcion: 'Tratamiento del dolor de cadera, bursitis trocantérea, conflicto femoroacetabular y recuperación post-prótesis. Recupera tu movilidad y calidad de vida.',
+    url: '/servicios-fisioterapia/rehabilitacion-cadera-valladolid/',
+  },
+  {
+    nombre: 'Rehabilitación Neurológica',
+    descripcion: 'Fisioterapia especializada para ictus, Parkinson, esclerosis múltiple y otras patologías neurológicas. Maximizamos la recuperación funcional y la independencia del paciente.',
+    url: '/servicios-fisioterapia/rehabilitacion-neurologica-ictus-valladolid/',
+  },
+];
+---
+
+<BaseLayout
+  title="Servicios de Fisioterapia en Valladolid | AMG Fisioterapia"
+  description="Fisioterapia especializada en Valladolid Centro: dolor cervical, lumbar, rodilla, cadera y neurológica. Tratamientos personalizados de 45-60 min. Pide cita: 35€/sesión."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Servicios de Fisioterapia</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Servicios de Fisioterapia en Valladolid Centro</h1>
+      <p class="page-hero__subtitle">Tratamientos personalizados basados en evidencia científica. 7+ años de experiencia, +200 pacientes atendidos, 4.9★ en Google.</p>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Fisioterapia Avanzada en el Centro de Valladolid</h2>
+      <div class="prose">
+        <p>En AMG Fisioterapia, creemos que cada paciente merece una atención individualizada, rigurosa y humana. Nuestro centro, ubicado en el corazón de Valladolid, ofrece tratamientos de fisioterapia basados en la mejor evidencia científica disponible, combinados con un trato cercano y personalizado que marca la diferencia.</p>
+        <p>Alberto Muñoz González, fisioterapeuta colegiado con más de 7 años de experiencia, lidera cada tratamiento desde la primera valoración hasta el alta. No hay protocolos genéricos: cada plan terapéutico se diseña en función de tu lesión, tu historial, tus objetivos y tu ritmo de vida.</p>
+        <p>Nuestros pacientes en Valladolid nos confían su recuperación porque saben que encontrarán un profesional que les escucha, les explica qué está pasando en su cuerpo y les enseña a cuidarse para evitar recaídas. Eso es lo que diferencia la fisioterapia de calidad de una simple sesión de masajes.</p>
+        <p>Trabajamos patologías del sistema musculoesquelético en toda su amplitud: desde el dolor de cuello y espalda hasta la rehabilitación neurológica, pasando por lesiones deportivas y recuperaciones postquirúrgicas. Si tienes dolor o limitación funcional, probablemente podemos ayudarte.</p>
+        <p>Cada sesión dura entre 45 y 60 minutos. Sin prisas. Sin listas de espera interminables. Con toda la atención puesta en ti.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-item__number font-display">7+</span>
+          <span class="stat-item__label">Años de experiencia</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number font-display">+200</span>
+          <span class="stat-item__label">Pacientes atendidos</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number font-display">4.9★</span>
+          <span class="stat-item__label">Valoración en Google</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-item__number font-display">35€</span>
+          <span class="stat-item__label">Sesión en clínica</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="section__title text-center">Nuestros Servicios en Valladolid</h2>
+      <p class="section__subtitle text-center">Elige el área que mejor describe tu problema. Si no sabes exactamente qué tienes, escríbenos y te orientamos.</p>
+      <div class="services-grid">
+        {servicios.map((servicio) => (
+          <a href={servicio.url} class="service-card">
+            <h3 class="service-card__title">{servicio.nombre}</h3>
+            <p class="service-card__desc">{servicio.descripcion}</p>
+            <span class="service-card__link">Ver tratamiento →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas Frecuentes</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-servicios">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Listo para empezar tu recuperación?</h2>
+      <p class="cta-section__subtitle">Primera valoración incluida. Sin listas de espera. En el centro de Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita ahora por WhatsApp
+      </a>
+      <p class="cta-section__note">O llama al <a href={`tel:${config.contact.phone.replace(/\s/g, '')}`}>{config.contact.phoneDisplay}</a></p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: var(--color-white);
+    padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl);
+  }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); }
+  .breadcrumb a { color: rgba(255,255,255,0.7); transition: color var(--duration-fast); }
+  .breadcrumb a:hover { color: var(--color-white); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section { padding-block: var(--space-4xl); }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-lg); }
+  .section__subtitle { font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-3xl); max-width: 600px; margin-inline: auto; }
+  .text-center { text-align: center; }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); }
+  .stat-item { text-align: center; }
+  .stat-item__number { display: block; font-size: var(--text-4xl); color: var(--color-primary); line-height: 1; margin-bottom: var(--space-sm); }
+  .stat-item__label { font-size: var(--text-sm); color: var(--text-secondary); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); margin-top: var(--space-2xl); }
+  .service-card { display: block; background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-2xl); transition: all var(--duration-normal) var(--ease-out); text-decoration: none; }
+  .service-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+  .service-card__title { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-md); }
+  .service-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-lg); }
+  .service-card__link { font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  .cta-section__note { margin-top: var(--space-lg); font-size: var(--text-sm); color: rgba(255,255,255,0.7); }
+  .cta-section__note a { color: var(--color-white); font-weight: 600; }
+  @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2,1fr); } .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .services-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  aspectRatio?: string;
+}
+
+const { src, alt, width, height, class: className, aspectRatio = '16/9' } = Astro.props;
+---
+
+<div class={`lazy-image-wrapper ${className || ''}`} style={`aspect-ratio: ${aspectRatio}`}>
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
+    class="lazy-image"
+  />
+</div>
+
+<style>
+  .lazy-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-gray-100);
+  }
+
+  .lazy-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Técnicas', url: '/tecnicas-fisioterapia/' },
+  { name: 'Terapia Manual', url: '/tecnicas-fisioterapia/terapia-manual-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿La terapia manual es lo mismo que un masaje?',
+    answer: 'No. La terapia manual es una disciplina fisioterapéutica basada en evidencia científica que incluye movilizaciones articulares, manipulaciones vertebrales, técnicas neuromusculares y trabajo sobre el sistema nervioso. Un masaje convencional trabaja principalmente el tejido blando de forma genérica. La terapia manual requiere un diagnóstico previo y una formación especializada de posgrado.',
+  },
+  {
+    question: '¿La manipulación vertebral es peligrosa?',
+    answer: 'En manos de un fisioterapeuta formado y tras una correcta exploración que descarte contraindicaciones, la manipulación vertebral es segura. Las complicaciones graves son extremadamente infrecuentes. Alberto realiza siempre una valoración exhaustiva antes de aplicar cualquier técnica de alta velocidad.',
+  },
+  {
+    question: '¿Para qué patologías está indicada la terapia manual?',
+    answer: 'Cervicalgia, lumbalgia, dorsalgia, dolor articular de hombro, codo, muñeca, cadera, rodilla o tobillo, contracturas musculares, cefaleas tensionales y cervicogénicas, latigazo cervical, síndrome del túnel carpiano y muchas otras. En general, cualquier patología del sistema musculoesquelético puede beneficiarse de la terapia manual.',
+  },
+  {
+    question: '¿Cuántas sesiones de terapia manual necesito?',
+    answer: 'Depende de la patología. Problemas agudos (tortícolis, bloqueo articular) pueden resolverse en 3-5 sesiones. Condiciones crónicas requieren más sesiones y habitualmente se combina con ejercicio terapéutico para consolidar los resultados. Alberto te dará una estimación tras la valoración inicial.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Terapia Manual en Valladolid',
+  description: 'Terapia manual fisioterapéutica en Valladolid: movilizaciones articulares, manipulaciones vertebrales y masoterapia. AMG Fisioterapia.',
+  url: '/tecnicas-fisioterapia/terapia-manual-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría pedir cita para terapia manual en AMG Fisioterapia Valladolid.');
+---
+
+<BaseLayout
+  title="Terapia Manual Fisioterapia Valladolid | AMG Fisioterapia"
+  description="Terapia manual en Valladolid: movilizaciones articulares, manipulaciones vertebrales y masoterapia. Fisioterapia basada en evidencia. Alberto Muñoz González. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/tecnicas-fisioterapia/">Técnicas</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Terapia Manual</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Terapia Manual en Valladolid</h1>
+          <p class="page-hero__subtitle">La técnica más solicitada. Movilizaciones articulares, manipulaciones vertebrales y masoterapia terapéutica con sólido respaldo científico.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/terapia-manual.png" alt="Terapia manual fisioterapia Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Qué es la Terapia Manual y Cómo Funciona</h2>
+      <div class="prose">
+        <p>La terapia manual es el conjunto de técnicas fisioterapéuticas aplicadas con las manos sobre el cuerpo del paciente con el objetivo de mejorar la movilidad articular, reducir el dolor, liberar restricciones en el tejido blando y restaurar la función del sistema musculoesquelético. Es una de las herramientas terapéuticas con mayor evidencia científica en fisioterapia.</p>
+
+        <p>En AMG Fisioterapia, en Valladolid, la terapia manual nunca se aplica de forma aislada como un "masaje genérico". Siempre va precedida de una valoración clínica completa que determina exactamente qué estructuras están afectadas, qué técnicas son más adecuadas para cada caso y cuáles están contraindicadas.</p>
+
+        <h3>Técnicas que Incluye</h3>
+        <p><strong>Movilizaciones articulares:</strong> movimientos de baja velocidad y amplitud controlada aplicados sobre la articulación para recuperar el rango de movimiento perdido. Especialmente útiles en bloqueos articulares de columna vertebral, hombro, cadera y articulaciones periféricas.</p>
+
+        <p><strong>Manipulaciones vertebrales (HVLAT):</strong> técnicas de alta velocidad y baja amplitud que producen el "clic" articular tan famoso. Están indicadas en bloqueos articulares específicos de la columna y tienen una eficacia respaldada por numerosos estudios. Solo se aplican tras una exploración que descarte contraindicaciones.</p>
+
+        <p><strong>Masoterapia terapéutica:</strong> técnicas de masaje clínico que incluyen el trabajo sobre el tejido blando (amasamiento, fricción, compresión isquémica), la liberación miofascial y el trabajo sobre cicatrices. Va más allá del masaje de relajación: tiene un objetivo terapéutico específico.</p>
+
+        <p><strong>Técnicas neurodinámicas:</strong> movilizaciones del sistema nervioso periférico para mejorar su deslizamiento y reducir la sensibilización nerviosa. Muy útiles en ciáticas, neuralgias y túnel carpiano.</p>
+
+        <p><strong>Tratamiento intraoral (fisioterapia temporomandibular):</strong> trabajo sobre la musculatura masticadora y la articulación temporomandibular para tratar el dolor de mandíbula, el bruxismo y las cefaleas relacionadas.</p>
+
+        <h3>Para Qué Sirve la Terapia Manual</h3>
+        <p>Las indicaciones de la terapia manual son amplísimas. En Valladolid, los motivos de consulta más frecuentes que tratamos con terapia manual incluyen: <a href="/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/">dolor cervical y tortícolis</a>, <a href="/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/">lumbalgia y ciática</a>, dolor de hombro, epicondilitis (codo de tenista), cefaleas tensionales, y lesiones deportivas de cualquier articulación.</p>
+
+        <p>La terapia manual raramente es el único componente del tratamiento. Se combina habitualmente con <a href="/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/">ejercicio terapéutico</a> para consolidar los resultados y prevenir recaídas, y con otras técnicas como la <a href="/tecnicas-fisioterapia/puncion-seca-valladolid/">punción seca</a> o el <a href="/tecnicas-fisioterapia/tens-electroestimulacion-valladolid/">TENS</a> según cada caso.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Terapia Manual</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-terapia-manual">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Quieres una sesión de terapia manual en Valladolid?</h2>
+      <p class="cta-section__subtitle">Primera valoración incluida. Sesión de 45-60 minutos. 35€ en clínica.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .prose a { color: var(--color-primary); text-decoration: underline; }
+  .prose strong { color: var(--color-gray-800); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

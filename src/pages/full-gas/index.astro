@@ -1,0 +1,1353 @@
+---
+export const prerender = false;
+
+import { getConfig } from '@utils/config';
+
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'pogacar-es-my-dios';
+
+// Check auth via cookie
+const authCookie = Astro.cookies.get('amg-admin-auth');
+const isAuthenticated = authCookie?.value === ADMIN_PASSWORD;
+
+// Handle login POST
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const password = formData.get('password');
+
+  if (password === ADMIN_PASSWORD) {
+    Astro.cookies.set('amg-admin-auth', ADMIN_PASSWORD, {
+      path: '/full-gas',
+      httpOnly: true,
+      secure: import.meta.env.PROD,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+    return Astro.redirect('/full-gas/');
+  }
+}
+
+const config = getConfig();
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Panel Admin | AMG Fisioterapia</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Sora', system-ui, sans-serif;
+      background-color: #f5f3ef;
+      color: #181428;
+      min-height: 100vh;
+    }
+
+    /* LOGIN */
+    .login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .login__card {
+      background: white;
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.05), 0 5px 29.2px 0 rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login__card h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .login__card p {
+      color: #666;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    .login__card input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dbdbdb;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .login__card input:focus {
+      outline: none;
+      border-color: #6a994d;
+    }
+
+    .login__card button {
+      width: 100%;
+      padding: 12px;
+      background: #504573;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .login__card button:hover { background: #3a3254; }
+
+    /* ADMIN DASHBOARD */
+    .admin {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .admin__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .admin__header h1 { font-size: 1.5rem; }
+
+    .admin__logout {
+      padding: 8px 16px;
+      font-size: 0.875rem;
+      background: #f5f3ef;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #666;
+    }
+
+    /* DASHBOARD CARDS */
+    .admin__dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .admin__dashboard { grid-template-columns: 1fr; }
+    }
+
+    .admin__stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04), 0 5px 29.2px 0 rgba(0,0,0,0.04);
+    }
+
+    .admin__stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin__stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #181428;
+    }
+
+    .admin__stat-value--green { color: #35573D; }
+
+    .admin__stat-sub {
+      font-size: 0.75rem;
+      color: #999;
+      margin-top: 0.25rem;
+    }
+
+    /* SECTIONS */
+    .admin__section {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04), 0 5px 29.2px 0 rgba(0,0,0,0.04);
+    }
+
+    .admin__section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .admin__section h2 {
+      font-size: 1.1rem;
+    }
+
+    .admin__field {
+      margin-bottom: 1.25rem;
+    }
+
+    .admin__field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin__field input,
+    .admin__field textarea,
+    .admin__field select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #dbdbdb;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .admin__field textarea { min-height: 80px; resize: vertical; }
+
+    .admin__field input:focus,
+    .admin__field textarea:focus {
+      outline: none;
+      border-color: #6a994d;
+    }
+
+    .admin__field textarea.admin__field--code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      min-height: 300px;
+    }
+
+    /* TOGGLE */
+    .admin__toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .admin__toggle input[type="checkbox"] {
+      width: 44px;
+      height: 24px;
+      appearance: none;
+      background: #dbdbdb;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .admin__toggle input[type="checkbox"]::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .admin__toggle input[type="checkbox"]:checked { background: #6a994d; }
+    .admin__toggle input[type="checkbox"]:checked::after { transform: translateX(20px); }
+
+    /* STATUS */
+    .admin__status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .admin__status--open { background: #dceede; color: #35573D; }
+    .admin__status--closed { background: #fde8e8; color: #D64545; }
+
+    /* BUTTONS */
+    .admin__save {
+      padding: 10px 24px;
+      background: #6a994d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .admin__save:hover { background: #5a9468; }
+    .admin__save:disabled { background: #aaa; cursor: not-allowed; }
+
+    .admin__btn {
+      padding: 8px 18px;
+      border: 1.5px solid #504573;
+      background: white;
+      color: #504573;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .admin__btn:hover { background: #504573; color: white; }
+
+    .admin__btn--danger {
+      border-color: #D64545;
+      color: #D64545;
+    }
+
+    .admin__btn--danger:hover { background: #D64545; color: white; }
+
+    /* FEEDBACK */
+    .admin__feedback {
+      display: inline-block;
+      margin-left: 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .admin__feedback--success { color: #35573D; }
+    .admin__feedback--error { color: #D64545; }
+    .admin__feedback--visible { opacity: 1; }
+
+    /* SPINNER */
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ffffff44;
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* BLOG LIST */
+    .admin__blog-list { list-style: none; }
+
+    .admin__blog-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .admin__filter-btn {
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 99px;
+      border: 1.5px solid #e0e0e0;
+      background: white;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .admin__filter-btn:hover,
+    .admin__filter-btn.active {
+      background: #504573;
+      border-color: #504573;
+      color: white;
+    }
+
+    .admin__blog-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 1rem;
+    }
+
+    .admin__blog-item:last-child { border: none; }
+    .admin__blog-item[data-hidden] { display: none; }
+
+    .admin__blog-info { flex: 1; min-width: 0; }
+    .admin__blog-title { font-weight: 500; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .admin__blog-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+    .admin__blog-date { font-size: 0.78rem; color: #999; }
+    .admin__blog-cat {
+      display: inline-block;
+      background: #ede9f5;
+      color: #504573;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .admin__blog-draft {
+      display: inline-block;
+      background: #fef3cd;
+      color: #856404;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .admin__blog-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .admin__icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      background: white;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.15s;
+    }
+
+    .admin__icon-btn:hover { background: #f5f3ef; color: #504573; border-color: #c5b8e8; }
+    .admin__icon-btn--danger { color: #D64545; border-color: #fca5a5; }
+    .admin__icon-btn--danger:hover { background: #fef2f2; border-color: #fca5a5; color: #D64545; }
+
+    /* Bonos tiers */
+    .bonos-tier-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 1fr auto;
+      gap: 0.75rem;
+      align-items: end;
+      margin-bottom: 0.75rem;
+    }
+
+    .admin__btn--sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* EDITOR */
+    #post-editor {
+      display: none;
+      border-top: 1px solid #f0f0f0;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+    }
+
+    #post-editor.is-open { display: block; }
+
+    .admin__editor-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .admin__editor-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    /* HORARIO GRID */
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .precios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .precios-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* EMPTY STATE */
+    .admin__empty {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    code {
+      background: #f5f3ef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  {!isAuthenticated ? (
+    <div class="login">
+      <div class="login__card">
+        <h1>Panel Admin</h1>
+        <p>AMG Fisioterapia</p>
+        <form method="POST">
+          <input
+            type="password"
+            name="password"
+            placeholder="Contrasena"
+            required
+            autocomplete="current-password"
+          />
+          <button type="submit">Acceder</button>
+        </form>
+      </div>
+    </div>
+  ) : (
+    <div class="admin">
+      <div class="admin__header">
+        <h1>Panel Admin — AMG Fisioterapia</h1>
+        <a href="/full-gas/logout/" class="admin__logout">Cerrar sesion</a>
+      </div>
+
+      <!-- DASHBOARD CARDS -->
+      <div class="admin__dashboard">
+        <div class="admin__stat-card">
+          <div class="admin__stat-label">Posts publicados</div>
+          <div class="admin__stat-value" id="stat-posts">—</div>
+          <div class="admin__stat-sub">en el blog</div>
+        </div>
+        <div class="admin__stat-card">
+          <div class="admin__stat-label">Ultima actualizacion</div>
+          <div class="admin__stat-value" id="stat-date" style="font-size:1rem; margin-top:0.25rem;">—</div>
+          <div class="admin__stat-sub">site-config.json</div>
+        </div>
+        <div class="admin__stat-card">
+          <div class="admin__stat-label">Estado</div>
+          <div class="admin__stat-value admin__stat-value--green">Online ✓</div>
+          <div class="admin__stat-sub">Panel activo</div>
+        </div>
+      </div>
+
+      <!-- ESTADO DEL NEGOCIO -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Estado del Negocio</h2>
+        </div>
+        <div class="admin__toggle">
+          <input type="checkbox" id="isOpen" checked={config.hours.isOpen} />
+          <label for="isOpen">
+            {config.hours.isOpen
+              ? <span class="admin__status admin__status--open">Abierto</span>
+              : <span class="admin__status admin__status--closed">Cerrado</span>
+            }
+          </label>
+        </div>
+      </div>
+
+      <!-- CONFIGURACION DEL NEGOCIO -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Configuracion del Negocio</h2>
+        </div>
+        <form id="config-form">
+          <div class="admin__field">
+            <label>Telefono (visible)</label>
+            <input type="tel" name="phone_display" value={config.contact.phoneDisplay} placeholder="600 000 000" />
+          </div>
+          <div class="admin__field">
+            <label>Telefono (con prefijo, para llamadas)</label>
+            <input type="tel" name="phone" value={config.contact.phone} placeholder="+34 600 000 000" />
+          </div>
+          <div class="admin__field">
+            <label>WhatsApp (con prefijo, sin espacios)</label>
+            <input type="tel" name="whatsapp" value={config.contact.whatsapp} placeholder="+34600000000" />
+          </div>
+          <div class="admin__field">
+            <label>Email</label>
+            <input type="email" name="email" value={config.contact.email} placeholder="info@amgfisio.es" />
+          </div>
+          <div class="admin__field">
+            <label>Horarios (texto libre)</label>
+            <textarea name="hours_text" placeholder="Lunes a Viernes: 09:00 - 20:00">{config.hours.whatsappHours}</textarea>
+          </div>
+          <div style="display:flex; align-items:center;">
+            <button type="submit" class="admin__save" id="config-save-btn">
+              Guardar cambios
+              <span class="spinner" id="config-spinner"></span>
+            </button>
+            <span class="admin__feedback" id="config-feedback"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- HORARIO -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Horario por Dias</h2>
+        </div>
+        {config.hours.schedule.map((s, i) => (
+          <div class="schedule-row">
+            <div class="admin__field" style="margin-bottom:0;">
+              <label>Dias</label>
+              <input type="text" value={s.days} name={`days-${i}`} />
+            </div>
+            <div class="admin__field" style="margin-bottom:0;">
+              <label>Horario</label>
+              <input type="text" value={s.hours} name={`hours-${i}`} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- ESTADÍSTICAS + COLEGIADO -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Estadísticas de la clínica</h2>
+          <button class="admin__save" id="stats-save-btn" type="button" style="font-size:0.85rem; padding:8px 18px;">
+            Guardar estadísticas
+            <span class="spinner" id="stats-spinner"></span>
+          </button>
+        </div>
+        <div class="precios-grid">
+          <div class="admin__field">
+            <label>Años de experiencia</label>
+            <input type="number" id="stat-years" value={config.stats.yearsExperience} min="0" />
+          </div>
+          <div class="admin__field">
+            <label>Pacientes recuperados</label>
+            <input type="number" id="stat-patients" value={config.stats.patientsRecovered} min="0" />
+          </div>
+          <div class="admin__field">
+            <label>Horas de terapia manual</label>
+            <input type="number" id="stat-hours" value={config.stats.manualTherapyHours} min="0" />
+          </div>
+          <div class="admin__field">
+            <label>Valoración Google (ej: 4.9)</label>
+            <input type="number" id="stat-rating" value={config.stats.googleRating} min="0" max="5" step="0.1" />
+          </div>
+          <div class="admin__field">
+            <label>Número de colegiado</label>
+            <input type="text" id="stat-colegiado" value={config.business.colegiadoNum} placeholder="47-XXXX" />
+          </div>
+        </div>
+        <span class="admin__feedback" id="stats-feedback"></span>
+      </div>
+
+      <!-- EQUIPO -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Equipo</h2>
+          <button class="admin__btn" id="team-add-btn" type="button">+ Añadir miembro</button>
+        </div>
+        <div id="team-list">
+          {(config.team || []).map((member, i) => (
+            <div class="bonos-tier-row team-member-row" data-index={i} style="grid-template-columns:80px 1fr 1fr auto; align-items:start;">
+              <div style="display:flex; flex-direction:column; gap:4px;">
+                <img src={member.photo} alt={member.name} style="width:60px; height:60px; border-radius:50%; object-fit:cover; background:var(--color-primary-50);" onerror="this.style.background='#e8e4dd';" />
+                <span style="font-size:0.65rem; color:#999;">Foto URL</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <input type="text" class="team-name" value={member.name} placeholder="Nombre" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+                <input type="text" class="team-role" value={member.role} placeholder="Cargo" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+                <input type="text" class="team-colegiado" value={member.colegiado} placeholder="Nº colegiado" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <input type="text" class="team-photo" value={member.photo} placeholder="/images/foto.jpg" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+                <textarea class="team-desc" placeholder="Descripción breve" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit; resize:vertical; min-height:80px;">{member.description}</textarea>
+              </div>
+              <button class="admin__icon-btn admin__icon-btn--danger team-remove-btn" type="button" title="Eliminar miembro">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+              </button>
+            </div>
+          ))}
+        </div>
+        <div style="display:flex; gap:0.75rem; margin-top:1rem; align-items:center;">
+          <button class="admin__save" id="team-save-btn" type="button">
+            Guardar equipo
+            <span class="spinner" id="team-spinner"></span>
+          </button>
+          <span class="admin__feedback" id="team-feedback"></span>
+        </div>
+      </div>
+
+      <!-- PRECIOS -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Precios — Sesiones individuales</h2>
+          <button class="admin__save" id="precios-save-btn" type="button" style="font-size:0.85rem; padding:8px 18px;">
+            Guardar precios
+            <span class="spinner" id="precios-spinner"></span>
+          </button>
+        </div>
+        <div class="precios-grid">
+          <div class="admin__field">
+            <label>Clinica (EUR/sesion)</label>
+            <input type="number" id="precio-clinica" value={config.pricing.clinica.price} />
+          </div>
+          <div class="admin__field">
+            <label>Domicilio (EUR/sesion)</label>
+            <input type="number" id="precio-domicilio" value={config.pricing.domicilio.price} />
+          </div>
+          <div class="admin__field">
+            <label>Duracion sesion</label>
+            <input type="text" id="precio-duracion" value={config.pricing.clinica.duration} />
+          </div>
+        </div>
+        <span class="admin__feedback" id="precios-feedback"></span>
+      </div>
+
+      <!-- BONOS -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Bonos — Tarifas por nº de sesiones</h2>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="admin__btn admin__btn--sm" id="bono-add-btn" type="button">+ Añadir tramo</button>
+            <button class="admin__save admin__btn--sm" id="bonos-save-btn" type="button">
+              Guardar bonos
+              <span class="spinner" id="bonos-spinner"></span>
+            </button>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: 110px 1fr 1fr auto; gap:0.5rem; font-size:0.75rem; font-weight:700; color:#999; text-transform:uppercase; margin-bottom:0.5rem;">
+          <span>Sesiones (desde)</span><span>Etiqueta</span><span>Precio por sesión (€)</span><span></span>
+        </div>
+        <div id="bonos-tiers-list">
+          {config.pricing.bonos.tiers?.map((tier, i) => (
+            <div class="bonos-tier-row" data-index={i}>
+              <input type="number" class="bono-sessions" value={tier.sessions} min="1" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+              <input type="text" class="bono-label" value={tier.label} placeholder="Etiqueta" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+              <input type="number" class="bono-price" value={tier.pricePerSession} min="1" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
+              <button class="admin__icon-btn admin__icon-btn--danger bono-remove-btn" type="button" title="Eliminar tramo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+              </button>
+            </div>
+          ))}
+        </div>
+        <span class="admin__feedback" id="bonos-feedback"></span>
+      </div>
+
+      <!-- BLOG POSTS -->
+      <div class="admin__section">
+        <div class="admin__section-header">
+          <h2>Blog Posts</h2>
+          <button class="admin__btn" id="btn-nuevo-post" type="button">+ Nuevo post</button>
+        </div>
+
+        <!-- Filtro por categoría -->
+        <div class="admin__blog-filter" id="cat-filter" style="display:none;">
+          <button class="admin__filter-btn active" data-cat="">Todos</button>
+          {config.blogCategories?.map((cat) => (
+            <button class="admin__filter-btn" data-cat={cat}>{cat}</button>
+          ))}
+        </div>
+
+        <ul class="admin__blog-list" id="posts-list">
+          <li class="admin__empty">Cargando posts...</li>
+        </ul>
+
+        <!-- EDITOR DE POST -->
+        <div id="post-editor">
+          <p class="admin__editor-title" id="editor-title">Nuevo post</p>
+          <input type="hidden" id="editor-mode" value="create" />
+          <input type="hidden" id="editor-original-slug" value="" />
+
+          <div class="admin__field">
+            <label>Slug (ID del post, sin espacios)</label>
+            <input type="text" id="editor-slug" placeholder="ejercicios-lumbar-dolor-espalda" />
+          </div>
+          <div class="admin__field">
+            <label>Titulo</label>
+            <input type="text" id="editor-post-title" placeholder="Titulo del post" />
+          </div>
+          <div class="admin__field">
+            <label>Descripcion SEO</label>
+            <input type="text" id="editor-description" placeholder="Descripcion corta para buscadores (max 160 char)" />
+          </div>
+          <div class="admin__field">
+            <label>Categoría</label>
+            <select id="editor-category">
+              <option value="">— Sin categoría —</option>
+              {config.blogCategories?.map((cat) => (
+                <option value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+          <div class="admin__field">
+            <label>Tags (separados por coma)</label>
+            <input type="text" id="editor-tags" placeholder="fisioterapia, lumbar, ejercicios" />
+          </div>
+          <div class="admin__field">
+            <label>Contenido Markdown</label>
+            <textarea class="admin__field--code" id="editor-content" placeholder="## Introduccion&#10;&#10;Escribe aqui el contenido en Markdown..."></textarea>
+          </div>
+
+          <div class="admin__editor-actions">
+            <button type="button" class="admin__save" id="btn-save-post">
+              Guardar post
+              <span class="spinner" id="post-spinner"></span>
+            </button>
+            <button type="button" class="admin__btn" id="btn-cancel-editor">Cancelar</button>
+            <span class="admin__feedback" id="post-feedback"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <script>
+    // =====================================
+    // DASHBOARD: cargar stats
+    // =====================================
+    async function loadDashboard() {
+      try {
+        const res = await fetch('/full-gas/api/posts');
+        if (res.ok) {
+          const data = await res.json();
+          const published = data.posts.filter((p) => !p.draft).length;
+          const statPosts = document.getElementById('stat-posts');
+          if (statPosts) statPosts.textContent = String(published);
+        }
+      } catch (e) {}
+
+      // Fecha actual como "ultima actualizacion"
+      const statDate = document.getElementById('stat-date');
+      if (statDate) {
+        const d = new Date();
+        statDate.textContent = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+    }
+
+    // =====================================
+    // CONFIG FORM
+    // =====================================
+    const configForm = document.getElementById('config-form');
+    const configSpinner = document.getElementById('config-spinner');
+    const configFeedback = document.getElementById('config-feedback');
+    const configSaveBtn = document.getElementById('config-save-btn');
+
+    function showFeedback(el, msg, isSuccess) {
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'admin__feedback admin__feedback--visible ' +
+        (isSuccess ? 'admin__feedback--success' : 'admin__feedback--error');
+      setTimeout(() => {
+        el.className = 'admin__feedback';
+      }, 3500);
+    }
+
+    if (configForm) {
+      configForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!configSaveBtn || !configSpinner) return;
+
+        configSaveBtn.disabled = true;
+        configSpinner.style.display = 'inline-block';
+
+        const fd = new FormData(configForm);
+        const payload = {
+          contact: {
+            phoneDisplay: fd.get('phone_display'),
+            phone: fd.get('phone'),
+            whatsapp: fd.get('whatsapp'),
+            email: fd.get('email'),
+          },
+          hours: {
+            whatsappHours: fd.get('hours_text'),
+          },
+        };
+
+        try {
+          const res = await fetch('/full-gas/api/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showFeedback(configFeedback, '✓ Guardado', true);
+          } else {
+            showFeedback(configFeedback, '✗ Error: ' + (data.error || 'desconocido'), false);
+          }
+        } catch (err) {
+          showFeedback(configFeedback, '✗ Error de red', false);
+        } finally {
+          configSaveBtn.disabled = false;
+          configSpinner.style.display = 'none';
+        }
+      });
+    }
+
+    // =====================================
+    // BLOG POSTS LIST
+    // =====================================
+    async function loadPosts() {
+      const list = document.getElementById('posts-list');
+      if (!list) return;
+
+      try {
+        const res = await fetch('/full-gas/api/posts');
+        const data = await res.json();
+
+        if (!data.posts || data.posts.length === 0) {
+          list.innerHTML = '<li class="admin__empty">No hay posts todavia. Crea el primero.</li>';
+          return;
+        }
+
+        list.innerHTML = data.posts.map((post) => `
+          <li class="admin__blog-item" data-category="${post.category || ''}">
+            <div class="admin__blog-info">
+              <div class="admin__blog-title" title="${post.title}">${post.title}</div>
+              <div class="admin__blog-meta">
+                <span class="admin__blog-date">${post.pubDate || 'Sin fecha'} · ${post.slug}</span>
+                ${post.category ? `<span class="admin__blog-cat">${post.category}</span>` : ''}
+                ${post.draft ? '<span class="admin__blog-draft">Borrador</span>' : ''}
+              </div>
+            </div>
+            <div class="admin__blog-actions">
+              <button class="admin__icon-btn" onclick="editPost('${post.slug}')" title="Editar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+              <button class="admin__icon-btn admin__icon-btn--danger" onclick="deletePost('${post.slug}', '${post.title.replace(/'/g, "\\'")}')" title="Borrar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+              </button>
+            </div>
+          </li>
+        `).join('');
+
+        // Show filter bar
+        const filterBar = document.getElementById('cat-filter');
+        if (filterBar) filterBar.style.display = 'flex';
+
+        // Wire up category filters
+        filterBar?.querySelectorAll('.admin__filter-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            filterBar.querySelectorAll('.admin__filter-btn').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.dataset.cat || '';
+            list.querySelectorAll('.admin__blog-item').forEach((item) => {
+              if (!cat || item.dataset.category === cat) {
+                item.removeAttribute('data-hidden');
+              } else {
+                item.dataset.hidden = '1';
+              }
+            });
+          });
+        });
+      } catch (e) {
+        list.innerHTML = '<li class="admin__empty">Error cargando posts.</li>';
+      }
+    }
+
+    // =====================================
+    // EDITOR DE POST
+    // =====================================
+    const editor = document.getElementById('post-editor');
+    const editorMode = document.getElementById('editor-mode');
+    const editorOriginalSlug = document.getElementById('editor-original-slug');
+    const editorTitle = document.getElementById('editor-title');
+    const editorSlug = document.getElementById('editor-slug');
+    const editorPostTitle = document.getElementById('editor-post-title');
+    const editorDesc = document.getElementById('editor-description');
+    const editorCategory = document.getElementById('editor-category');
+    const editorTags = document.getElementById('editor-tags');
+    const editorContent = document.getElementById('editor-content');
+    const postSpinner = document.getElementById('post-spinner');
+    const postFeedback = document.getElementById('post-feedback');
+
+    function openEditor(mode = 'create') {
+      if (!editor || !editorMode || !editorTitle) return;
+      editorMode.value = mode;
+      editorTitle.textContent = mode === 'create' ? 'Nuevo post' : 'Editar post';
+      editor.classList.add('is-open');
+      editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeEditor() {
+      if (!editor) return;
+      editor.classList.remove('is-open');
+      if (editorSlug) editorSlug.value = '';
+      if (editorPostTitle) editorPostTitle.value = '';
+      if (editorDesc) editorDesc.value = '';
+      if (editorCategory) editorCategory.value = '';
+      if (editorTags) editorTags.value = '';
+      if (editorContent) editorContent.value = '';
+      if (editorOriginalSlug) editorOriginalSlug.value = '';
+    }
+
+    // Nuevo post
+    const btnNuevo = document.getElementById('btn-nuevo-post');
+    if (btnNuevo) {
+      btnNuevo.addEventListener('click', () => {
+        if (editorSlug) editorSlug.removeAttribute('disabled');
+        openEditor('create');
+      });
+    }
+
+    // Cancelar
+    const btnCancel = document.getElementById('btn-cancel-editor');
+    if (btnCancel) btnCancel.addEventListener('click', closeEditor);
+
+    // Editar post existente
+    window.editPost = async function(slug) {
+      try {
+        const res = await fetch(`/full-gas/api/post/${slug}`);
+        const data = await res.json();
+        if (!res.ok) { alert('Error al cargar el post.'); return; }
+
+        // Parsear frontmatter basico
+        const raw = data.content;
+        const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n\n?([\s\S]*)$/);
+        if (fmMatch) {
+          const fm = fmMatch[1];
+          const body = fmMatch[2];
+          const titleMatch = fm.match(/title:\s*["']?(.+?)["']?\n/);
+          const descMatch = fm.match(/description:\s*["']?(.+?)["']?\n/);
+          const categoryMatch = fm.match(/category:\s*["']?(.+?)["']?\n/);
+          const tagsMatch = fm.match(/tags:\s*(\[.*?\])/);
+
+          if (editorPostTitle && titleMatch) editorPostTitle.value = titleMatch[1].trim();
+          if (editorDesc && descMatch) editorDesc.value = descMatch[1].trim();
+          if (editorCategory && categoryMatch) editorCategory.value = categoryMatch[1].trim();
+          if (editorTags && tagsMatch) {
+            try {
+              const tags = JSON.parse(tagsMatch[1]);
+              editorTags.value = tags.join(', ');
+            } catch {}
+          }
+          if (editorContent) editorContent.value = body;
+        } else {
+          if (editorContent) editorContent.value = raw;
+        }
+
+        if (editorSlug) {
+          editorSlug.value = slug;
+          editorSlug.setAttribute('disabled', 'true');
+        }
+        if (editorOriginalSlug) editorOriginalSlug.value = slug;
+
+        openEditor('edit');
+      } catch (err) {
+        alert('Error de red al cargar el post.');
+      }
+    };
+
+    // Borrar post
+    window.deletePost = async function(slug, title) {
+      if (!confirm(`Borrar el post "${title}"? Esta accion no se puede deshacer.`)) return;
+      try {
+        const res = await fetch(`/full-gas/api/post/${slug}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          await loadPosts();
+          await loadDashboard();
+        } else {
+          alert('Error al borrar: ' + (data.error || 'desconocido'));
+        }
+      } catch (err) {
+        alert('Error de red al borrar el post.');
+      }
+    };
+
+    // Guardar post (crear o actualizar)
+    const btnSavePost = document.getElementById('btn-save-post');
+    if (btnSavePost) {
+      btnSavePost.addEventListener('click', async () => {
+        const mode = editorMode?.value;
+        const slug = editorSlug?.value.trim();
+        const title = editorPostTitle?.value.trim();
+        const description = editorDesc?.value.trim();
+        const category = editorCategory?.value || '';
+        const tags = editorTags?.value.split(',').map(t => t.trim()).filter(Boolean);
+        const content = editorContent?.value;
+
+        if (!slug || !title || !content) {
+          alert('Slug, titulo y contenido son obligatorios.');
+          return;
+        }
+
+        btnSavePost.disabled = true;
+        if (postSpinner) postSpinner.style.display = 'inline-block';
+
+        try {
+          let res;
+          if (mode === 'edit') {
+            const originalSlug = editorOriginalSlug?.value || slug;
+            // Reconstruir el archivo completo con frontmatter actualizado
+            const today = new Date().toISOString().split('T')[0];
+            const fullContent = `---\ntitle: "${title}"\ndescription: "${description}"\npubDate: ${today}\nauthor: "Alberto Munoz Gonzalez"\ntags: ${JSON.stringify(tags)}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${content}`;
+            res = await fetch(`/full-gas/api/post/${originalSlug}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ content: fullContent }),
+            });
+          } else {
+            res = await fetch('/full-gas/api/posts', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug, title, description, content, tags, category }),
+            });
+          }
+
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showFeedback(postFeedback, '✓ Post guardado', true);
+            setTimeout(() => {
+              closeEditor();
+              loadPosts();
+              loadDashboard();
+            }, 1200);
+          } else {
+            showFeedback(postFeedback, '✗ Error: ' + (data.error || 'desconocido'), false);
+          }
+        } catch (err) {
+          showFeedback(postFeedback, '✗ Error de red', false);
+        } finally {
+          btnSavePost.disabled = false;
+          if (postSpinner) postSpinner.style.display = 'none';
+        }
+      });
+    }
+
+    // =====================================
+    // PRECIOS SAVE
+    // =====================================
+    const preciosSaveBtn = document.getElementById('precios-save-btn');
+    const preciosSpinner = document.getElementById('precios-spinner');
+    const preciosFeedback = document.getElementById('precios-feedback');
+
+    preciosSaveBtn?.addEventListener('click', async () => {
+      const clinica = parseFloat(document.getElementById('precio-clinica')?.value) || 0;
+      const domicilio = parseFloat(document.getElementById('precio-domicilio')?.value) || 0;
+      const duration = document.getElementById('precio-duracion')?.value || '';
+
+      preciosSaveBtn.disabled = true;
+      if (preciosSpinner) preciosSpinner.style.display = 'inline-block';
+
+      try {
+        const res = await fetch('/full-gas/api/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pricing: { clinica: { price: clinica, duration }, domicilio: { price: domicilio } } }),
+        });
+        const data = await res.json();
+        showFeedback(preciosFeedback, res.ok && data.success ? '✓ Guardado' : '✗ Error', res.ok && data.success);
+      } catch {
+        showFeedback(preciosFeedback, '✗ Error de red', false);
+      } finally {
+        preciosSaveBtn.disabled = false;
+        if (preciosSpinner) preciosSpinner.style.display = 'none';
+      }
+    });
+
+    // =====================================
+    // BONOS TIERS MANAGEMENT
+    // =====================================
+    const tiersList = document.getElementById('bonos-tiers-list');
+    const bonosAddBtn = document.getElementById('bono-add-btn');
+    const bonosSaveBtn = document.getElementById('bonos-save-btn');
+    const bonosSpinner = document.getElementById('bonos-spinner');
+    const bonosFeedback = document.getElementById('bonos-feedback');
+
+    function getTiers() {
+      const rows = tiersList?.querySelectorAll('.bonos-tier-row') || [];
+      return Array.from(rows).map((row) => ({
+        sessions: parseInt(row.querySelector('.bono-sessions')?.value) || 1,
+        label: row.querySelector('.bono-label')?.value || '',
+        pricePerSession: parseFloat(row.querySelector('.bono-price')?.value) || 0,
+      }));
+    }
+
+    function addTierRow(tier = { sessions: 1, label: '', pricePerSession: 30 }) {
+      const row = document.createElement('div');
+      row.className = 'bonos-tier-row';
+      const fieldStyle = 'padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;';
+      row.innerHTML = `
+        <input type="number" class="bono-sessions" value="${tier.sessions}" min="1" style="${fieldStyle}" />
+        <input type="text" class="bono-label" value="${tier.label}" placeholder="Etiqueta" style="${fieldStyle}" />
+        <input type="number" class="bono-price" value="${tier.pricePerSession}" min="1" style="${fieldStyle}" />
+        <button class="admin__icon-btn admin__icon-btn--danger bono-remove-btn" type="button" title="Eliminar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      `;
+      row.querySelector('.bono-remove-btn')?.addEventListener('click', () => row.remove());
+      tiersList?.appendChild(row);
+    }
+
+    // Wire up existing remove buttons
+    tiersList?.querySelectorAll('.bono-remove-btn').forEach((btn) => {
+      btn.addEventListener('click', () => btn.closest('.bonos-tier-row')?.remove());
+    });
+
+    bonosAddBtn?.addEventListener('click', () => addTierRow());
+
+    bonosSaveBtn?.addEventListener('click', async () => {
+      const tiers = getTiers();
+      bonosSaveBtn.disabled = true;
+      if (bonosSpinner) bonosSpinner.style.display = 'inline-block';
+
+      try {
+        const res = await fetch('/full-gas/api/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pricing: { bonos: { tiers } } }),
+        });
+        const data = await res.json();
+        showFeedback(bonosFeedback, res.ok && data.success ? '✓ Bonos guardados' : '✗ Error', res.ok && data.success);
+      } catch {
+        showFeedback(bonosFeedback, '✗ Error de red', false);
+      } finally {
+        bonosSaveBtn.disabled = false;
+        if (bonosSpinner) bonosSpinner.style.display = 'none';
+      }
+    });
+
+    // =====================================
+    // ESTADÍSTICAS + COLEGIADO
+    // =====================================
+    const statsSaveBtn = document.getElementById('stats-save-btn');
+    const statsSpinner = document.getElementById('stats-spinner');
+    const statsFeedback = document.getElementById('stats-feedback');
+
+    if (statsSaveBtn) {
+      statsSaveBtn.addEventListener('click', async () => {
+        statsSaveBtn.disabled = true;
+        if (statsSpinner) statsSpinner.style.display = 'inline-block';
+
+        const payload = {
+          stats: {
+            yearsExperience: Number(document.getElementById('stat-years')?.value),
+            patientsRecovered: Number(document.getElementById('stat-patients')?.value),
+            manualTherapyHours: Number(document.getElementById('stat-hours')?.value),
+            googleRating: Number(document.getElementById('stat-rating')?.value),
+          },
+          business: {
+            colegiadoNum: document.getElementById('stat-colegiado')?.value,
+          },
+        };
+
+        try {
+          const res = await fetch('/full-gas/api/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          showFeedback(statsFeedback, res.ok && data.success ? '✓ Guardado' : '✗ Error', res.ok && data.success);
+        } catch (err) {
+          showFeedback(statsFeedback, '✗ Error de red', false);
+        } finally {
+          statsSaveBtn.disabled = false;
+          if (statsSpinner) statsSpinner.style.display = 'none';
+        }
+      });
+    }
+
+    // =====================================
+    // EQUIPO
+    // =====================================
+    const teamSaveBtn = document.getElementById('team-save-btn');
+    const teamSpinner = document.getElementById('team-spinner');
+    const teamFeedback = document.getElementById('team-feedback');
+    const teamList = document.getElementById('team-list');
+    const teamAddBtn = document.getElementById('team-add-btn');
+
+    function getTeamMembers() {
+      const rows = teamList?.querySelectorAll('.team-member-row') || [];
+      return Array.from(rows).map((row, i) => ({
+        id: `member-${Date.now()}-${i}`,
+        name: row.querySelector('.team-name')?.value || '',
+        role: row.querySelector('.team-role')?.value || '',
+        colegiado: row.querySelector('.team-colegiado')?.value || '',
+        photo: row.querySelector('.team-photo')?.value || '',
+        description: row.querySelector('.team-desc')?.value || '',
+      }));
+    }
+
+    function addTeamRow(member = {}) {
+      const row = document.createElement('div');
+      row.className = 'bonos-tier-row team-member-row';
+      row.style.cssText = 'grid-template-columns:80px 1fr 1fr auto; align-items:start;';
+      row.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <img src="${member.photo || ''}" alt="" style="width:60px;height:60px;border-radius:50%;object-fit:cover;background:#e8e4dd;" onerror="this.style.background='#e8e4dd';" />
+          <span style="font-size:0.65rem;color:#999;">Foto URL</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <input type="text" class="team-name" value="${member.name || ''}" placeholder="Nombre" style="padding:8px 10px;border:1.5px solid #dbdbdb;border-radius:8px;font-size:0.9rem;font-family:inherit;" />
+          <input type="text" class="team-role" value="${member.role || ''}" placeholder="Cargo" style="padding:8px 10px;border:1.5px solid #dbdbdb;border-radius:8px;font-size:0.9rem;font-family:inherit;" />
+          <input type="text" class="team-colegiado" value="${member.colegiado || ''}" placeholder="Nº colegiado" style="padding:8px 10px;border:1.5px solid #dbdbdb;border-radius:8px;font-size:0.9rem;font-family:inherit;" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <input type="text" class="team-photo" value="${member.photo || ''}" placeholder="/images/foto.jpg" style="padding:8px 10px;border:1.5px solid #dbdbdb;border-radius:8px;font-size:0.9rem;font-family:inherit;" />
+          <textarea class="team-desc" placeholder="Descripción breve" style="padding:8px 10px;border:1.5px solid #dbdbdb;border-radius:8px;font-size:0.9rem;font-family:inherit;resize:vertical;min-height:80px;">${member.description || ''}</textarea>
+        </div>
+        <button class="admin__icon-btn admin__icon-btn--danger team-remove-btn" type="button" title="Eliminar miembro">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      `;
+      row.querySelector('.team-remove-btn').addEventListener('click', () => row.remove());
+      row.querySelector('.team-photo').addEventListener('input', (e) => {
+        const img = row.querySelector('img');
+        if (img) img.src = e.target.value;
+      });
+      teamList?.appendChild(row);
+    }
+
+    // Wire remove buttons on existing rows
+    teamList?.querySelectorAll('.team-remove-btn').forEach((btn) => {
+      btn.addEventListener('click', () => btn.closest('.team-member-row').remove());
+    });
+
+    // Live photo preview on existing rows
+    teamList?.querySelectorAll('.team-photo').forEach((input) => {
+      input.addEventListener('input', (e) => {
+        const img = e.target.closest('.team-member-row')?.querySelector('img');
+        if (img) img.src = e.target.value;
+      });
+    });
+
+    if (teamAddBtn) teamAddBtn.addEventListener('click', () => addTeamRow());
+
+    if (teamSaveBtn) {
+      teamSaveBtn.addEventListener('click', async () => {
+        teamSaveBtn.disabled = true;
+        if (teamSpinner) teamSpinner.style.display = 'inline-block';
+
+        try {
+          const res = await fetch('/full-gas/api/config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ team: getTeamMembers() }),
+          });
+          const data = await res.json();
+          showFeedback(teamFeedback, res.ok && data.success ? '✓ Guardado' : '✗ Error', res.ok && data.success);
+        } catch (err) {
+          showFeedback(teamFeedback, '✗ Error de red', false);
+        } finally {
+          teamSaveBtn.disabled = false;
+          if (teamSpinner) teamSpinner.style.display = 'none';
+        }
+      });
+    }
+
+    // Init
+    loadPosts();
+    loadDashboard();
+  </script>
+</body>
+</html>

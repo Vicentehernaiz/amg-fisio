@@ -1,0 +1,29 @@
+---
+const GA_ID = import.meta.env.PUBLIC_GA_ID || 'G-XXXXXXXXXX';
+const isProd = import.meta.env.PROD;
+---
+
+{isProd && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+
+      // Custom events helpers
+      window.trackEvent = function(action, category, label) {
+        gtag('event', action, { event_category: category, event_label: label });
+      };
+
+      // Auto-track WhatsApp clicks
+      document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href*="wa.me"]');
+        if (link) gtag('event', 'click_whatsapp', { event_category: 'conversion' });
+        const phone = e.target.closest('a[href^="tel:"]');
+        if (phone) gtag('event', 'click_phone', { event_category: 'conversion' });
+      });
+    </script>
+  </>
+)}

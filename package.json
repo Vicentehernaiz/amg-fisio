@@ -1,0 +1,20 @@
+{
+  "name": "amg-fisio-astro-web",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "AMG Fisioterapia - Clinica de Fisioterapia Premium en Valladolid Centro",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.0.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "astro": "^5.7.0",
+    "gsap": "^3.15.0",
+    "lucide-astro": "^0.469.0"
+  }
+}

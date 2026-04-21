@@ -1,0 +1,87 @@
+{
+  "business": {
+    "name": "AMG Fisioterapia",
+    "legalName": "Alberto Munoz Gonzalez - AMG Fisioterapia",
+    "owner": "Alberto Munoz Gonzalez",
+    "colegiadoNum": "XXXX",
+    "description": "Clinica de Fisioterapia Premium en Valladolid Centro. Tratamientos personalizados de fisioterapia deportiva, columna, rehabilitacion neurologica y traumatologica.",
+    "slogan": "Fisioterapia Avanzada en Valladolid Centro"
+  },
+  "contact": {
+    "phone": "+34 600 000 000",
+    "phoneDisplay": "600 000 000",
+    "whatsapp": "+34600000000",
+    "email": "info@amgfisio.es",
+    "address": {
+      "street": "Calle Ejemplo, 1",
+      "postalCode": "47001",
+      "city": "Valladolid",
+      "region": "Castilla y Leon",
+      "country": "ES"
+    },
+    "googleMapsUrl": "https://maps.google.com/?q=AMG+Fisioterapia+Valladolid",
+    "appleMapsUrl": "https://maps.apple.com/?q=AMG+Fisioterapia+Valladolid"
+  },
+  "hours": {
+    "isOpen": true,
+    "schedule": [
+      { "days": "Lunes a Viernes", "hours": "09:00 - 14:00 / 16:00 - 20:00" },
+      { "days": "Sabado", "hours": "09:00 - 14:00" },
+      { "days": "Domingo", "hours": "Cerrado" }
+    ],
+    "whatsappHours": "Lunes a Viernes 09:00 - 20:00",
+    "callHours": "Lunes a Viernes 09:00 - 14:00 / 16:00 - 20:00"
+  },
+  "pricing": {
+    "clinica": {
+      "price": 35,
+      "label": "Sesion en clinica",
+      "duration": "45-60 min",
+      "description": "Sesion individual en nuestro centro de Valladolid"
+    },
+    "domicilio": {
+      "price": 45,
+      "label": "Sesion a domicilio",
+      "duration": "45-60 min",
+      "description": "Nos desplazamos a tu casa en Valladolid y provincia"
+    },
+    "bonos": {
+      "label": "Bonos de sesiones",
+      "description": "Ahorra con bonos de varias sesiones. Precio por sesión más bajo.",
+      "tiers": [
+        {"sessions": 1, "pricePerSession": 35, "label": "Sesión suelta"},
+        {"sessions": 5, "pricePerSession": 32, "label": "Bono Básico"},
+        {"sessions": 10, "pricePerSession": 30, "label": "Bono Estándar"},
+        {"sessions": 20, "pricePerSession": 28, "label": "Bono Intensivo"}
+      ]
+    }
+  },
+  "stats": {
+    "yearsExperience": 7,
+    "patientsRecovered": 450,
+    "manualTherapyHours": 10000,
+    "googleRating": 4.9,
+    "sessionDuration": "45-60 min"
+  },
+  "team": [
+    {
+      "id": "alberto",
+      "name": "Alberto Muñoz González",
+      "role": "Fisioterapeuta Colegiado",
+      "colegiado": "XXXX",
+      "description": "Especialista en fisioterapia deportiva y terapia manual con más de 7 años de experiencia ayudando a pacientes a recuperar su movilidad y calidad de vida.",
+      "photo": "/images/alberto.jpg"
+    }
+  ],
+  "social": {
+    "instagram": "https://instagram.com/amgfisio",
+    "googleBusiness": "https://g.page/amgfisio"
+  },
+  "blogCategories": ["Consejos de salud", "Fisioterapia deportiva", "Dolor de espalda", "Neurología", "Rehabilitación", "Técnicas"],
+  "seo": {
+    "defaultTitle": "AMG Fisioterapia | Fisioterapia Avanzada en Valladolid Centro",
+    "defaultDescription": "Clinica de fisioterapia en Valladolid Centro. Especialistas en fisioterapia deportiva, dolor de espalda, rehabilitacion y mas. Sesiones de 45-60 min personalizadas. Pide cita.",
+    "defaultImage": "/images/og-default.jpg",
+    "locale": "es_ES"
+  }
+}

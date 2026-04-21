@@ -1,0 +1,360 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+
+const config = getConfig();
+const waLink = getWhatsAppLink('Hola, me gustaría pedir más información sobre AMG Fisioterapia.');
+const team = config.team || [];
+---
+
+<BaseLayout
+  title={`Sobre Nosotros | ${config.business.name}`}
+  description={`Conoce al equipo de ${config.business.name}. Fisioterapeutas colegiados especializados en fisioterapia deportiva, terapia manual y rehabilitación en Valladolid Centro.`}
+>
+  <Header slot="header" />
+
+  <main>
+    <!-- HERO -->
+    <section class="about-hero">
+      <div class="container">
+        <p class="eyebrow font-display">Quiénes somos</p>
+        <h1 class="about-hero__title">Fisioterapia con <span class="accent">propósito</span></h1>
+        <p class="about-hero__subtitle">En AMG Fisioterapia combinamos ciencia, experiencia y trato cercano para devolverte la movilidad y calidad de vida que mereces.</p>
+      </div>
+    </section>
+
+    <!-- MISIÓN / VALORES -->
+    <section class="values section">
+      <div class="container">
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Evidencia científica</h3>
+            <p>Cada técnica que aplicamos está respaldada por la investigación más actualizada en fisioterapia y ciencias del movimiento.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>Tratamiento personalizado</h3>
+            <p>No existe un protocolo único. Diseñamos cada plan de tratamiento adaptado a ti, a tu ritmo y a tus objetivos.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Equipo comprometido</h3>
+            <p>Más que fisioterapeutas, somos compañeros de recuperación. Tu bienestar es nuestra prioridad desde el primer día.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="team section">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow font-display">El equipo</p>
+          <h2 class="team__title">Las personas detrás<br>de tu recuperación</h2>
+        </div>
+
+        <div class="team-grid">
+          {team.map((member) => (
+            <div class="member-card">
+              <div class="member-photo-wrap">
+                <img
+                  src={member.photo}
+                  alt={`${member.name} — ${member.role}`}
+                  class="member-photo"
+                  width="320"
+                  height="380"
+                  loading="lazy"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                />
+                <div class="member-photo-placeholder" style="display:none;">
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                </div>
+              </div>
+              <div class="member-info">
+                <h3 class="member-name">{member.name}</h3>
+                <p class="member-role">{member.role}</p>
+                {member.colegiado && (
+                  <p class="member-colegiado">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Colegiado nº {member.colegiado}
+                  </p>
+                )}
+                <p class="member-desc">{member.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta section">
+      <div class="container">
+        <div class="about-cta__inner">
+          <h2 class="about-cta__title">¿Hablamos?</h2>
+          <p class="about-cta__subtitle">Cuéntanos qué te pasa y te ayudamos a encontrar el mejor tratamiento.</p>
+          <a href={waLink} target="_blank" rel="noopener noreferrer" class="about-cta__btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Pedir cita por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+/* HERO */
+.about-hero {
+  background: #ffffff;
+  border-radius: 0 0 36px 36px;
+  padding: 120px 0 72px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-lg);
+  text-transform: uppercase;
+}
+
+.about-hero__title {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xl);
+}
+
+.accent { color: var(--color-primary-dark); }
+
+.about-hero__subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-inline: auto;
+  line-height: var(--leading-relaxed);
+}
+
+/* VALUES */
+.values {
+  background: linear-gradient(52deg, #FAF6F0 32.34%, #FFF 75%);
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+.value-card {
+  padding: var(--space-xl);
+  background: #fff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.value-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-50);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-lg);
+}
+
+.value-card h3 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.value-card p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* TEAM */
+.team {
+  background: #ffffff;
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.team__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-top: var(--space-md);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-2xl);
+  justify-items: center;
+}
+
+.member-card {
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  max-width: 360px;
+  width: 100%;
+  transition: transform var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal);
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.member-photo-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  background: var(--color-primary-50);
+  overflow: hidden;
+}
+
+.member-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.member-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-300);
+}
+
+.member-info {
+  padding: var(--space-xl);
+}
+
+.member-name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.member-role {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-sm);
+}
+
+.member-colegiado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.member-colegiado svg { color: var(--color-primary-dark); flex-shrink: 0; }
+
+.member-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* CTA */
+.about-cta {
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.about-cta__inner {
+  background: linear-gradient(311deg, #A6C958 3%, #8A79B6 85%);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-5xl);
+  text-align: center;
+}
+
+.about-cta__title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  letter-spacing: -1px;
+  color: #f2e8d0;
+  margin-bottom: var(--space-md);
+}
+
+.about-cta__subtitle {
+  font-size: var(--text-lg);
+  color: rgba(242, 232, 208, 0.85);
+  margin-bottom: var(--space-2xl);
+}
+
+.about-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 44px;
+  padding: 0 32px;
+  background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
+  color: #181428;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.about-cta__btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .values-grid { grid-template-columns: 1fr; }
+  .about-hero { padding: 100px 0 48px; }
+  .values, .team, .about-cta { padding: 36px 20px; }
+  .about-cta__inner { padding: var(--space-3xl) var(--space-xl); }
+}
+</style>

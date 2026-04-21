@@ -1,0 +1,6 @@
+---
+export const prerender = false;
+
+Astro.cookies.delete('amg-admin-auth', { path: '/full-gas' });
+return Astro.redirect('/full-gas/');
+---

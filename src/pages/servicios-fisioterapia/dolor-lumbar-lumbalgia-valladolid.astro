@@ -1,0 +1,207 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Servicios', url: '/servicios-fisioterapia/' },
+  { name: 'Dolor Lumbar', url: '/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Cuánto tarda en curarse la lumbalgia con fisioterapia?',
+    answer: 'Una lumbalgia aguda sin causa grave (la más frecuente) suele mejorar significativamente en 5-8 sesiones. La lumbalgia crónica o asociada a hernia discal puede requerir 10-15 sesiones. La ciática tarda algo más, dependiendo de la compresión nerviosa. Alberto te dará una estimación en la primera valoración.',
+  },
+  {
+    question: '¿La fisioterapia sirve para la hernia discal lumbar?',
+    answer: 'Sí. La fisioterapia es uno de los tratamientos más eficaces para la hernia discal lumbar en la mayoría de los casos. Podemos reducir la presión sobre el disco, mejorar la movilidad y fortalecer la musculatura estabilizadora. Solo un porcentaje pequeño de hernias requiere cirugía.',
+  },
+  {
+    question: '¿Puedo hacer ejercicio si tengo lumbalgia?',
+    answer: 'En muchos casos sí, con las adaptaciones adecuadas. El reposo absoluto está desaconsejado para la lumbalgia aguda no complicada. El movimiento controlado y el ejercicio terapéutico son parte fundamental del tratamiento. Alberto te indicará qué actividades puedes hacer y cuáles evitar según tu caso.',
+  },
+  {
+    question: '¿Qué diferencia hay entre lumbalgia aguda y crónica?',
+    answer: 'Se habla de lumbalgia aguda cuando el dolor lleva menos de 6 semanas y de crónica cuando supera los 3 meses. El tratamiento es diferente: en la fase aguda el objetivo es reducir el dolor y restaurar la función; en la crónica, trabajamos más el ejercicio terapéutico, la neurociencia del dolor y los factores psicosociales que perpetúan el dolor.',
+  },
+  {
+    question: '¿La punción seca sirve para el dolor de espalda?',
+    answer: 'Sí, la punción seca es especialmente eficaz para tratar los puntos gatillo miofasciales de la musculatura paravertebral (erector spinae, cuadrado lumbar, glúteo), que son una causa frecuente de dolor lumbar y lumbociática. Se combina con otras técnicas para un resultado integral.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Tratamiento del Dolor Lumbar en Valladolid',
+  description: 'Fisioterapia para lumbalgia, ciática y hernia discal lumbar en Valladolid. Terapia manual, punción seca y ejercicio terapéutico. AMG Fisioterapia.',
+  url: '/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, tengo dolor lumbar y me gustaría pedir cita en AMG Fisioterapia.');
+---
+
+<BaseLayout
+  title="Fisioterapia Lumbar Valladolid - Lumbalgia | AMG Fisioterapia"
+  description="Tratamiento del dolor lumbar en Valladolid: lumbalgia, ciática y hernia discal. Terapia manual, punción seca y ejercicio terapéutico. Pide cita: 35€/sesión."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/servicios-fisioterapia/">Servicios</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Dolor Lumbar</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Tratamiento del Dolor Lumbar en Valladolid</h1>
+          <p class="page-hero__subtitle">8 de cada 10 personas sufrirán lumbalgia en algún momento de su vida. Con fisioterapia especializada en Valladolid, la recuperación es posible sin cirugía en la mayoría de los casos.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/lumbalgia.jpg" alt="Tratamiento dolor lumbar lumbalgia Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Fisioterapia para el Dolor de Espalda Baja en Valladolid</h2>
+      <div class="prose">
+        <p>La lumbalgia —el dolor en la zona baja de la espalda— es el problema musculoesquelético más prevalente en el mundo. Según la OMS, es la principal causa de discapacidad laboral en muchos países. En España, y por supuesto en Valladolid, es uno de los motivos de consulta más frecuentes tanto en atención primaria como en fisioterapia.</p>
+
+        <p>Existe un mito muy extendido: que el dolor lumbar hay que aguantarlo, que "es lo normal cuando uno tiene años", o que solo se soluciona con cirugía. Nada más lejos de la realidad. La fisioterapia, cuando está bien indicada y bien aplicada, resuelve el 80-90% de los casos de lumbalgia sin necesidad de intervenciones más invasivas.</p>
+
+        <h3>Lumbalgia Aguda vs. Crónica</h3>
+        <p>Distinguimos dos grandes tipos de lumbalgia según su duración. La lumbalgia aguda (menos de 6 semanas) suele tener una causa mecánica clara: un movimiento brusco, una mala postura mantenida durante horas, levantar algo pesado de forma incorrecta. Es muy dolorosa en los primeros días pero responde muy bien al tratamiento fisioterapéutico rápido.</p>
+
+        <p>La lumbalgia crónica (más de 3 meses) es más compleja. A menudo hay un componente de sensibilización central, factores psicosociales y pérdida de condición física que hay que abordar de forma integral. En AMG Fisioterapia trabajamos con un enfoque biopsicosocial que no se limita a "tocar donde duele", sino que aborda la persona en su totalidad.</p>
+
+        <h3>Ciática y Hernia Discal: Cuándo Interviene la Fisioterapia</h3>
+        <p>La ciática es el dolor que sigue el trayecto del nervio ciático: desde la zona lumbar, pasando por el glúteo, y bajando por la pierna hasta el pie. La causa más frecuente es la compresión de una raíz nerviosa lumbar, habitualmente por una hernia discal o una estenosis de canal.</p>
+
+        <p>La fisioterapia puede descomprimir la raíz nerviosa mediante técnicas de tracción, movilizaciones lumbares específicas y ejercicios de centralización del dolor (técnica McKenzie). La mayoría de las hernias discales se reabsorben con el tiempo, y el tratamiento fisioterapéutico ayuda a controlar el dolor durante ese proceso y a fortalecer la musculatura para evitar recaídas.</p>
+
+        <h3>El Tratamiento en AMG Fisioterapia</h3>
+        <p>Cada caso de lumbalgia es único. En AMG, la primera sesión siempre incluye una valoración completa antes de empezar a tratar. Identificamos el tipo de lumbalgia, los factores contribuyentes y los signos de alarma que requieren derivación médica.</p>
+
+        <p>El tratamiento combina <a href="/tecnicas-fisioterapia/terapia-manual-valladolid/">terapia manual lumbar</a> (movilizaciones vertebrales, trabajo sobre la articulación sacroilíaca, técnicas fasciales), <a href="/tecnicas-fisioterapia/puncion-seca-valladolid/">punción seca</a> en los músculos paravertebrales cuando hay puntos gatillo activos, <a href="/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/">ejercicio terapéutico</a> para estabilizar la zona lumbar y mejorar el control motor, y educación sobre el dolor y los factores de estilo de vida que influyen en la lumbalgia (postura, sueño, estrés, actividad física).</p>
+
+        <p>En Valladolid, AMG Fisioterapia es el lugar donde el dolor lumbar se trata con el tiempo y la atención que merece, no en sesiones de 15 minutos con una decena de pacientes en paralelo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title">Técnicas para el Dolor Lumbar</h2>
+      <div class="tecnicas-links">
+        <a href="/tecnicas-fisioterapia/terapia-manual-valladolid/" class="tecnica-link">
+          <strong>Terapia Manual</strong>
+          <span>Movilizaciones lumbares, sacroilíaca, técnicas fasciales →</span>
+        </a>
+        <a href="/tecnicas-fisioterapia/puncion-seca-valladolid/" class="tecnica-link">
+          <strong>Punción Seca</strong>
+          <span>Tratamiento de puntos gatillo en musculatura paravertebral →</span>
+        </a>
+        <a href="/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/" class="tecnica-link">
+          <strong>Ejercicio Terapéutico</strong>
+          <span>Estabilización lumbar, control motor, fortalecimiento core →</span>
+        </a>
+        <a href="/servicios-fisioterapia/" class="tecnica-link">
+          <strong>Ver todos los servicios</strong>
+          <span>Explorar otras áreas de tratamiento →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre el Dolor Lumbar</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-lumbar">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes dolor de espalda?</h2>
+      <p class="cta-section__subtitle">No esperes a que se haga crónico. Pide cita hoy en AMG Fisioterapia, en el centro de Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+      <p class="cta-section__note">O llama al <a href={`tel:${config.contact.phone.replace(/\s/g, '')}`}>{config.contact.phoneDisplay}</a> · 35€/sesión en clínica</p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .breadcrumb a:hover { color: var(--color-white); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .prose a { color: var(--color-primary); text-decoration: underline; }
+  .prose strong { color: var(--color-gray-800); }
+  .tecnicas-links { display: flex; flex-direction: column; gap: var(--space-md); }
+  .tecnica-link { display: flex; flex-direction: column; gap: 4px; padding: var(--space-lg) var(--space-xl); background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); transition: all var(--duration-fast); text-decoration: none; }
+  .tecnica-link:hover { border-color: var(--color-primary); }
+  .tecnica-link strong { font-size: var(--text-base); color: var(--color-gray-900); }
+  .tecnica-link span { font-size: var(--text-sm); color: var(--color-primary); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-cream); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  .cta-section__note { margin-top: var(--space-lg); font-size: var(--text-sm); color: rgba(255,255,255,0.7); }
+  .cta-section__note a { color: var(--color-white); font-weight: 600; }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

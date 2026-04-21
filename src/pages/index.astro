@@ -1,0 +1,2043 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink, getPhoneLink } from '@utils/config';
+import { Star } from 'lucide-astro';
+
+const config = getConfig();
+const waLink = getWhatsAppLink('Hola, me gustaría reservar una primera consulta en AMG Fisioterapia.');
+const waClinLink = getWhatsAppLink('Hola, me gustaría reservar una sesión en clínica.');
+const waDomLink = getWhatsAppLink('Hola, me gustaría reservar una sesión a domicilio.');
+
+// Bono starting price: first tier with sessions > 1
+const bonoTiers = config.pricing.bonos.tiers || [];
+const bonoMinTier = bonoTiers.find((t) => t.sessions > 1) || bonoTiers[0];
+const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSession : 0;
+---
+
+<BaseLayout
+  title="AMG Fisioterapia | Fisioterapia Avanzada en Valladolid Centro"
+  description="Clínica de fisioterapia en Valladolid Centro. Especialistas en fisioterapia deportiva, dolor de espalda, rehabilitación y más. Sesiones de 45-60 min personalizadas. Pide cita."
+>
+  <Header slot="header" />
+
+  <!-- ====================================================
+       1. HERO — Fullscreen con parallax y GSAP stagger
+  ===================================================== -->
+  <section class="hero" id="inicio" aria-label="Inicio">
+    <div class="hero__bg" id="hero-bg">
+      <img src="/images/hero-bg.jpg" alt="" role="presentation" loading="eager" fetchpriority="high" />
+      <div class="hero__overlay"></div>
+    </div>
+
+    <div class="container hero__content">
+      <div class="hero__left">
+        <p class="hero__eyebrow font-display">AMG Fisioterapia · Valladolid Centro</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__word">Fisioterapia</span>
+          <span class="hero__word hero__word--accent">Avanzada</span>
+          <span class="hero__word">en</span>
+          <span class="hero__word hero__word--accent">Valladolid</span>
+        </h1>
+        <p class="hero__subtitle" id="hero-subtitle">
+          Tratamientos personalizados. Sin interrupciones. Solo tú y tu recuperación.
+        </p>
+
+        <div class="hero__stats" id="hero-stats">
+          <div class="hero__stat">
+            <span class="hero__stat-value">{config.stats.sessionDuration}</span>
+            <span class="hero__stat-label">sesiones exclusivas</span>
+          </div>
+          <div class="hero__stat-divider" aria-hidden="true"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">{config.stats.patientsSatisfied}</span>
+            <span class="hero__stat-label">pacientes satisfechos</span>
+          </div>
+          <div class="hero__stat-divider" aria-hidden="true"></div>
+          <div class="hero__stat">
+            <span class="hero__stat-value">{config.stats.googleRating}<span class="hero__star">★</span></span>
+            <span class="hero__stat-label">valoración Google</span>
+          </div>
+        </div>
+
+        <div class="hero__ctas" id="hero-ctas">
+          <a href={waLink} target="_blank" rel="noopener noreferrer" class="hero__cta-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Reserva tu primera consulta
+          </a>
+          <a href={getPhoneLink()} class="hero__cta-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11 19.79 19.79 0 0 1 1.04 2.48 2 2 0 0 1 3 .5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15z"/></svg>
+            {config.contact.phoneDisplay}
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__right" id="hero-pain">
+        <div class="hero__pain-card">
+          <p class="hero__pain-label">¿Qué te duele hoy?</p>
+          <div class="hero__pain-grid">
+            <a href="/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M12 6v6M9 10l3 2 3-2M7 17c0-2.5 2-4 5-4s5 1.5 5 4"/></svg>
+              <span>Cuello</span>
+            </a>
+            <a href="/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2c0 0-4 4-4 9s4 9 4 9 4-4 4-9-4-9-4-9"/><path d="M8 9h8M8 13h8"/></svg>
+              <span>Espalda</span>
+            </a>
+            <a href="/servicios-fisioterapia/rehabilitacion-rodilla-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>Rodilla</span>
+            </a>
+            <a href="/servicios-fisioterapia/rehabilitacion-cadera-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12c0-3.9 3.1-7 7-7s7 3.1 7 7-3.1 7-7 7"/><path d="M12 5v14"/></svg>
+              <span>Cadera</span>
+            </a>
+            <a href="/fisioterapia-deportiva-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v5l3 3M9 12l-3 4M15 12l3 4"/></svg>
+              <span>Hombro</span>
+            </a>
+            <a href="/fisioterapia-deportiva-valladolid/" class="pain-btn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2v10M8 16l4 6 4-6"/><circle cx="12" cy="14" r="3"/></svg>
+              <span>Tobillo</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       2. SERVICIOS — Grid 3 columnas premium
+  ===================================================== -->
+  <section class="services section gs-reveal" id="servicios" aria-label="Servicios de fisioterapia">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow font-display">Especialidades</p>
+        <h2 class="section-title">Tratamos la causa,<br>no solo el síntoma</h2>
+        <p class="section-subtitle">Fisioterapia avanzada para cada tipo de lesión y paciente</p>
+      </div>
+
+      <div class="services-grid stagger-grid">
+        <a href="/fisioterapia-deportiva-valladolid/" class="service-card gs-stagger">
+          <div class="service-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><path d="m6.5 17.5 3-7 5 0 3 7"/><path d="M3 21h18"/></svg>
+          </div>
+          <h3 class="service-card__title">Fisioterapia Deportiva</h3>
+          <p class="service-card__desc">Especialistas en readaptación, esguinces, ligamento cruzado y vuelta al deporte.</p>
+          <span class="service-card__arrow">Ver más →</span>
+        </a>
+
+        <a href="/servicios-fisioterapia/" class="service-card gs-stagger">
+          <div class="service-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8 2 4 6 4 12s4 10 8 10 8-4 8-10S16 2 12 2"/><path d="M12 6v12M8 10h8M8 14h6"/></svg>
+          </div>
+          <h3 class="service-card__title">Columna y Dolor Crónico</h3>
+          <p class="service-card__desc">Cervicalgias, lumbalgias, hernias discales y ciáticas con tratamiento personalizado.</p>
+          <span class="service-card__arrow">Ver más →</span>
+        </a>
+
+        <a href="/servicios-fisioterapia/rehabilitacion-neurologica-valladolid/" class="service-card gs-stagger">
+          <div class="service-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+          </div>
+          <h3 class="service-card__title">Rehabilitación Neurológica</h3>
+          <p class="service-card__desc">Recuperación tras ictus, Parkinson, esclerosis múltiple. Recupera tu independencia.</p>
+          <span class="service-card__arrow">Ver más →</span>
+        </a>
+
+        <a href="/servicios-fisioterapia/fisioterapia-rodilla-valladolid/" class="service-card gs-stagger">
+          <div class="service-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v4M16 2v4M4 8h16M4 8v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 14h4M12 12v4"/></svg>
+          </div>
+          <h3 class="service-card__title">Traumatología y Post-Cirugía</h3>
+          <p class="service-card__desc">Rehabilitación post-operatoria de rodilla, cadera, hombro y otras articulaciones.</p>
+          <span class="service-card__arrow">Ver más →</span>
+        </a>
+
+        <a href="/fisioterapia-domicilio-valladolid/" class="service-card gs-stagger">
+          <div class="service-card__icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="service-card__title">Fisioterapia a Domicilio</h3>
+          <p class="service-card__desc">Nos desplazamos a tu casa en Valladolid y provincia. 45€/sesión, todo incluido.</p>
+          <span class="service-card__arrow">Ver más →</span>
+        </a>
+
+        <a href="/servicios-fisioterapia/" class="service-card service-card--cta gs-stagger">
+          <div class="service-card__all">
+            <p class="service-card__all-label font-display">Ver todos los servicios</p>
+            <span class="service-card__all-arrow">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       3. TÉCNICAS — Carousel horizontal scroll-snap
+  ===================================================== -->
+  <section class="techniques section gs-reveal" id="tecnicas" aria-label="Técnicas de fisioterapia">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow font-display">Técnicas</p>
+        <h2 class="section-title">Tratamientos especializados<br>con evidencia científica</h2>
+      </div>
+    </div>
+
+    <div class="techniques-wrapper">
+      <div class="techniques-track" id="techniques-track" role="list">
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/terapia-manual.png" alt="Terapia manual avanzada en AMG Fisioterapia Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">01</span>
+            <h3 class="technique-slide__title">Terapia Manual</h3>
+            <p class="technique-slide__desc">Técnicas manuales específicas para recuperar la movilidad y reducir el dolor. Movilizaciones articulares, masoterapia y manipulaciones vertebrales.</p>
+            <a href="/tecnicas-fisioterapia/terapia-manual/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
+
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/ejercicio-terapeutico.jpg" alt="Ejercicio terapéutico personalizado en Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">02</span>
+            <h3 class="technique-slide__title">Ejercicio Terapéutico</h3>
+            <p class="technique-slide__desc">Ejercicios personalizados para fortalecer y corregir patrones de movimiento que causan lesiones. Readaptación y prevención de recaídas.</p>
+            <a href="/tecnicas-fisioterapia/ejercicio-terapeutico/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
+
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/electroestimulacion-tens.png" alt="Electroestimulación TENS en Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">03</span>
+            <h3 class="technique-slide__title">Electroestimulación TENS</h3>
+            <p class="technique-slide__desc">Neuroestimulación eléctrica para bloquear el dolor y mejorar la recuperación muscular. Seguro y eficaz para dolor crónico y agudo.</p>
+            <a href="/tecnicas-fisioterapia/electroterapia-tens/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
+
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/presoterapia.png" alt="Presoterapia para deportistas en Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">04</span>
+            <h3 class="technique-slide__title">Presoterapia</h3>
+            <p class="technique-slide__desc">Compresión neumática para eliminar toxinas, reducir inflamación y acelerar la recuperación. Muy valorada por deportistas.</p>
+            <a href="/tecnicas-fisioterapia/presoterapia/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
+
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/kinesioterapia.png" alt="Punción seca en Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">05</span>
+            <h3 class="technique-slide__title">Punción Seca</h3>
+            <p class="technique-slide__desc">Agujas de acupuntura para desactivar puntos gatillo que provocan dolor y limitación funcional. Resultados rápidos y duraderos.</p>
+            <a href="/tecnicas-fisioterapia/puncion-seca-valladolid/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="techniques-nav" aria-label="Navegación del carrusel">
+        <button class="techniques-prev-btn" id="tech-prev" aria-label="Técnica anterior">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="19,3 5,12 19,21"/></svg>
+        </button>
+        <div class="techniques-dots-pill" id="tech-dots" role="tablist" aria-label="Seleccionar técnica">
+          <button class="techniques-dot active" role="tab" aria-selected="true" aria-label="Técnica 1"></button>
+          <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 2"></button>
+          <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 3"></button>
+          <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 4"></button>
+          <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 5"></button>
+        </div>
+        <button class="techniques-next-btn" id="tech-next" aria-label="Siguiente técnica">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       4. FISIOTERAPEUTA — Layout 60/40
+  ===================================================== -->
+  <section class="about section gs-reveal" id="fisioterapeuta" aria-label="Conoce al fisioterapeuta">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-eyebrow font-display">Tu Fisioterapeuta</p>
+          <h2 class="about-name">{config.business.owner}</h2>
+          <p class="about-role">Fisioterapeuta Colegiado · Director Clínico</p>
+
+          <p class="about-bio">
+            Más de 7 años de experiencia tratando deportistas y pacientes con dolor crónico en Valladolid.
+            Mi pasión por el deporte —soy runner y ciclista— me permite entender las necesidades específicas
+            de cada atleta y persona, diseñando tratamientos que realmente funcionan.
+          </p>
+          <p class="about-bio">
+            Cada sesión es un trabajo conjunto: escucho, evalúo y aplico las técnicas más avanzadas
+            con evidencia científica. El objetivo no es solo aliviar el dolor, sino que entiendas
+            tu cuerpo y no vuelvas a tener el mismo problema.
+          </p>
+
+          <div class="about-badges">
+            <span class="about-badge">✓ Fisioterapeuta Colegiado</span>
+            <span class="about-badge">✓ 7+ años de experiencia</span>
+            <span class="about-badge">✓ +200 pacientes tratados</span>
+            <span class="about-badge">✓ Especialista Deportivo</span>
+          </div>
+
+          <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Pide cita con Alberto
+          </a>
+        </div>
+
+        <div class="about-image">
+          <div class="about-image-frame" aria-label="Foto de Alberto Muñoz González, fisioterapeuta">
+            <div class="about-image-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              <span>Foto de Alberto</span>
+            </div>
+          </div>
+          <div class="about-image-accent" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       5. STATS — Fondo morado, counters GSAP
+  ===================================================== -->
+  <section class="stats" id="stats" aria-label="Estadísticas de la clínica">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" data-target={config.stats.yearsExperience} data-suffix="+">0+</span>
+          <span class="stat-label">Años de experiencia</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" data-target={config.stats.patientsRecovered} data-prefix="+">0</span>
+          <span class="stat-label">Pacientes recuperados</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" data-target={config.stats.manualTherapyHours} data-prefix="+" data-suffix="h">0h</span>
+          <span class="stat-label">Horas de terapia manual</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" data-target={config.stats.googleRating} data-decimal="true">0</span>
+          <span class="stat-label"><Star size={16} class="stat-star" aria-hidden="true" /> Valoración en Google</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       6. PRECIOS — 2 cards lado a lado
+  ===================================================== -->
+  <section class="pricing section gs-reveal" id="reservar" aria-label="Tarifas y precios">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow font-display">Tarifas</p>
+        <h2 class="section-title">Invierte en tu salud</h2>
+        <p class="section-subtitle">Sesiones individuales de {config.pricing.clinica.duration}. Sin lista de espera.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Domicilio — izquierda -->
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <div class="pricing-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="pricing-name">Sesión a domicilio</h3>
+          </div>
+          <p class="pricing-desc">Fisioterapia profesional en tu hogar con desplazamiento incluido.</p>
+          <div class="pricing-price-row">
+            <span class="pricing-amount">{config.pricing.domicilio.price}</span><span class="pricing-currency">€</span>
+            <span class="pricing-period">/sesión de {config.pricing.domicilio.duration}</span>
+          </div>
+          <a href={waDomLink} target="_blank" rel="noopener noreferrer" class="pricing-cta pricing-cta--outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Solicitar cita a domicilio
+          </a>
+          <p class="pricing-includes-label">Qué incluye</p>
+          <ul class="pricing-features">
+            <li>Atención en la comodidad de tu hogar</li>
+            <li>Todo el material incluido</li>
+            <li>Valladolid capital y provincia</li>
+            <li>Ideal para post-operatorio</li>
+            <li>Cancelación gratuita 24h antes</li>
+          </ul>
+        </div>
+
+        <!-- Clínica — centro destacada -->
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__header">
+            <div class="pricing-icon pricing-icon--green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3 class="pricing-name">Reservar cita</h3>
+            <span class="pricing-badge">Popular</span>
+          </div>
+          <p class="pricing-desc">Agenda tu primera consulta con nuestros especialistas.</p>
+          <div class="pricing-price-row">
+            <span class="pricing-amount">{config.pricing.clinica.price}</span><span class="pricing-currency">€</span>
+            <span class="pricing-period">/sesión de {config.pricing.clinica.duration}</span>
+          </div>
+          <a href={waClinLink} target="_blank" rel="noopener noreferrer" class="pricing-cta pricing-cta--primary">
+            Reservar mi cita ahora →
+          </a>
+          <p class="pricing-includes-label">Qué incluye</p>
+          <ul class="pricing-features">
+            <li>Primera consulta con valoración completa</li>
+            <li>Sesión individual y privada</li>
+            <li>Plan de tratamiento personalizado</li>
+            <li>Cancelación gratuita 24h antes</li>
+            <li>Pago en clínica</li>
+          </ul>
+        </div>
+
+        <!-- Bonos — derecha con calculadora expandible -->
+        <div class="pricing-card pricing-card--bonos" data-tiers={JSON.stringify(config.pricing.bonos.tiers)} data-wa={config.contact.whatsapp}>
+          <div class="pricing-card__header">
+            <div class="pricing-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </div>
+            <h3 class="pricing-name">Bonos configurables</h3>
+          </div>
+          <p class="pricing-desc">Personaliza tu plan de tratamiento y ahorra en cada sesión.</p>
+          <div class="pricing-price-row">
+            <span class="pricing-desde">Desde</span>
+            <span class="pricing-amount">{bonoMinPrice}</span><span class="pricing-currency">€</span>
+          </div>
+
+          <button class="pricing-cta pricing-cta--outline bonos-toggle-btn" type="button" aria-expanded="false">
+            Configurar bonos
+          </button>
+
+          <!-- Calculadora expandible -->
+          <div class="bonos-calc-wrap" aria-hidden="true">
+            <div class="bonos-calc">
+              <p class="bonos-calc__label">¿Cuántas sesiones necesitas?</p>
+              <div class="bonos-calc__stepper">
+                <button class="bonos-step bonos-step--minus" type="button" aria-label="Menos sesiones">−</button>
+                <span class="bonos-calc__count">5</span>
+                <button class="bonos-step bonos-step--plus" type="button" aria-label="Más sesiones">+</button>
+              </div>
+              <div class="bonos-calc__result">
+                <div class="bonos-calc__tier-name"></div>
+                <div class="bonos-calc__price-row">
+                  <span class="bonos-calc__total"></span>
+                  <span class="bonos-calc__per-session"></span>
+                </div>
+                <div class="bonos-calc__savings"></div>
+              </div>
+              <a href="#" class="pricing-cta pricing-cta--primary bonos-wa-btn" target="_blank" rel="noopener noreferrer" style="margin-top:var(--space-md);">
+                Consultar este bono →
+              </a>
+            </div>
+          </div>
+
+          <p class="pricing-includes-label">Qué incluye</p>
+          <ul class="pricing-features">
+            <li>Bonos de 5, 10 o más sesiones</li>
+            <li>Ahorro de hasta un 20%</li>
+            <li>Sin fecha de caducidad</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       7. CONTACTO — CTA final + datos
+  ===================================================== -->
+  <section class="contact section gs-reveal" id="contacto" style="background: #ffffff;" aria-label="Contacto">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-cta">
+          <p class="section-eyebrow font-display">¿Empezamos?</p>
+          <h2 class="contact-title">Tu recuperación<br>empieza hoy</h2>
+          <p class="contact-subtitle">
+            Primera consulta sin compromiso. Cuéntanos qué te duele y te decimos cómo podemos ayudarte.
+          </p>
+          <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Escríbenos por WhatsApp
+          </a>
+          <a href={getPhoneLink()} class="contact-phone">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 11 19.79 19.79 0 0 1 1.04 2.48 2 2 0 0 1 3 .5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15z"/></svg>
+            {config.contact.phoneDisplay}
+          </a>
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-block">
+            <h3 class="contact-block__title">Horarios</h3>
+            {config.hours.schedule.map((s) => (
+              <div class="contact-schedule">
+                <span class="contact-schedule__days">{s.days}</span>
+                <span class="contact-schedule__hours">{s.hours}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="contact-block">
+            <h3 class="contact-block__title">Dónde estamos</h3>
+            <p class="contact-address">{config.contact.address.street}</p>
+            <p class="contact-address">{config.contact.address.postalCode} {config.contact.address.city}</p>
+            <div class="contact-maps">
+              <a href={config.contact.googleMapsUrl} target="_blank" rel="noopener" class="btn-sm-outline">Google Maps</a>
+              <a href={config.contact.appleMapsUrl} target="_blank" rel="noopener" class="btn-sm-ghost">Apple Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <h3 class="contact-block__title">Email</h3>
+            <a href={`mailto:${config.contact.email}`} class="contact-email">{config.contact.email}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+/* ==============================================
+   HERO
+============================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 72px;
+  overflow: hidden;
+  color: var(--color-white);
+  border-radius: 0 0 36px 36px;
+  margin-bottom: 10px;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    rgba(12, 10, 25, 0.82) 0%,
+    rgba(80, 69, 115, 0.65) 55%,
+    rgba(166, 201, 88, 0.25) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-4xl);
+  align-items: center;
+  padding-block: var(--space-5xl) var(--space-4xl);
+}
+
+.hero__eyebrow {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary-300);
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+
+.hero__word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.hero__word--accent {
+  color: var(--color-primary-300);
+}
+
+.hero__subtitle {
+  font-size: var(--text-lg);
+  color: rgba(255,255,255,0.78);
+  line-height: var(--leading-relaxed);
+  max-width: 500px;
+  margin-bottom: var(--space-2xl);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+  opacity: 0;
+}
+
+.hero__stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.2);
+}
+
+.hero__stat-value {
+  display: block;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+}
+
+.hero__star { color: var(--color-primary-300); }
+
+.hero__stat-label {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  opacity: 0;
+}
+
+.hero__cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 28px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 4px 0 rgba(166, 201, 88, 0.45), 0 5px 29.2px 0 rgba(166, 201, 88, 0.45);
+  transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__cta-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary-dark);
+  transform: translateX(-101%);
+  transition: transform var(--duration-normal) var(--ease-out);
+  z-index: 0;
+}
+
+.hero__cta-primary:hover::before { transform: translateX(0); }
+.hero__cta-primary svg, .hero__cta-primary span { position: relative; z-index: 1; }
+
+.hero__cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 4px 0 rgba(166, 201, 88, 0.5), 0 5px 29.2px 0 rgba(166, 201, 88, 0.5);
+}
+
+.hero__cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 22px;
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-full);
+  transition: all var(--duration-fast);
+}
+
+.hero__cta-secondary:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--color-white);
+}
+
+/* Pain points card */
+.hero__pain-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: var(--space-2xl);
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.hero__pain-label {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: normal;
+  color: #ffffff;
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.hero__pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.pain-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-md) var(--space-sm);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-xl);
+  color: rgba(255,255,255,0.85);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.pain-btn:hover {
+  background: rgba(119,180,131,0.25);
+  border-color: rgba(119,180,131,0.5);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  margin: auto;
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.3); }
+}
+
+/* ==============================================
+   SECTION PANELS — border-radius + floating
+============================================== */
+.services {
+  background: linear-gradient(52deg, #FAF6F0 32.34%, #FFF 75%);
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+  position: relative;
+  overflow: hidden;
+}
+
+.services::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 691px;
+  height: 284px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(166, 201, 88, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 0 0 50% 50%;
+}
+
+.techniques {
+  /* no background — shows page #f2e8d1 */
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.about {
+  background: var(--color-white);
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.stats {
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.pricing {
+  background: linear-gradient(52deg, #FAF6F0 32.34%, #FFF 75%);
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+.contact {
+  background: #ffffff;
+  border-radius: 32px;
+  margin: 10px;
+  padding: 54px;
+}
+
+/* ==============================================
+   SERVICIOS
+============================================== */
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary-700);
+  margin-bottom: var(--space-md);
+  /* pill background */
+  background: rgba(166, 201, 88, 0.12);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-radius: 999px;
+  padding: 5px 16px;
+  border: 1px solid rgba(166, 201, 88, 0.2);
+}
+
+.section-title {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-4xl);
+  letter-spacing: -1px;
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.section-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2xl);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 20px;
+  transition: all var(--duration-normal) var(--ease-out);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.service-card:hover {
+  border-color: var(--color-primary-200);
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.08), 0 5px 29.2px 0 rgba(0,0,0,0.08);
+  transform: translateY(-4px) scale(1.01);
+}
+
+.service-card__icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-50);
+  color: var(--color-primary);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-lg);
+  transition: background var(--duration-fast);
+}
+
+.service-card:hover .service-card__icon {
+  background: var(--color-primary-100);
+}
+
+.service-card__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--text-primary);
+}
+
+.service-card__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  flex-grow: 1;
+  margin-bottom: var(--space-lg);
+}
+
+.service-card__arrow {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: gap var(--duration-fast);
+}
+
+.service-card--cta {
+  background: linear-gradient(135deg, var(--color-primary-50), rgba(80,69,115,0.05));
+  border-color: var(--color-primary-100);
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+}
+
+.service-card__all {
+  text-align: center;
+}
+
+.service-card__all-label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.service-card__all-arrow {
+  font-size: var(--text-3xl);
+  color: var(--color-primary-300);
+  display: block;
+}
+
+/* ==============================================
+   TÉCNICAS CAROUSEL
+============================================== */
+.techniques-wrapper {
+  overflow: hidden;
+}
+
+.techniques-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: var(--space-lg);
+  padding: 0 var(--container-padding) var(--space-2xl);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.techniques-track::-webkit-scrollbar { display: none; }
+
+.technique-slide {
+  flex: 0 0 calc(50% - var(--space-lg));
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--color-white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.technique-slide__img {
+  overflow: hidden;
+}
+
+.technique-slide__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.technique-slide:hover .technique-slide__img img {
+  transform: scale(1.04);
+}
+
+.technique-slide__body {
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.technique-slide__num {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.technique-slide__title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+.technique-slide__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  flex-grow: 1;
+  margin-bottom: var(--space-lg);
+}
+
+.technique-slide__link {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.techniques-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 var(--container-padding);
+}
+
+.techniques-dots-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 22px;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.techniques-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.20);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.techniques-dot.active {
+  background: rgba(0, 0, 0, 0.55);
+  width: 36px;
+  border-radius: 999px;
+}
+
+.techniques-prev-btn,
+.techniques-next-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.70);
+  transition: background var(--duration-fast), box-shadow var(--duration-fast);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.techniques-prev-btn:hover,
+.techniques-next-btn:hover {
+  background: #f5f5f5;
+  box-shadow: var(--shadow-md);
+}
+
+/* ==============================================
+   FISIOTERAPEUTA
+============================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-5xl);
+  align-items: center;
+}
+
+.about-text {
+  padding-right: var(--space-xl);
+}
+
+.about-name {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-4xl);
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  line-height: var(--leading-tight);
+}
+
+.about-role {
+  font-size: var(--text-base);
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-bottom: var(--space-xl);
+}
+
+.about-bio {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-lg);
+}
+
+.about-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.about-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-primary-700);
+}
+
+.about-image {
+  position: relative;
+}
+
+.about-image-frame {
+  aspect-ratio: 3/4;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--color-cream);
+  position: relative;
+  z-index: 1;
+}
+
+.about-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+.about-image-accent {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 70%;
+  height: 70%;
+  background: linear-gradient(135deg, var(--color-primary-100), rgba(80,69,115,0.1));
+  border-radius: 20px;
+  z-index: 0;
+}
+
+/* ==============================================
+   STATS
+============================================== */
+.stats {
+  background: linear-gradient(311deg, #A6C958 3%, #8A79B6 85%);
+  padding-block: var(--space-4xl);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+  text-align: center;
+}
+
+.stat-item {
+  color: rgb(242, 232, 208);
+}
+
+.stat-value {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--text-5xl);
+  letter-spacing: -1px;
+  margin-bottom: var(--space-sm);
+  color: rgb(242, 232, 208);
+}
+
+.stat-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 28px;
+  color: rgb(242, 232, 208);
+}
+
+.stat-star {
+  display: inline-block;
+  vertical-align: middle;
+  color: rgb(242, 232, 208);
+}
+
+/* ==============================================
+   PRECIOS
+============================================== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.pricing-card {
+  padding: 28px;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card--featured {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary), 0 4px 4px 0 rgba(0,0,0,0.09), 0 5px 29.2px 0 rgba(0,0,0,0.09);
+}
+
+/* Card header: icon + title row */
+.pricing-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-sm);
+}
+
+.pricing-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
+  flex-shrink: 0;
+}
+
+.pricing-icon--green {
+  background: var(--color-primary-50);
+  color: var(--color-primary-dark);
+}
+
+.pricing-name {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.pricing-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pricing-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-md);
+}
+
+/* Price row */
+.pricing-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.pricing-desde {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 6px;
+  align-self: center;
+}
+
+.pricing-amount {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: -2px;
+}
+
+.pricing-currency {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pricing-period {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-left: 4px;
+  align-self: center;
+}
+
+/* CTA buttons */
+.pricing-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: all var(--duration-fast);
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.pricing-cta--outline {
+  background: var(--color-white);
+  border: 1.5px solid var(--color-gray-300);
+  color: var(--text-primary);
+}
+
+.pricing-cta--outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.pricing-cta--primary {
+  background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
+  border: none;
+  color: #181428;
+  font-weight: 600;
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
+}
+
+.pricing-cta--primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* "Qué incluye" label */
+.pricing-includes-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-sm);
+}
+
+.pricing-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: var(--leading-normal);
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Bonos calculator (collapsible) */
+.bonos-calc-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.bonos-calc-wrap.is-open {
+  grid-template-rows: 1fr;
+  margin-bottom: var(--space-lg);
+}
+
+.bonos-calc {
+  min-height: 0;
+  overflow: hidden;
+  background: var(--color-primary-50);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.bonos-calc__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-sm);
+}
+
+.bonos-calc__stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.bonos-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary-300);
+  background: var(--color-white);
+  color: var(--color-primary-dark);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bonos-step:hover:not(:disabled) {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.bonos-step:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.bonos-calc__count {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  min-width: 2rem;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+.bonos-calc__result {
+  border-top: 1px solid var(--color-primary-100);
+  padding-top: var(--space-sm);
+}
+
+.bonos-calc__tier-name {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: 2px;
+}
+
+.bonos-calc__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.bonos-calc__total {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -1px;
+}
+
+.bonos-calc__per-session {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.bonos-calc__savings {
+  font-size: var(--text-xs);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+/* ==============================================
+   CONTACTO
+============================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl);
+  align-items: start;
+}
+
+.contact-title {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.contact-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-2xl);
+}
+
+.contact-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color var(--duration-fast);
+}
+
+.contact-phone:hover { color: var(--color-primary); }
+
+.contact-block {
+  margin-bottom: var(--space-xl);
+}
+
+.contact-block__title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-schedule {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-gray-200);
+  font-size: var(--text-sm);
+}
+
+.contact-schedule__days {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.contact-schedule__hours { color: var(--text-secondary); }
+
+.contact-address {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.contact-maps {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.contact-email {
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  transition: color var(--duration-fast);
+}
+.contact-email:hover { color: var(--color-primary-dark); }
+
+/* ==============================================
+   SHARED BUTTONS
+============================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 44px;
+  padding: 0 32px;
+  background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
+  color: #181428;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
+  transition: all var(--duration-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 12px 24px;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  background: transparent;
+  transition: all var(--duration-fast);
+}
+
+.btn-outline:hover {
+  background: var(--color-primary-50);
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 16px 32px;
+  background: #25D366;
+  color: var(--color-white);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 4px 0 rgba(37, 211, 102, 0.35), 0 5px 29.2px 0 rgba(37, 211, 102, 0.35);
+  transition: all var(--duration-fast);
+  margin-bottom: var(--space-md);
+}
+
+.btn-whatsapp:hover {
+  background: #1FAD54;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 4px 0 rgba(37, 211, 102, 0.45), 0 5px 29.2px 0 rgba(37, 211, 102, 0.45);
+}
+
+.btn-full {
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-sm-outline {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--duration-fast);
+}
+
+.btn-sm-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-sm-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast);
+}
+
+.btn-sm-ghost:hover { color: var(--color-primary); }
+
+/* ==============================================
+   GSAP REVEAL (initial hidden state)
+============================================== */
+.gs-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ==============================================
+   RESPONSIVE
+============================================== */
+@media (max-width: 1024px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-block: var(--space-4xl) var(--space-3xl);
+  }
+
+  .hero__subtitle { margin-inline: auto; }
+
+  .hero__stats { justify-content: center; }
+
+  .hero__ctas { justify-content: center; }
+
+  .hero__pain-card { max-width: 420px; margin-inline: auto; }
+
+  .hero__pain-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3xl);
+  }
+
+  .about-text { padding-right: 0; text-align: center; }
+
+  .about-badges { justify-content: center; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+
+  .contact-grid { grid-template-columns: 1fr; }
+
+  .technique-slide {
+    flex: 0 0 calc(80% - var(--space-lg));
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__title { font-size: var(--text-5xl); }
+
+  .services-grid { grid-template-columns: 1fr; }
+
+  .technique-slide {
+    flex: 0 0 calc(90% - var(--space-lg));
+    grid-template-columns: 1fr;
+  }
+
+  .technique-slide__img { height: 200px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .hero__title { font-size: var(--text-4xl); }
+
+  .hero__stats { flex-direction: column; gap: var(--space-lg); }
+
+  .hero__stat-divider { display: none; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  .stat-value { font-size: var(--text-4xl); }
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero__word,
+  .hero__subtitle,
+  .hero__stats,
+  .hero__ctas,
+  .hero__eyebrow,
+  .hero__pain-card,
+  .gs-reveal,
+  .service-card,
+  .hero__scroll-line {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+<script>
+(function() {
+  // Respect prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // ---- Load GSAP + ScrollTrigger from CDN ----
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function initGSAP() {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js');
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js');
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ---- HERO animations ----
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.to('.hero__eyebrow', { opacity: 1, duration: 0.6 })
+      .to('.hero__word', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+      }, '-=0.2')
+      .to('.hero__subtitle', { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
+      .to('.hero__stats',    { opacity: 1, duration: 0.5 }, '-=0.2')
+      .to('.hero__ctas',     { opacity: 1, duration: 0.5 }, '-=0.2')
+      .to('.hero__pain-card',{ opacity: 1, x: 0, duration: 0.7 }, '-=0.4');
+
+    // ---- Hero parallax ----
+    const heroBg = document.getElementById('hero-bg');
+    if (heroBg) {
+      ScrollTrigger.create({
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+        onUpdate: (self) => {
+          gsap.set(heroBg, { yPercent: self.progress * 20 });
+        }
+      });
+    }
+
+    // ---- Scroll reveal: sections ----
+    document.querySelectorAll('.gs-reveal').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        }
+      });
+    });
+
+    // ---- Stagger: service cards ----
+    document.querySelectorAll('.gs-stagger').forEach((el, i) => {
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        delay: i * 0.08,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          once: true,
+        }
+      });
+    });
+
+    // ---- Stats counter ----
+    document.querySelectorAll('.stat-value').forEach((el) => {
+      const target = parseFloat(el.dataset.target || '0');
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const isDecimal = el.dataset.decimal === 'true';
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(
+            { val: 0 },
+            { val: target, duration: 2, ease: 'power2.out',
+              onUpdate: function() {
+                const v = this.targets()[0].val;
+                el.textContent = prefix + (isDecimal ? v.toFixed(1) : Math.round(v).toLocaleString('es-ES')) + suffix;
+              }
+            }
+          );
+        }
+      });
+    });
+
+    // header scroll shadow handled via CSS .scrolled class (see Header.astro)
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGSAP);
+  } else {
+    initGSAP();
+  }
+
+  // ---- Techniques Carousel (no GSAP needed) ----
+  const track = document.getElementById('techniques-track');
+  const dots  = document.querySelectorAll('.techniques-dot');
+  const prevBtn = document.getElementById('tech-prev');
+  const nextBtn = document.getElementById('tech-next');
+
+  if (track && dots.length) {
+    let current = 0;
+    const slides = track.querySelectorAll('.technique-slide');
+    const total = slides.length;
+
+    function goTo(index) {
+      current = (index + total) % total;
+      const slideWidth = slides[0].offsetWidth + parseInt(getComputedStyle(track).gap);
+      track.scrollTo({ left: current * slideWidth, behavior: 'smooth' });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+        d.setAttribute('aria-selected', String(i === current));
+      });
+    }
+
+    prevBtn?.addEventListener('click', () => goTo(current - 1));
+    nextBtn?.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+    // Update dot on scroll
+    let scrollTimer;
+    track.addEventListener('scroll', () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const slideWidth = slides[0].offsetWidth + parseInt(getComputedStyle(track).gap);
+        current = Math.round(track.scrollLeft / slideWidth);
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+          d.setAttribute('aria-selected', String(i === current));
+        });
+      }, 100);
+    });
+  }
+
+  // ---- Bonos Calculator ----
+  const bonosCard = document.querySelector('.pricing-card--bonos');
+  if (bonosCard) {
+    const tiers = JSON.parse(bonosCard.dataset.tiers || '[]');
+    let sessions = 5;
+    const MIN = 1, MAX = 30;
+
+    const calcWrap = bonosCard.querySelector('.bonos-calc-wrap');
+    const toggleBtn = bonosCard.querySelector('.bonos-toggle-btn');
+    const countEl = bonosCard.querySelector('.bonos-calc__count');
+    const tierNameEl = bonosCard.querySelector('.bonos-calc__tier-name');
+    const totalEl = bonosCard.querySelector('.bonos-calc__total');
+    const perSessionEl = bonosCard.querySelector('.bonos-calc__per-session');
+    const savingsEl = bonosCard.querySelector('.bonos-calc__savings');
+    const waBtn = bonosCard.querySelector('.bonos-wa-btn');
+    const minusBtn = bonosCard.querySelector('.bonos-step--minus');
+    const plusBtn = bonosCard.querySelector('.bonos-step--plus');
+
+    // Toggle calculator visibility
+    toggleBtn?.addEventListener('click', () => {
+      const isOpen = calcWrap?.classList.toggle('is-open');
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
+        toggleBtn.textContent = isOpen ? 'Ocultar calculadora' : 'Configurar bonos';
+      }
+      if (calcWrap) calcWrap.setAttribute('aria-hidden', String(!isOpen));
+    });
+
+    function getActiveTier(n) {
+      let active = tiers[0];
+      for (const tier of tiers) {
+        if (n >= tier.sessions) active = tier;
+      }
+      return active;
+    }
+
+    function updateCalc() {
+      if (!countEl || !tierNameEl || !totalEl || !perSessionEl || !savingsEl || !waBtn) return;
+      const tier = getActiveTier(sessions);
+      const total = sessions * tier.pricePerSession;
+      const basePrice = tiers[0]?.pricePerSession || tier.pricePerSession;
+      const saved = sessions * (basePrice - tier.pricePerSession);
+
+      countEl.textContent = String(sessions);
+      tierNameEl.textContent = tier.label;
+      totalEl.textContent = total + ' €';
+      perSessionEl.textContent = tier.pricePerSession + ' €/sesión';
+      savingsEl.textContent = saved > 0 ? `Ahorras ${saved} € vs sesión suelta` : 'Sin descuento adicional';
+
+      const waNum = (bonosCard.dataset.wa || '+34600000000').replace(/\s/g, '');
+      const msg = encodeURIComponent(`Hola, me interesa un bono de ${sessions} sesiones (${total} €). ¿Podéis confirmar disponibilidad?`);
+      waBtn.href = `https://wa.me/${waNum}?text=${msg}`;
+
+      if (minusBtn) minusBtn.disabled = sessions <= MIN;
+      if (plusBtn) plusBtn.disabled = sessions >= MAX;
+    }
+
+    minusBtn?.addEventListener('click', () => { sessions = Math.max(MIN, sessions - 1); updateCalc(); });
+    plusBtn?.addEventListener('click', () => { sessions = Math.min(MAX, sessions + 1); updateCalc(); });
+
+    updateCalc();
+  }
+})();
+</script>

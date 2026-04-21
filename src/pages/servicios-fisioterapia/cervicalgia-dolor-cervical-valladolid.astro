@@ -1,0 +1,217 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Servicios', url: '/servicios-fisioterapia/' },
+  { name: 'Dolor Cervical', url: '/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Cuántas sesiones necesito para la cervicalgia?',
+    answer: 'Depende de la causa y cronicidad. Un episodio agudo de tortícolis suele resolverse en 3-5 sesiones. La cervicalgia crónica o asociada a hernia cervical puede requerir 8-12 sesiones con una fase de mantenimiento. Alberto te dará una estimación personalizada en la primera valoración.',
+  },
+  {
+    question: '¿El tratamiento del dolor cervical duele?',
+    answer: 'La terapia manual puede generar algo de molestia transitoria durante la maniobra, especialmente al trabajar zonas muy contracturadas. Nada insoportable. La electroestimulación TENS es completamente indolora. Siempre adaptamos la intensidad a tu umbral de tolerancia.',
+  },
+  {
+    question: '¿Puedo ir si tengo hernia cervical?',
+    answer: 'Sí. La fisioterapia es uno de los tratamientos de primera línea para la hernia cervical. Podemos reducir la compresión radicular, mejorar la movilidad y tratar el dolor muscular asociado. Solo en casos muy severos con déficit neurológico importante es necesario derivar a cirugía.',
+  },
+  {
+    question: '¿Qué diferencia hay entre un fisioterapeuta y un masajista para el dolor cervical?',
+    answer: 'El fisioterapeuta realiza un diagnóstico diferencial, identifica la causa del dolor (articular, muscular, discal, radicular) y aplica técnicas específicas para cada caso. El masajista trabaja el tejido blando de forma genérica, lo que puede aliviar síntomas pero no trata la causa. Para un dolor cervical recurrente o con irradiación, acude siempre a un fisioterapeuta colegiado.',
+  },
+  {
+    question: '¿Cómo sé si necesito fisioterapia para mi dolor de cuello?',
+    answer: 'Señales de que deberías consultar: dolor que lleva más de 2 semanas sin mejorar, dolor que irradia al brazo o mano, hormigueos o pérdida de fuerza en el brazo, limitación severa de movimiento, dolor que te impide dormir o trabajar. En cualquier caso, es mejor valorarlo antes de que se cronifique.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Tratamiento del Dolor Cervical en Valladolid',
+  description: 'Fisioterapia para cervicalgia, tortícolis y hernia cervical en Valladolid. Terapia manual, TENS y ejercicio terapéutico. Alberto Muñoz González.',
+  url: '/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+
+const whatsappLink = getWhatsAppLink('Hola, tengo dolor cervical y me gustaría pedir cita en AMG Fisioterapia.');
+---
+
+<BaseLayout
+  title="Fisioterapia Cervical Valladolid - Dolor de Cuello | AMG"
+  description="Tratamiento del dolor cervical en Valladolid: cervicalgia, tortícolis, hernia cervical. Terapia manual + TENS. Alberto Muñoz González, fisioterapeuta colegiado. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/servicios-fisioterapia/">Servicios</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Dolor Cervical</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Tratamiento del Dolor Cervical en Valladolid</h1>
+          <p class="page-hero__subtitle">El dolor de cuello es uno de los problemas más frecuentes que tratamos. Con el diagnóstico correcto y el tratamiento adecuado, la recuperación es posible.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/cervicalgia.jpg" alt="Tratamiento cervicalgia dolor cervical Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">¿Por Qué Aparece el Dolor Cervical?</h2>
+      <div class="prose">
+        <p>La cervicalgia es uno de los motivos de consulta más frecuentes en fisioterapia. Se estima que 7 de cada 10 personas sufrirán dolor de cuello en algún momento de su vida. En Valladolid, como en cualquier ciudad moderna, el sedentarismo, el trabajo frente a ordenador y los malos hábitos posturales están detrás de la mayoría de los casos.</p>
+
+        <p>Las causas más habituales del dolor cervical incluyen: contractura muscular por tensión sostenida o mala postura, articulación cigapofisaria irritada (lo que llamamos "bloqueo cervical"), hernia o protrusión discal que comprime una raíz nerviosa, artrosis cervical (espondiloartrosis) en pacientes de mayor edad, o traumatismos como el latigazo cervical tras un accidente de tráfico.</p>
+
+        <p>El problema con el dolor cervical es que, si no se trata bien desde el principio, tiende a cronificarse. Un episodio agudo que podría resolverse en unas pocas sesiones puede convertirse en un dolor crónico que limita tu calidad de vida durante años. Por eso es importante consultar pronto y no esperar a "ver si se pasa solo" cuando el dolor lleva más de dos semanas.</p>
+
+        <h3>Síntomas que Deben Hacerte Consultar</h3>
+        <p>Más allá del dolor en el cuello, la cervicalgia puede manifestarse con: dolor que se irradia hacia el hombro, el brazo o incluso la mano (lo que llamamos braquialgia o cervicobranquialgia), hormigueos o entumecimiento en los dedos, sensación de presión en la cabeza o cefaleas que empiezan en la nuca, mareos o vértigos de origen cervicogénico, o pérdida de fuerza en la mano o el brazo.</p>
+
+        <p>Cuando aparecen estos síntomas neurológicos, es especialmente importante no automedicarse ni esperar: necesitas una valoración profesional que descarte causas graves y establezca el tratamiento correcto.</p>
+
+        <h3>Cómo Trata Alberto el Dolor Cervical</h3>
+        <p>El tratamiento en AMG Fisioterapia siempre empieza con una valoración exhaustiva: preguntamos sobre el inicio del dolor, los factores que lo agravan o alivian, tu trabajo y hábitos de vida, y cualquier estudio previo (radiografía, resonancia). Después hacemos una exploración física completa: movilidad cervical activa y pasiva, test neurológicos, palpación de las estructuras, y evaluamos la postura global.</p>
+
+        <p>Con ese diagnóstico en mano, diseñamos un plan de tratamiento que habitualmente combina:</p>
+
+        <p><strong>Terapia manual:</strong> incluye técnicas de movilización articular (para restaurar el movimiento de las vértebras cervicales), manipulación vertebral cuando está indicada, masoterapia profunda sobre la musculatura cervical y suboccipital, y técnicas de tejido blando sobre estructuras como el ligamento nucal o la fascia cervical. La <a href="/tecnicas-fisioterapia/terapia-manual-valladolid/">terapia manual cervical</a> tiene uno de los niveles más altos de evidencia científica para el tratamiento del dolor de cuello.</p>
+
+        <p><strong>Electroestimulación TENS:</strong> aplicada sobre la zona cervical, el <a href="/tecnicas-fisioterapia/tens-electroestimulacion-valladolid/">TENS</a> produce una analgesia efectiva que permite trabajar mejor en las fases agudas. Es completamente indolora y reduce la necesidad de antiinflamatorios.</p>
+
+        <p><strong>Ejercicio terapéutico:</strong> fundamental para consolidar la recuperación y prevenir recaídas. Te enseñamos ejercicios específicos de movilidad, estiramiento y fortalecimiento de la musculatura cervical y escapular que podrás hacer en casa. Sin un componente activo, el dolor cervical tiende a volver.</p>
+
+        <h3>¿Qué Esperar en la Primera Sesión?</h3>
+        <p>La primera cita dura entre 60 y 75 minutos. Empezamos hablando: te escuchamos, tomamos nota de tu historial y entendemos tu caso en detalle. Después viene la exploración física. Al finalizar, Alberto te explica su diagnóstico en términos comprensibles, te dice qué está pasando en tu cuello y por qué, y te propone un plan de tratamiento con un número estimado de sesiones y objetivos claros. El tratamiento comienza ese mismo día.</p>
+
+        <p>Muchos pacientes salen de la primera sesión ya con menos dolor y con más movilidad. No siempre es así, pero es habitual. La mejora progresiva sesión a sesión es la norma cuando el diagnóstico es correcto.</p>
+
+        <p>En Valladolid, encontrarás en AMG Fisioterapia un centro donde el dolor cervical se trata con rigor, con tiempo y con una atención que va mucho más allá del "masaje de turno".</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title">Técnicas que Utilizamos</h2>
+      <div class="tecnicas-links">
+        <a href="/tecnicas-fisioterapia/terapia-manual-valladolid/" class="tecnica-link">
+          <strong>Terapia Manual</strong>
+          <span>Movilizaciones y manipulaciones cervicales, masoterapia profunda →</span>
+        </a>
+        <a href="/tecnicas-fisioterapia/tens-electroestimulacion-valladolid/" class="tecnica-link">
+          <strong>Electroestimulación TENS</strong>
+          <span>Analgesia eléctrica, reducción de la inflamación →</span>
+        </a>
+        <a href="/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/" class="tecnica-link">
+          <strong>Ejercicio Terapéutico</strong>
+          <span>Fortalecimiento cervical y escapular, corrección postural →</span>
+        </a>
+        <a href="/servicios-fisioterapia/" class="tecnica-link">
+          <strong>Ver todos los servicios</strong>
+          <span>Explorar otras áreas de tratamiento →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas Frecuentes sobre el Dolor Cervical</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-cervical">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes dolor de cuello?</h2>
+      <p class="cta-section__subtitle">No esperes a que se cronifique. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+      <p class="cta-section__note">O llama al <a href={`tel:${config.contact.phone.replace(/\s/g, '')}`}>{config.contact.phoneDisplay}</a> · Sesión en clínica: <strong>35€</strong></p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .breadcrumb a:hover { color: var(--color-white); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .prose a { color: var(--color-primary); text-decoration: underline; }
+  .prose strong { color: var(--color-gray-800); }
+  .tecnicas-links { display: flex; flex-direction: column; gap: var(--space-md); }
+  .tecnica-link { display: flex; flex-direction: column; gap: 4px; padding: var(--space-lg) var(--space-xl); background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); transition: all var(--duration-fast); text-decoration: none; }
+  .tecnica-link:hover { border-color: var(--color-primary); }
+  .tecnica-link strong { font-size: var(--text-base); color: var(--color-gray-900); }
+  .tecnica-link span { font-size: var(--text-sm); color: var(--color-primary); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-cream); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  .cta-section__note { margin-top: var(--space-lg); font-size: var(--text-sm); color: rgba(255,255,255,0.7); }
+  .cta-section__note a { color: var(--color-white); font-weight: 600; }
+  .cta-section__note strong { color: var(--color-white); }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

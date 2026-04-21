@@ -1,0 +1,167 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Técnicas', url: '/tecnicas-fisioterapia/' },
+  { name: 'Ejercicio Terapéutico', url: '/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/' },
+];
+
+const faqs = [
+  {
+    question: '¿El ejercicio terapéutico es lo mismo que ir al gimnasio?',
+    answer: 'No. El ejercicio terapéutico es prescrito y supervisado por un fisioterapeuta en función de tu patología específica. Los ejercicios se seleccionan, progresan y modifican según tu evolución clínica. No se trata de entrenar por entrenar, sino de restaurar función, corregir patrones y fortalecer estructuras con un objetivo terapéutico concreto.',
+  },
+  {
+    question: '¿El ejercicio duele? ¿Tengo que esforzarme si tengo dolor?',
+    answer: 'El ejercicio terapéutico se prescribe dentro de un rango de dolor tolerable (máximo 3-4/10 en la escala de dolor). No debe ser agónico. La evidencia actual dice que el movimiento controlado, incluso con algo de molestia, es generalmente beneficioso y no daña. Alberto te guiará para encontrar el nivel correcto.',
+  },
+  {
+    question: '¿El ejercicio terapéutico sirve para el dolor crónico?',
+    answer: 'Es uno de los tratamientos con mayor evidencia científica para el dolor crónico musculoesquelético. El movimiento modula los mecanismos de procesamiento del dolor, mejora la condición física general y tiene efectos positivos sobre el estado de ánimo. Para lumbalgia crónica, fibromialgia y otras condiciones crónicas, el ejercicio es el pilar del tratamiento.',
+  },
+  {
+    question: '¿Podré hacer los ejercicios en casa?',
+    answer: 'Sí, ese es uno de los objetivos. Alberto te enseña los ejercicios en la sesión y te proporciona un plan de ejercicio domiciliario que puedes hacer de forma autónoma. Esto reduce la dependencia de la clínica y empodera al paciente en su recuperación.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Ejercicio Terapéutico en Valladolid',
+  description: 'Ejercicio terapéutico supervisado en Valladolid para rehabilitación, readaptación deportiva y control del dolor crónico. AMG Fisioterapia.',
+  url: '/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre ejercicio terapéutico en AMG Fisioterapia Valladolid.');
+---
+
+<BaseLayout
+  title="Ejercicio Terapéutico Valladolid | Readaptación | AMG"
+  description="Ejercicio terapéutico supervisado en Valladolid: readaptación deportiva, control del dolor crónico y corrección postural. AMG Fisioterapia. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/tecnicas-fisioterapia/">Técnicas</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Ejercicio Terapéutico</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Ejercicio Terapéutico en Valladolid</h1>
+          <p class="page-hero__subtitle">El movimiento como medicina. El ejercicio terapéutico supervisado es el pilar de la fisioterapia moderna y la mejor herramienta para prevenir recaídas.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/ejercicio-terapeutico.jpg" alt="Ejercicio terapéutico readaptación fisioterapia" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Ejercicio Clínico: Mucho Más que "Hacer Ejercicio"</h2>
+      <div class="prose">
+        <p>La evidencia científica es clara: el ejercicio terapéutico es uno de los tratamientos con mayor eficacia para la mayoría de las patologías musculoesqueléticas. No solo ayuda a recuperarse de una lesión, sino que mejora la condición física general, modula los mecanismos del dolor y previene futuras lesiones. En AMG Fisioterapia, en Valladolid, integramos el ejercicio terapéutico en prácticamente todos los tratamientos.</p>
+
+        <p>La gran diferencia con el ejercicio que podrías hacer por tu cuenta en el gimnasio es la prescripción individualizada y la supervisión clínica. Alberto selecciona los ejercicios exactos para tu patología, te enseña la técnica correcta de ejecución, progresa la carga de forma controlada y los modifica según tu evolución. Es ejercicio como medicamento: con dosis, indicaciones y contraindicaciones.</p>
+
+        <h3>Áreas de Aplicación</h3>
+        <p><strong>Rehabilitación post-lesión:</strong> tras una lesión articular, muscular o postquirúrgica, el ejercicio terapéutico es fundamental para recuperar la fuerza, la propiocepción (el sentido de posición de las articulaciones) y la coordinación perdidas. Sin un componente de ejercicio activo, la recuperación es incompleta y el riesgo de recaída es mucho mayor.</p>
+
+        <p><strong>Estabilización lumbar y cervical:</strong> el trabajo de la musculatura profunda (transverso del abdomen, multífidus) es esencial en el tratamiento del dolor de espalda crónico. Estos músculos son el corsé natural de la columna, y cuando no funcionan bien, la columna es más vulnerable a las lesiones.</p>
+
+        <p><strong>Corrección postural:</strong> muchos dolores de cuello, hombros y espalda tienen su origen en patrones posturales inadecuados. El ejercicio terapéutico trabaja la conciencia corporal, la activación de la musculatura postural y la reeducación del movimiento para corregir estos patrones en la vida cotidiana.</p>
+
+        <p><strong>Readaptación deportiva:</strong> el ejercicio terapéutico es el corazón del proceso de retorno al deporte tras una lesión. Progresamos desde ejercicios de aislamiento muscular hasta movimientos deportivos específicos, siguiendo un protocolo de return to play con criterios objetivos de seguridad. Ver más en nuestra página de <a href="/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/">readaptación deportiva en Valladolid</a>.</p>
+
+        <p><strong>Dolor crónico:</strong> para la lumbalgia crónica, la fibromialgia, la artrosis y otras condiciones de dolor crónico, el ejercicio es el tratamiento con mayor nivel de evidencia. Mejora el umbral del dolor, aumenta los niveles de endorfinas y mejora la condición física que se deteriora con el sedentarismo inducido por el dolor.</p>
+
+        <h3>Plan de Ejercicio Domiciliario</h3>
+        <p>Uno de los pilares del ejercicio terapéutico en AMG es que el paciente aprende a ser autónomo. No queremos que dependas de nosotros indefinidamente: queremos que tengas las herramientas para cuidarte tú mismo. Por eso, en cada sesión te enseñamos ejercicios que puedes practicar en casa, con un plan estructurado y progresivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Ejercicio Terapéutico</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-ejercicio">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">Empieza a moverte mejor</h2>
+      <p class="cta-section__subtitle">Pide cita en AMG Fisioterapia en Valladolid. Primera sesión con valoración completa incluida.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .prose a { color: var(--color-primary); text-decoration: underline; }
+  .prose strong { color: var(--color-gray-800); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

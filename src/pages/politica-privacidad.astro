@@ -1,0 +1,208 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+const title = "Politica de Privacidad | AMG Fisioterapia";
+const description = "Politica de privacidad de AMG Fisioterapia. Informacion sobre el tratamiento de sus datos personales conforme al RGPD y la LOPD-GDD.";
+const today = new Date();
+const updateDate = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <!-- Hero pequeño -->
+  <section class="legal-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegacion">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page">Politica de Privacidad</span>
+      </nav>
+      <h1>Politica de Privacidad</h1>
+    </div>
+  </section>
+
+  <!-- Contenido -->
+  <section class="legal-content">
+    <div class="container--narrow">
+
+      <p>
+        En AMG Fisioterapia, la privacidad de nuestros pacientes y usuarios es una prioridad. Esta Politica de Privacidad explica como recopilamos, usamos y protegemos sus datos personales, de conformidad con el <strong>Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (RGPD)</strong> y la <strong>Ley Organica 3/2018, de 5 de diciembre, de Proteccion de Datos Personales y garantia de los derechos digitales (LOPD-GDD)</strong>.
+      </p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <ul>
+        <li><strong>Nombre:</strong> Alberto Munoz Gonzalez</li>
+        <li><strong>Actividad:</strong> AMG Fisioterapia</li>
+        <li><strong>Domicilio:</strong> Calle Ejemplo, 1, 47001 Valladolid (Castilla y Leon, Espana)</li>
+        <li><strong>Email de contacto:</strong> <a href="mailto:info@amgfisio.es">info@amgfisio.es</a></li>
+        <li><strong>Telefono:</strong> 600 000 000</li>
+      </ul>
+
+      <h2>2. Datos personales que recogemos</h2>
+      <p>Segun la forma en que interactue con nosotros, podemos recopilar los siguientes datos:</p>
+      <ul>
+        <li><strong>Datos identificativos:</strong> nombre, apellidos, numero de telefono, direccion de correo electronico.</li>
+        <li><strong>Datos de salud:</strong> informacion clinica necesaria para la prestacion del servicio de fisioterapia (motivo de consulta, historial de lesiones, estado de salud general). Estos datos tienen la consideracion de datos especialmente protegidos segun el articulo 9 del RGPD.</li>
+        <li><strong>Datos de navegacion:</strong> datos tecnicos de acceso al sitio web (anonimizados si se utiliza Google Analytics).</li>
+      </ul>
+
+      <h2>3. Finalidad del tratamiento</h2>
+      <p>Sus datos personales son tratados con las siguientes finalidades:</p>
+      <ul>
+        <li><strong>Gestion de citas:</strong> programar, confirmar y administrar las sesiones de fisioterapia.</li>
+        <li><strong>Prestacion del servicio:</strong> elaborar y gestionar el historial clinico del paciente necesario para la atencion fisioterapeutica.</li>
+        <li><strong>Comunicaciones:</strong> responder a consultas, recordatorios de cita y comunicaciones relacionadas con el servicio contratado.</li>
+        <li><strong>Mejora del servicio:</strong> analizar el uso del sitio web para mejorar la experiencia del usuario (datos anonimizados).</li>
+        <li><strong>Cumplimiento de obligaciones legales:</strong> conservacion de documentacion clinica segun la normativa sanitaria aplicable.</li>
+      </ul>
+
+      <h2>4. Base legal del tratamiento</h2>
+      <ul>
+        <li><strong>Ejecucion de un contrato:</strong> el tratamiento es necesario para la prestacion del servicio de fisioterapia solicitado (art. 6.1.b RGPD).</li>
+        <li><strong>Consentimiento explicito:</strong> para el tratamiento de datos de salud (art. 9.2.a RGPD), que el paciente otorga al inicio de la relacion asistencial.</li>
+        <li><strong>Obligacion legal:</strong> conservacion de historia clinica segun la legislacion sanitaria de Castilla y Leon (Ley 8/2003, de 8 de abril, sobre derechos y deberes de las personas en relacion con la salud).</li>
+        <li><strong>Interes legitimo:</strong> para el envio de comunicaciones relacionadas directamente con el servicio prestado.</li>
+      </ul>
+
+      <h2>5. Destinatarios de los datos</h2>
+      <p>
+        AMG Fisioterapia no cede sus datos personales a terceros, salvo en los siguientes casos:
+      </p>
+      <ul>
+        <li>Cuando exista obligacion legal de comunicarlos a las autoridades sanitarias o judiciales competentes.</li>
+        <li>Cuando el paciente haya dado su consentimiento expreso para una derivacion a otro profesional sanitario.</li>
+        <li>Proveedores de servicios tecnologicos que actuen como encargados del tratamiento (p. ej., plataforma de correo electronico), bajo acuerdo de confidencialidad y cumplimiento del RGPD.</li>
+      </ul>
+      <p>No se realizan transferencias internacionales de datos fuera del Espacio Economico Europeo.</p>
+
+      <h2>6. Plazo de conservacion</h2>
+      <p>
+        Los datos clinicos se conservan durante un minimo de <strong>5 anos</strong> desde la ultima asistencia, segun establece la normativa sanitaria de Castilla y Leon, y pueden conservarse durante mas tiempo si existe obligacion legal o interes legitimo justificado.
+      </p>
+      <p>
+        Los datos de contacto para consultas o gestion de citas se conservan mientras dure la relacion asistencial y, en su caso, durante el periodo de prescripcion de las acciones legales correspondientes.
+      </p>
+
+      <h2>7. Derechos del interesado</h2>
+      <p>Puede ejercer en cualquier momento los siguientes derechos reconocidos por el RGPD:</p>
+      <ul>
+        <li><strong>Acceso:</strong> conocer que datos suyos tratamos.</li>
+        <li><strong>Rectificacion:</strong> solicitar la correccion de datos inexactos o incompletos.</li>
+        <li><strong>Supresion ("derecho al olvido"):</strong> solicitar la eliminacion de sus datos cuando ya no sean necesarios para la finalidad para la que fueron recogidos (con las limitaciones que imponga la normativa sanitaria).</li>
+        <li><strong>Oposicion:</strong> oponerse al tratamiento de sus datos en determinadas circunstancias.</li>
+        <li><strong>Limitacion del tratamiento:</strong> solicitar la suspension del tratamiento en determinados supuestos.</li>
+        <li><strong>Portabilidad:</strong> recibir sus datos en formato estructurado y de uso comun.</li>
+        <li><strong>Retirada del consentimiento:</strong> en cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada.</li>
+      </ul>
+      <p>
+        Para ejercer cualquiera de estos derechos, puede dirigirse a: <a href="mailto:info@amgfisio.es">info@amgfisio.es</a>, indicando su nombre, apellidos y el derecho que desea ejercer. Le responderemos en el plazo maximo de 30 dias.
+      </p>
+
+      <h2>8. Reclamacion ante la autoridad de control</h2>
+      <p>
+        Si considera que el tratamiento de sus datos no se ajusta a la normativa vigente, tiene derecho a presentar una reclamacion ante la <strong>Agencia Espanola de Proteccion de Datos (AEPD)</strong>, a traves de su sede electronica en <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>, o en su direccion postal: C/ Jorge Juan, 6, 28001 Madrid.
+      </p>
+
+      <h2>9. Seguridad de los datos</h2>
+      <p>
+        AMG Fisioterapia aplica las medidas tecnicas y organizativas apropiadas para garantizar la seguridad de sus datos personales, conforme al nivel de riesgo existente, incluyendo la proteccion frente al acceso no autorizado, la perdida o la destruccion accidental de datos.
+      </p>
+
+      <p class="legal-date">
+        <strong>Ultima actualizacion:</strong> {updateDate}
+      </p>
+
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .legal-hero {
+    background-color: var(--color-gray-50);
+    padding-block: var(--space-2xl) var(--space-xl);
+    margin-top: 72px;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .legal-hero h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-top: var(--space-sm);
+  }
+
+  .breadcrumb {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .legal-content {
+    padding-block: var(--space-4xl);
+  }
+
+  .container--narrow {
+    max-width: 720px;
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+  }
+
+  .container--narrow h2 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-top: var(--space-3xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .container--narrow p {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow ul {
+    padding-left: var(--space-xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .container--narrow li {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .container--narrow a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .legal-date {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-gray-200);
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+  }
+</style>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /full-gas/
+
+Sitemap: https://amgfisio.es/sitemap-index.xml
