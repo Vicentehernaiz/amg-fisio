@@ -174,13 +174,13 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
         <div class="mega-col">
           <p class="mega-heading">Lesiones frecuentes</p>
           <ul class="mega-list">
-            <li><a href="/fisioterapia-deportiva-valladolid/" class="mega-link">
+            <li><a href="/fisioterapia-deportiva-valladolid/esguinces-distensiones-valladolid/" class="mega-link">
               <span class="mega-link__dot"></span>Esguinces y distensiones
             </a></li>
-            <li><a href="/fisioterapia-deportiva-valladolid/" class="mega-link">
+            <li><a href="/fisioterapia-deportiva-valladolid/tendinopatias-valladolid/" class="mega-link">
               <span class="mega-link__dot"></span>Tendinopatías
             </a></li>
-            <li><a href="/fisioterapia-deportiva-valladolid/" class="mega-link">
+            <li><a href="/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/" class="mega-link">
               <span class="mega-link__dot"></span>Return to Play
             </a></li>
           </ul>
@@ -195,10 +195,8 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
 
   </div><!-- /header__panels -->
 
-</header>
-
-<!-- ── MOBILE MENU (fuera del pill) ──────────── -->
-<div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-label="Menú de navegación">
+  <!-- ── MOBILE MENU (dropdown bajo el pill) ───── -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-label="Menú de navegación">
   <ul class="mobile-menu__list">
     <li>
       <a href="/servicios-fisioterapia/" class="mobile-menu__link">Servicios</a>
@@ -226,6 +224,8 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
         <li><a href="/fisioterapia-deportiva-valladolid/fisioterapia-running-corredores/">Running</a></li>
         <li><a href="/fisioterapia-deportiva-valladolid/fisioterapia-ciclismo-ciclistas/">Ciclismo</a></li>
         <li><a href="/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/">Readaptación</a></li>
+        <li><a href="/fisioterapia-deportiva-valladolid/esguinces-distensiones-valladolid/">Esguinces y distensiones</a></li>
+        <li><a href="/fisioterapia-deportiva-valladolid/tendinopatias-valladolid/">Tendinopatías</a></li>
       </ul>
     </li>
     <li><a href="/fisioterapia-domicilio-valladolid/" class="mobile-menu__link">A Domicilio</a></li>
@@ -241,7 +241,8 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
       {config.contact.phoneDisplay}
     </a>
   </div>
-</div>
+  </div>
+</header>
 
 <style>
 /* =====================================================
@@ -270,6 +271,11 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
   grid-template-rows: 68px 1fr;
   border-radius: 34px;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.35), 0 5px 29.2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* When mobile menu is open, allow dropdown to overflow the pill */
+.header.mobile-open {
+  overflow: visible;
 }
 
 /* ── Bar ── */
@@ -540,24 +546,31 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
 }
 
 /* =====================================================
-   MOBILE MENU (outside the pill)
+   MOBILE MENU (dropdown bajo el pill)
 ===================================================== */
 .mobile-menu {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: calc(var(--z-sticky) - 1);
   background: #181428;
-  padding: 96px var(--container-padding) var(--container-padding);
+  border-radius: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px var(--container-padding);
+  max-height: 70vh;
   overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 10;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
 
 .mobile-menu.is-open {
-  transform: translateX(0);
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobile-menu__list {
@@ -719,7 +732,9 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
       mobileMenu?.classList.remove('is-open');
       mobileMenu?.setAttribute('aria-hidden', 'true');
       toggle?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+      header?.classList.remove('mobile-open');
+      const lines = toggle?.querySelectorAll('.nav-toggle__line');
+      lines?.forEach(l => { (l as HTMLElement).removeAttribute('style'); });
     }
   });
 
@@ -728,7 +743,7 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
     const isOpen = mobileMenu?.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(isOpen));
     mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    header?.classList.toggle('mobile-open', !!isOpen);
 
     const lines = toggle.querySelectorAll('.nav-toggle__line');
     if (isOpen) {

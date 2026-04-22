@@ -1,0 +1,199 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisio Deportiva', url: '/fisioterapia-deportiva-valladolid/' },
+  { name: 'Esguinces y Distensiones', url: '/fisioterapia-deportiva-valladolid/esguinces-distensiones-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Cuánto tarda en curar un esguince de tobillo?',
+    answer: 'Depende directamente del grado de la lesión. Un esguince de grado I (elongación ligamentosa sin rotura) se resuelve en 1-2 semanas con tratamiento fisioterápico adecuado. Un grado II (rotura parcial) requiere entre 3 y 6 semanas. Un grado III (rotura completa) puede necesitar entre 6 y 12 semanas, y en algunos casos tratamiento quirúrgico previo. Estos plazos son orientativos: la evolución real depende de factores individuales como la edad, el nivel de actividad física, el estado previo del tobillo y la adherencia al tratamiento.',
+  },
+  {
+    question: '¿Hay que inmovilizar siempre un esguince?',
+    answer: 'No siempre, y en muchos casos la inmovilización prolongada es contraproducente. La evidencia científica actual apoya la movilización precoz controlada en los esguinces de grado I y muchos de grado II: moverse dentro de los límites del dolor favorece la cicatrización correcta del ligamento, mantiene el tono muscular y reduce el tiempo de recuperación. La inmovilización estricta (escayola, bota rígida) se reserva para esguinces de grado III o cuando hay lesiones asociadas que lo requieran. En AMG evaluamos cada caso individualmente y aplicamos el protocolo más adecuado.',
+  },
+  {
+    question: '¿Cuándo puedo volver al deporte tras un esguince?',
+    answer: 'El retorno al deporte no debe basarse únicamente en el tiempo transcurrido, sino en criterios funcionales objetivos: ausencia de dolor durante los gestos deportivos, recuperación completa del rango de movimiento, simetría de fuerza entre ambos lados, y respuesta propioceptiva adecuada. Volver antes de cumplir estos criterios multiplica el riesgo de re-esguince, que suele ser más grave que el original. En AMG realizamos una valoración funcional antes del alta deportiva para garantizar una vuelta segura.',
+  },
+  {
+    question: '¿La distensión muscular es lo mismo que un desgarro?',
+    answer: 'No exactamente. Son términos de la misma escala de lesión muscular pero de distinta gravedad. Una elongación es una sobreestiramiento sin rotura de fibras. Una distensión implica microroturas de fibras musculares (grado I-II), con dolor localizado, inflamación y leve pérdida de función. Un desgarro (grado III) es una rotura parcial o total del músculo, con dolor intenso, hematoma visible e incapacidad funcional marcada. En todos los casos el tratamiento fisioterápico es clave para guiar la cicatrización correcta del tejido muscular y prevenir la formación de adherencias que aumentan el riesgo de recidiva.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Esguinces y Distensiones en Valladolid',
+  description: 'Tratamiento de esguinces y distensiones musculares en Valladolid. Recuperación rápida y segura con fisioterapia avanzada. AMG Fisioterapia.',
+  url: '/fisioterapia-deportiva-valladolid/esguinces-distensiones-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre tratamiento de esguince en AMG Fisioterapia Valladolid.');
+
+const grados = [
+  {
+    num: 'I',
+    titulo: 'Grado I — Elongación',
+    desc: 'Sobreestiramiento del ligamento o músculo sin rotura de fibras. Dolor leve, inflamación moderada, movilidad conservada. Recuperación en 1-2 semanas con tratamiento adecuado.',
+  },
+  {
+    num: 'II',
+    titulo: 'Grado II — Rotura Parcial',
+    desc: 'Rotura de un número significativo de fibras ligamentosas o musculares. Dolor moderado-intenso, hematoma, inflamación y pérdida parcial de función. Recuperación en 3-6 semanas.',
+  },
+  {
+    num: 'III',
+    titulo: 'Grado III — Rotura Completa',
+    desc: 'Rotura total del ligamento o músculo. Dolor severo, hematoma extenso e incapacidad funcional marcada. Puede requerir valoración quirúrgica. Recuperación de 6 a 12 semanas o más.',
+  },
+];
+---
+
+<BaseLayout
+  title="Esguinces y Distensiones en Valladolid | Fisioterapia AMG"
+  description="Tratamiento de esguinces y distensiones musculares en Valladolid. Recuperación rápida y segura con fisioterapia avanzada. AMG Fisioterapia. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/fisioterapia-deportiva-valladolid/">Fisio Deportiva</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Esguinces y Distensiones</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Esguinces y Distensiones en Valladolid</h1>
+          <p class="page-hero__subtitle">Recuperación rápida y segura de los tejidos blandos del aparato locomotor. Sin precipitarse, sin recaídas.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/rehabilitacion.jpg" alt="Tratamiento de esguinces y distensiones en Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Esguinces y Distensiones: Qué Son y Cómo se Tratan</h2>
+      <div class="prose">
+        <p>Los esguinces y las distensiones musculares son dos de las lesiones del aparato locomotor más frecuentes tanto en deportistas como en personas sedentarias. Aunque comparten algunas características clínicas, afectan a estructuras distintas: los esguinces implican una lesión del ligamento (estructura que conecta hueso con hueso), mientras que las distensiones afectan al músculo o al tendón (estructura que conecta músculo con hueso).</p>
+
+        <p>La articulación más afectada por esguinces es el tobillo, aunque también son muy frecuentes en la rodilla, la muñeca y los dedos. Las distensiones musculares se producen con mayor frecuencia en el isquiotibial, el cuádriceps, los gemelos y el bíceps femoral, siendo lesiones especialmente prevalentes en deportes con aceleraciones bruscas, cambios de dirección y saltos.</p>
+
+        <p>En AMG Fisioterapia aplicamos un protocolo de tratamiento estructurado en fases, adaptado al grado de la lesión, al nivel de actividad del paciente y a sus objetivos de recuperación. El tratamiento en la fase aguda se centra en el control del dolor y la inflamación, la recuperación precoz de la movilidad y la protección del tejido lesionado. A medida que el tejido cicatriza, incorporamos ejercicio terapéutico progresivo para recuperar la fuerza, la propiocepción y la coordinación neuromuscular.</p>
+
+        <h3>La Importancia de No Saltarse las Fases</h3>
+        <p>Uno de los errores más comunes en la recuperación de esguinces y distensiones es volver a la actividad antes de que el tejido esté preparado para soportar las cargas. El dolor desaparece antes de que la cicatrización sea completa: esto lleva a muchos pacientes a retomar la actividad prematuramente, lo que aumenta exponencialmente el riesgo de recidiva. Y la recidiva suele ser peor que la lesión original.</p>
+
+        <p>En AMG no nos quedamos en la fase de "ya no duele". Evaluamos la función de forma objetiva: rango de movimiento completo, simetría de fuerza, respuesta propioceptiva correcta y capacidad para realizar los gestos específicos de la actividad sin compensaciones. Solo cuando se cumplen estos criterios damos el alta al paciente.</p>
+
+        <p>El tiempo medio de recuperación varía en función del grado de la lesión: entre 1 y 2 semanas para un grado I, entre 3 y 6 semanas para un grado II, y entre 6 y 12 semanas para un grado III. En Valladolid, AMG Fisioterapia ofrece un servicio de fisioterapia deportiva con citas en clínica céntrica, con valoración inicial, plan de tratamiento individualizado y seguimiento hasta el retorno a la actividad.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Grados de Lesión</h2>
+      <div class="fases-grid">
+        {grados.map((grado) => (
+          <div class="fase-card">
+            <span class="fase-card__num">{grado.num}</span>
+            <h3 class="fase-card__titulo">{grado.titulo}</h3>
+            <p class="fase-card__desc">{grado.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Esguinces y Distensiones</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-esguinces">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes un esguince o una distensión?</h2>
+      <p class="cta-section__subtitle">Trátalo bien desde el principio. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .fases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .fase-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); text-align: center; }
+  .fase-card__num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-md); }
+  .fase-card__titulo { font-size: var(--text-lg); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .fase-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-cream); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 1024px) { .fases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .fases-grid { grid-template-columns: 1fr; } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

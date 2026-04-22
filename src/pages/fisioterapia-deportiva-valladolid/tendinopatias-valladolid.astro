@@ -1,0 +1,188 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisio Deportiva', url: '/fisioterapia-deportiva-valladolid/' },
+  { name: 'Tendinopatías', url: '/fisioterapia-deportiva-valladolid/tendinopatias-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿La tendinitis y la tendinopatía son lo mismo?',
+    answer: 'No. La tendinitis implica inflamación aguda del tendón, algo que ocurre puntualmente y en fases muy iniciales. La tendinopatía es el término correcto para la mayoría de problemas crónicos del tendón: se trata de una degeneración de la estructura del colágeno, no de una inflamación sostenida. Esta diferencia es fundamental porque el tratamiento es distinto: los antiinflamatorios apenas ayudan en la tendinopatía crónica, mientras que el ejercicio excéntrico progresivo sí tiene evidencia sólida.',
+  },
+  {
+    question: '¿El reposo cura la tendinopatía?',
+    answer: 'No. El reposo total es uno de los errores más comunes en el manejo de las tendinopatías. El tendón necesita carga mecánica para reorganizar su estructura de colágeno. El reposo absoluto puede aliviar el dolor temporalmente, pero no resuelve la degeneración subyacente y el problema reaparece en cuanto se retoma la actividad. La base del tratamiento es el ejercicio excéntrico y de carga progresiva, que estimula la síntesis de colágeno de calidad y restaura la capacidad de carga del tendón.',
+  },
+  {
+    question: '¿Cuánto tiempo tarda en curar una tendinopatía?',
+    answer: 'Es muy variable. Una tendinopatía leve y de corta evolución puede resolverse en 6-8 semanas con un buen protocolo de carga progresiva. Las tendinopatías crónicas (meses o años de evolución) requieren entre 3 y 6 meses de trabajo constante, a veces más. La ubicación también influye: el tendón de Aquiles y el rotuliano responden bien al ejercicio excéntrico, pero necesitan tiempo. El factor más determinante es el cumplimiento del programa de ejercicio prescrito, más que cualquier técnica pasiva.',
+  },
+  {
+    question: '¿Puedo seguir entrenando con una tendinopatía?',
+    answer: 'Depende del grado y la fase. En tendinopatías reactivas (fase aguda con mucho dolor) puede ser necesaria una reducción significativa de la carga durante unos días. Pero en la inmensa mayoría de casos, el objetivo es modificar la carga, no eliminarla. Continuar entrenando con una gestión adecuada del volumen e intensidad es parte del tratamiento, no un obstáculo. El reposo total prolonga la recuperación. En AMG diseñamos un plan que te permite mantener la actividad física mientras el tendón se recupera.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Tendinopatías en Valladolid',
+  description: 'Tratamiento de tendinopatías en Valladolid. Tendinitis rotuliana, aquílea, del manguito, epicondilitis. Fisioterapia avanzada con evidencia científica. AMG Fisioterapia.',
+  url: '/fisioterapia-deportiva-valladolid/tendinopatias-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, me gustaría información sobre tratamiento de tendinopatía en AMG Fisioterapia Valladolid.');
+
+const tendones = [
+  { num: '01', titulo: 'Tendón de Aquiles', desc: 'La tendinopatía aquílea es muy frecuente en corredores y deportistas de impacto. Cursa con dolor en la inserción del talón o en el cuerpo del tendón, rigidez matutina y dolor al inicio del ejercicio.' },
+  { num: '02', titulo: 'Tendón Rotuliano', desc: 'Conocida como "rodilla del saltador", afecta especialmente a jugadores de baloncesto, voleibol y atletas de salto. El dolor se localiza en el polo inferior de la rótula y empeora con la carga.' },
+  { num: '03', titulo: 'Manguito Rotador', desc: 'Las tendinopatías del supraespinoso y del resto del manguito causan dolor en el hombro con los movimientos por encima de la cabeza. Frecuente en nadadores, tenistas y deportistas de lanzamiento.' },
+  { num: '04', titulo: 'Epicondilitis Lateral', desc: 'El "codo del tenista" es una tendinopatía de los extensores del carpo en su inserción en el epicóndilo lateral. Duele con el agarre y la extensión de muñeca. También afecta a personas con trabajos manuales repetitivos.' },
+];
+---
+
+<BaseLayout
+  title="Tendinopatías en Valladolid | Tratamiento de Tendones | AMG"
+  description="Tratamiento de tendinopatías en Valladolid. Tendinitis rotuliana, aquílea, del manguito, epicondilitis. Fisioterapia avanzada con evidencia científica. AMG. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/fisioterapia-deportiva-valladolid/">Fisio Deportiva</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Tendinopatías</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Tendinopatías en Valladolid</h1>
+          <p class="page-hero__subtitle">El tendón no se inflama: se degenera. Entender esto cambia el tratamiento. En AMG aplicamos el protocolo correcto.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/fisioterapia-deportiva.jpg" alt="Tratamiento de tendinopatías en Valladolid AMG Fisioterapia" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Tendinopatía: Más Allá de la Tendinitis</h2>
+      <div class="prose">
+        <p>Durante décadas, cualquier dolor en un tendón se llamaba "tendinitis", dando a entender que había inflamación y que los antiinflamatorios eran la solución. La evidencia científica actual ha cambiado esta visión por completo. El término correcto para la mayoría de los problemas crónicos del tendón es <strong>tendinopatía</strong>, que describe una degeneración de la estructura de colágeno del tendón, no una inflamación sostenida.</p>
+
+        <p>Esta diferencia no es semántica: tiene implicaciones directas en el tratamiento. Los antiinflamatorios (AINES) apenas tienen efecto en las tendinopatías crónicas. El reposo absoluto tampoco resuelve el problema: el tendón necesita carga mecánica para reorganizar su estructura. El tratamiento con mayor evidencia científica es el <strong>ejercicio de carga progresiva</strong>, especialmente el trabajo excéntrico, combinado con una correcta gestión de la carga de entrenamiento.</p>
+
+        <p>Las tendinopatías aparecen cuando la demanda mecánica sobre el tendón supera su capacidad de adaptación. Esto ocurre con aumentos bruscos de volumen o intensidad de entrenamiento, cambios de superficie o calzado, deficiencias de fuerza en los músculos que controlan la carga del tendón, o patrones biomecánicos que sobrecargan una zona concreta.</p>
+
+        <h3>Diagnóstico y Valoración en AMG</h3>
+        <p>En AMG realizamos una valoración completa que incluye la localización y comportamiento del dolor (escala de dolor de Curwin-Stanish, test de la carga), la capacidad de carga del tendón mediante tests funcionales, el análisis biomecánico del gesto deportivo y la historia de cargas de entrenamiento. Esta valoración nos permite diseñar un programa de ejercicio individualizado que carga el tendón de forma progresiva, dentro del umbral de dolor tolerable, para estimular la síntesis de colágeno de calidad.</p>
+
+        <p>Complementamos el ejercicio con otras técnicas cuando están indicadas: ondas de choque focales, electroterapia, trabajo de tejidos blandos o taping neuromuscular. Pero siempre con el ejercicio como eje central del tratamiento, no como complemento secundario.</p>
+
+        <p>En Valladolid, AMG Fisioterapia ofrece un abordaje de las tendinopatías basado en la evidencia científica más actualizada. Si llevas semanas o meses con dolor en un tendón que no mejora, es el momento de hacer las cosas de otra manera.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Tendinopatías más Frecuentes</h2>
+      <div class="fases-grid">
+        {tendones.map((tendón) => (
+          <div class="fase-card">
+            <span class="fase-card__num">{tendón.num}</span>
+            <h3 class="fase-card__titulo">{tendón.titulo}</h3>
+            <p class="fase-card__desc">{tendón.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Tendinopatías</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-tendinopatias">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes dolor en un tendón?</h2>
+      <p class="cta-section__subtitle">Empieza el protocolo correcto. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .fases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .fase-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); text-align: center; }
+  .fase-card__num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-md); }
+  .fase-card__titulo { font-size: var(--text-lg); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .fase-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-cream); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; gap: var(--space-sm); padding: var(--space-md) var(--space-2xl); background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-base); border-radius: var(--radius-full); transition: all var(--duration-fast); }
+  .btn-whatsapp:hover { background: var(--color-gray-100); transform: translateY(-2px); }
+  @media (max-width: 1024px) { .fases-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .fases-grid { grid-template-columns: 1fr; } }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+</style>

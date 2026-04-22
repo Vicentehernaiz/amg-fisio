@@ -1807,6 +1807,26 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   .technique-slide__img { height: 200px; }
 
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .services,
+  .techniques,
+  .about,
+  .stats,
+  .pricing,
+  .contact {
+    padding: 32px 20px;
+    margin: 6px;
+  }
+
+  .stat-label { font-size: clamp(0.85rem, 3vw, 1.25rem); }
+
+  .pricing-card { padding: 20px; }
+
+  .contact-btns .btn-primary,
+  .contact-btns .btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1819,6 +1839,14 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   .stats-grid { grid-template-columns: 1fr 1fr; }
 
   .stat-value { font-size: var(--text-4xl); }
+}
+
+@media (max-width: 480px) {
+  .hero { padding-top: 68px; }
+
+  .hero__pain-card { padding: 16px; }
+
+  .hero__pain-label { font-size: 18px; }
 }
 
 /* prefers-reduced-motion */
