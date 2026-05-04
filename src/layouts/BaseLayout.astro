@@ -117,12 +117,14 @@ const allSchemas = schema
     </svg>
   </a>
 
-  <!-- Service Worker Registration -->
+  <!-- Service Worker cleanup: unregister any previously installed SW so
+       users on the broken cache-first build recover. The /sw.js shipped
+       at this path is a killswitch (clears caches + unregisters). -->
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      navigator.serviceWorker.getRegistrations().then((regs) => {
+        regs.forEach((reg) => reg.unregister());
+      }).catch(() => {});
     }
   </script>
 
