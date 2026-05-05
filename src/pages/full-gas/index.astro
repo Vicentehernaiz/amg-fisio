@@ -158,6 +158,17 @@ const config = getConfig();
 
     .admin__header h1 { font-size: 1.5rem; }
 
+    .admin__notice {
+      background: #fef9e7;
+      border: 1px solid #f7d774;
+      color: #856404;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
     .admin__logout {
       padding: 8px 16px;
       font-size: 0.875rem;
@@ -612,6 +623,10 @@ const config = getConfig();
       <div class="admin__header">
         <h1>Panel Admin — AMG Fisioterapia</h1>
         <a href="/full-gas/logout/" class="admin__logout">Cerrar sesion</a>
+      </div>
+
+      <div class="admin__notice">
+        <strong>Nota:</strong> los cambios se guardan en GitHub y tardan ~1 minuto en estar visibles en el sitio público mientras Vercel reconstruye.
       </div>
 
       <!-- DASHBOARD CARDS -->
