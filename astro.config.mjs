@@ -7,6 +7,9 @@ export default defineConfig({
   output: 'static',
   compressHTML: true,
   adapter: vercel(),
+  security: {
+    checkOrigin: false,
+  },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/full-gas'),
