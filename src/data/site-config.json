@@ -6,7 +6,7 @@
     "colegiadoNum": "XXXX",
     "description": "Clinica de Fisioterapia Premium en Valladolid Centro. Tratamientos personalizados de fisioterapia deportiva, columna, rehabilitacion neurologica y traumatologica.",
     "slogan": "Fisioterapia Avanzada en Valladolid Centro",
-    "bookingUrl": ""
+    "bookingUrl": "https://amg-fisio.vercel.app/servicios-fisioterapia/rehabilitacion-rodilla-valladolid/"
   },
   "contact": {
     "phone": "+34 600 000 000",
@@ -26,9 +26,18 @@
   "hours": {
     "isOpen": true,
     "schedule": [
-      { "days": "Lunes a Viernes", "hours": "09:00 - 14:00 / 16:00 - 20:00" },
-      { "days": "Sabado", "hours": "09:00 - 14:00" },
-      { "days": "Domingo", "hours": "Cerrado" }
+      {
+        "days": "Lunes a Viernes",
+        "hours": "09:00 - 14:00 / 16:00 - 20:00"
+      },
+      {
+        "days": "Sabado",
+        "hours": "09:00 - 14:00"
+      },
+      {
+        "days": "Domingo",
+        "hours": "Cerrado"
+      }
     ],
     "whatsappHours": "Lunes a Viernes 09:00 - 20:00",
     "callHours": "Lunes a Viernes 09:00 - 14:00 / 16:00 - 20:00"
@@ -50,10 +59,26 @@
       "label": "Bonos de sesiones",
       "description": "Ahorra con bonos de varias sesiones. Precio por sesión más bajo.",
       "tiers": [
-        {"sessions": 1, "pricePerSession": 35, "label": "Sesión suelta"},
-        {"sessions": 5, "pricePerSession": 32, "label": "Bono Básico"},
-        {"sessions": 10, "pricePerSession": 30, "label": "Bono Estándar"},
-        {"sessions": 20, "pricePerSession": 28, "label": "Bono Intensivo"}
+        {
+          "sessions": 1,
+          "pricePerSession": 35,
+          "label": "Sesión suelta"
+        },
+        {
+          "sessions": 5,
+          "pricePerSession": 32,
+          "label": "Bono Básico"
+        },
+        {
+          "sessions": 10,
+          "pricePerSession": 30,
+          "label": "Bono Estándar"
+        },
+        {
+          "sessions": 20,
+          "pricePerSession": 28,
+          "label": "Bono Intensivo"
+        }
       ]
     }
   },
@@ -79,13 +104,34 @@
     "googleBusiness": "https://g.page/amgfisio"
   },
   "blogCategories": [
-    { "slug": "consejos", "label": "Consejos de salud" },
-    { "slug": "fisioterapia-deportiva", "label": "Fisioterapia deportiva" },
-    { "slug": "dolor-cronico", "label": "Dolor crónico" },
-    { "slug": "rehabilitacion", "label": "Rehabilitación" },
-    { "slug": "tecnicas", "label": "Técnicas" },
-    { "slug": "prevencion", "label": "Prevención" },
-    { "slug": "nutricion", "label": "Nutrición" }
+    {
+      "slug": "consejos",
+      "label": "Consejos de salud"
+    },
+    {
+      "slug": "fisioterapia-deportiva",
+      "label": "Fisioterapia deportiva"
+    },
+    {
+      "slug": "dolor-cronico",
+      "label": "Dolor crónico"
+    },
+    {
+      "slug": "rehabilitacion",
+      "label": "Rehabilitación"
+    },
+    {
+      "slug": "tecnicas",
+      "label": "Técnicas"
+    },
+    {
+      "slug": "prevencion",
+      "label": "Prevención"
+    },
+    {
+      "slug": "nutricion",
+      "label": "Nutrición"
+    }
   ],
   "seo": {
     "defaultTitle": "AMG Fisioterapia | Fisioterapia Avanzada en Valladolid Centro",
