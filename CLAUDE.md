@@ -57,7 +57,7 @@ Seguir estrictamente el mapa de URLs del documento SEO v2:
 
 ## Panel Admin
 - URL: /full-gas (no indexable)
-- Contrasena: pogacar-es-my-dios
+- Contrasena: pogacar-es-mi-dios
 - Funcionalidad: editar config del negocio, gestionar blog
 
 ## Precios

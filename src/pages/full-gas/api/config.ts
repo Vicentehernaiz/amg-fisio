@@ -22,7 +22,7 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
 
 function checkAuth(request: Request): boolean {
   const cookie = request.headers.get('cookie') || '';
-  return cookie.includes('amg-admin-auth=pogacar-es-my-dios');
+  return cookie.includes('amg-admin-auth=pogacar-es-mi-dios');
 }
 
 export const GET: APIRoute = async ({ request }) => {
