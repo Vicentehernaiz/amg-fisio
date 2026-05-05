@@ -41,3 +41,13 @@ export function getPhoneLink() {
 export function getEmailLink() {
   return `mailto:${siteConfig.contact.email}`;
 }
+
+export function getBookingLink() {
+  const url = (siteConfig.business as { bookingUrl?: string }).bookingUrl;
+  return url && url.trim() !== '' ? url : '/#reservar';
+}
+
+export function isBookingExternal() {
+  const link = getBookingLink();
+  return link.startsWith('http://') || link.startsWith('https://');
+}

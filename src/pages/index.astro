@@ -4,13 +4,16 @@ export const prerender = true;
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
-import { getConfig, getWhatsAppLink, getPhoneLink } from '@utils/config';
+import { getConfig, getWhatsAppLink, getPhoneLink, getBookingLink, isBookingExternal } from '@utils/config';
 import { Star } from '@lucide/astro';
 
 const config = getConfig();
 const waLink = getWhatsAppLink('Hola, me gustaría reservar una primera consulta en AMG Fisioterapia.');
 const waClinLink = getWhatsAppLink('Hola, me gustaría reservar una sesión en clínica.');
 const waDomLink = getWhatsAppLink('Hola, me gustaría reservar una sesión a domicilio.');
+const bookingHref = getBookingLink();
+const bookingExternal = isBookingExternal();
+const bookingLinkAttrs = bookingExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
 // Bono starting price: first tier with sessions > 1
 const bonoTiers = config.pricing.bonos.tiers || [];
@@ -64,9 +67,9 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
         </div>
 
         <div class="hero__ctas" id="hero-ctas">
-          <button class="hero__cta-primary" type="button">
+          <a class="hero__cta-primary" href={bookingHref} {...bookingLinkAttrs}>
             Reservar tu cita
-          </button>
+          </a>
         </div>
       </div>
 
@@ -474,7 +477,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
             Primera consulta sin compromiso. Cuéntanos qué te duele y te decimos cómo podemos ayudarte.
           </p>
           <div class="contact-btns">
-            <a href="/#reservar" class="btn-primary">
+            <a href={bookingHref} class="btn-primary" {...bookingLinkAttrs}>
               Reservar cita
             </a>
             <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">

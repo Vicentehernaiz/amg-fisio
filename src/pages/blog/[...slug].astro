@@ -6,6 +6,7 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import { getCollection, render } from 'astro:content';
 import { generateBreadcrumbSchema } from '@utils/seo';
+import { getBookingLink, isBookingExternal } from '@utils/config';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -20,6 +21,10 @@ const { Content } = await render(post);
 
 const seoTitle = post.data.seo?.title || `${post.data.title} | AMG Fisioterapia Blog`;
 const seoDesc = post.data.seo?.description || post.data.description;
+
+const bookingHref = getBookingLink();
+const bookingExternal = isBookingExternal();
+const bookingLinkAttrs = bookingExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
 const breadcrumbs = generateBreadcrumbSchema([
   { name: 'Inicio', url: '/' },
@@ -78,7 +83,7 @@ const articleSchema = {
 
       <div class="article__cta">
         <p>Necesitas ayuda con tu problema? <strong>Reserva tu cita</strong> y te ayudamos.</p>
-        <a href="/#reservar" class="btn btn--primary">Reservar cita</a>
+        <a href={bookingHref} class="btn btn--primary" {...bookingLinkAttrs}>Reservar cita</a>
       </div>
     </div>
   </article>

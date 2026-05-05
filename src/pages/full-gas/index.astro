@@ -690,6 +690,13 @@ const config = getConfig();
             <label>Horarios (texto libre)</label>
             <textarea name="hours_text" placeholder="Lunes a Viernes: 09:00 - 20:00">{config.hours.whatsappHours}</textarea>
           </div>
+          <div class="admin__field">
+            <label>URL para reservar cita</label>
+            <input type="url" name="booking_url" value={config.business.bookingUrl || ''} placeholder="https://tu-software-de-reservas.com/amg-fisio" />
+            <small style="display:block; color:#888; font-size:0.78rem; margin-top:4px;">
+              Donde apuntan los botones "Reservar cita" del sitio. Déjalo vacío para usar el ancla por defecto (/#reservar).
+            </small>
+          </div>
           <div style="display:flex; align-items:center;">
             <button type="submit" class="admin__save" id="config-save-btn">
               Guardar cambios
@@ -965,6 +972,9 @@ const config = getConfig();
 
         const fd = new FormData(configForm);
         const payload = {
+          business: {
+            bookingUrl: fd.get('booking_url') || '',
+          },
           contact: {
             phoneDisplay: fd.get('phone_display'),
             phone: fd.get('phone'),
