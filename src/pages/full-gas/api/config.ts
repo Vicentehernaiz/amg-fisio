@@ -2,6 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { ghGetFile, ghPutText } from '@utils/github';
+import { checkAdminAuth } from '@utils/auth';
 
 const CONFIG_PATH = 'src/data/site-config.json';
 
@@ -20,8 +21,7 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
 }
 
 function checkAuth(request: Request): boolean {
-  const cookie = request.headers.get('cookie') || '';
-  return cookie.includes('amg-admin-auth=pogacar-es-mi-dios');
+  return checkAdminAuth(request);
 }
 
 function unauthorized() {

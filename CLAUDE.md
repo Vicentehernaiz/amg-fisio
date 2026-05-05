@@ -57,7 +57,7 @@ Seguir estrictamente el mapa de URLs del documento SEO v2:
 
 ## Panel Admin
 - URL: /full-gas (no indexable)
-- Contrasena: pogacar-es-mi-dios
+- Contrasena: configurada en la variable de entorno `ADMIN_PASSWORD` (Vercel project settings y `.env` local). NUNCA commitear el valor.
 - Funcionalidad: editar config del negocio, gestionar blog
 
 ## Precios

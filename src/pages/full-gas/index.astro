@@ -2,26 +2,30 @@
 export const prerender = false;
 
 import { getConfig } from '@utils/config';
+import { getAdminPassword, checkAdminAuth, getAdminCookieName } from '@utils/auth';
 
-const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || 'pogacar-es-mi-dios';
-
-// Check auth via cookie
-const authCookie = Astro.cookies.get('amg-admin-auth');
-const isAuthenticated = authCookie?.value === ADMIN_PASSWORD;
+const ADMIN_PASSWORD = getAdminPassword();
+const isAuthenticated = checkAdminAuth(Astro.request);
+let loginError: string | null = null;
 
 // Handle login POST
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
   const password = formData.get('password');
 
-  if (password === ADMIN_PASSWORD) {
-    Astro.cookies.set('amg-admin-auth', ADMIN_PASSWORD, {
+  if (!ADMIN_PASSWORD) {
+    loginError = 'Servidor mal configurado: falta ADMIN_PASSWORD en variables de entorno.';
+  } else if (typeof password === 'string' && password === ADMIN_PASSWORD) {
+    Astro.cookies.set(getAdminCookieName(), ADMIN_PASSWORD, {
       path: '/full-gas',
       httpOnly: true,
       secure: import.meta.env.PROD,
+      sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
     return Astro.redirect('/full-gas/');
+  } else {
+    loginError = 'Contraseña incorrecta.';
   }
 }
 
@@ -124,6 +128,17 @@ const config = getConfig();
     .login__card .login__toggle:focus-visible {
       outline: 2px solid #6a994d;
       outline-offset: 1px;
+    }
+
+    .login__error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      text-align: left;
     }
 
     .login__card button {
@@ -574,6 +589,7 @@ const config = getConfig();
       <div class="login__card">
         <h1>Panel Admin</h1>
         <p>AMG Fisioterapia</p>
+        {loginError && <p class="login__error">{loginError}</p>}
         <form method="POST">
           <div class="login__input-wrap">
             <input
