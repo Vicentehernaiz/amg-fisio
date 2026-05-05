@@ -2,7 +2,7 @@
 title: "Bienvenidos a AMG Fisioterapia"
 description: "Te presentamos nuestra clinica de fisioterapia en Valladolid Centro. Conoce nuestros servicios, tecnicas y por que somos diferentes."
 pubDate: 2026-04-20
-author: "Alberto Munoz Gonzalez"
+author: "Alberto Muñoz Gonzalez"
 tags: ["fisioterapia", "valladolid", "presentacion"]
 category: "consejos"
 image: "/images/terapia-manual.png"
@@ -10,13 +10,13 @@ imageAlt: "Clinica AMG Fisioterapia en Valladolid Centro"
 draft: false
 seo:
   title: "Bienvenidos a AMG Fisioterapia Valladolid | Blog"
-  description: "Descubre AMG Fisioterapia, tu clinica de fisioterapia avanzada en Valladolid Centro. Tratamientos personalizados de 45-60 minutos."
+  description: "Descubre AMG Fisioterapia, tu clinica de fisioterapia avanzada en Valladolid Centro. Tratamientos personalizados de 45 min sesión."
   keywords: ["fisioterapia valladolid", "clinica fisioterapia", "amg fisio"]
 ---
 
 ## Tu clinica de fisioterapia en Valladolid Centro
 
-Bienvenidos al blog de **AMG Fisioterapia**. Soy Alberto Munoz Gonzalez, fisioterapeuta colegiado y director clinico, y quiero presentarte lo que hacemos y por que lo hacemos diferente.
+Bienvenidos al blog de **AMG Fisioterapia**. Soy Alberto Muñoz Gonzalez, fisioterapeuta colegiado y director clinico, y quiero presentarte lo que hacemos y por que lo hacemos diferente.
 
 ### Sesiones sin prisas, sin interrupciones
 

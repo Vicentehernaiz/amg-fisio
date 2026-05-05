@@ -2,7 +2,7 @@
 title: "Beneficios de la Fisioterapia Deportiva para el Deportista Amateur"
 description: "La fisioterapia deportiva no es solo para élites. Descubre cómo puede mejorar tu rendimiento, reducir lesiones y alargar tu vida deportiva."
 pubDate: 2026-04-10
-author: "Alberto Munoz Gonzalez"
+author: "Alberto Muñoz Gonzalez"
 tags: ["fisioterapia-deportiva", "running", "prevención", "valladolid", "deporte"]
 category: "fisioterapia-deportiva"
 image: "/images/fisioterapia-deportiva.jpg"

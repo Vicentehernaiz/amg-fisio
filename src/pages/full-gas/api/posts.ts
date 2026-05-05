@@ -75,7 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
     const safeSlug = String(slug).replace(/[^a-z0-9-]/gi, '-').toLowerCase();
     const today = new Date().toISOString().split('T')[0];
-    const frontmatter = `---\ntitle: "${title}"\ndescription: "${description || ''}"\npubDate: ${today}\nauthor: "Alberto Munoz Gonzalez"\ntags: ${JSON.stringify(tags || [])}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${content}`;
+    const frontmatter = `---\ntitle: "${title}"\ndescription: "${description || ''}"\npubDate: ${today}\nauthor: "Alberto Muñoz Gonzalez"\ntags: ${JSON.stringify(tags || [])}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${content}`;
     await ghPutText(`${POSTS_DIR}/${safeSlug}.md`, frontmatter, `blog: create post "${title}"`);
     return new Response(JSON.stringify({ success: true, slug: safeSlug }), {
       headers: { 'Content-Type': 'application/json' },

@@ -94,7 +94,7 @@ export function generateLocalBusinessSchema() {
           itemOffered: {
             '@type': 'Service',
             name: 'Sesion de Fisioterapia en Clinica',
-            description: 'Sesion individualizada de 45-60 minutos',
+            description: 'Sesion individualizada de 45 min sesión',
           },
           price: config.pricing.clinica.price,
           priceCurrency: 'EUR',
@@ -104,7 +104,7 @@ export function generateLocalBusinessSchema() {
           itemOffered: {
             '@type': 'Service',
             name: 'Fisioterapia a Domicilio',
-            description: 'Sesion a domicilio de 45-60 minutos en Valladolid',
+            description: 'Sesion a domicilio de 45 min sesión en Valladolid',
           },
           price: config.pricing.domicilio.price,
           priceCurrency: 'EUR',

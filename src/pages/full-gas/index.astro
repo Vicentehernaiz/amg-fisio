@@ -1536,7 +1536,7 @@ const config = getConfig();
           if (mode === 'edit') {
             const originalSlug = editorOriginalSlug?.value || slug;
             const pubDate = originalPubDate || new Date().toISOString().split('T')[0];
-            const fullContent = `---\ntitle: "${title}"\ndescription: "${description}"\npubDate: ${pubDate}\nauthor: "Alberto Munoz Gonzalez"\ntags: ${JSON.stringify(tags)}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${body}`;
+            const fullContent = `---\ntitle: "${title}"\ndescription: "${description}"\npubDate: ${pubDate}\nauthor: "Alberto Muñoz Gonzalez"\ntags: ${JSON.stringify(tags)}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${body}`;
             res = await fetch(`/full-gas/api/post/${originalSlug}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },

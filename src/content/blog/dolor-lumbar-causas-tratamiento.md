@@ -2,7 +2,7 @@
 title: "Dolor Lumbar: Causas, Síntomas y Tratamiento Fisioterapéutico"
 description: "Guía completa sobre el dolor lumbar: por qué aparece, cuándo preocuparse y cómo la fisioterapia puede ayudarte a recuperarte."
 pubDate: 2026-04-15
-author: "Alberto Munoz Gonzalez"
+author: "Alberto Muñoz Gonzalez"
 tags: ["lumbalgia", "dolor-espalda", "fisioterapia", "valladolid"]
 category: "dolor-cronico"
 image: "/images/lumbalgia.jpg"

@@ -1,8 +1,8 @@
 {
   "business": {
     "name": "AMG Fisioterapia",
-    "legalName": "Alberto Munoz Gonzalez - AMG Fisioterapia",
-    "owner": "Alberto Munoz Gonzalez",
+    "legalName": "Alberto Muñoz Gonzalez - AMG Fisioterapia",
+    "owner": "Alberto Muñoz Gonzalez",
     "colegiadoNum": "XXXX",
     "description": "Clinica de Fisioterapia Premium en Valladolid Centro. Tratamientos personalizados de fisioterapia deportiva, columna, rehabilitacion neurologica y traumatologica.",
     "slogan": "Fisioterapia Avanzada en Valladolid Centro",
@@ -46,13 +46,13 @@
     "clinica": {
       "price": 35,
       "label": "Sesion en clinica",
-      "duration": "45-60 min",
+      "duration": "45 min sesión",
       "description": "Sesion individual en nuestro centro de Valladolid"
     },
     "domicilio": {
       "price": 45,
       "label": "Sesion a domicilio",
-      "duration": "45-60 min",
+      "duration": "45 min sesión",
       "description": "Nos desplazamos a tu casa en Valladolid y provincia"
     },
     "bonos": {
@@ -83,11 +83,11 @@
     }
   },
   "stats": {
-    "yearsExperience": 7,
+    "yearsExperience": 5,
     "patientsRecovered": 450,
     "manualTherapyHours": 10000,
     "googleRating": 4.9,
-    "sessionDuration": "45-60 min"
+    "sessionDuration": "45 min sesión"
   },
   "team": [
     {
@@ -95,7 +95,7 @@
       "name": "Alberto Muñoz González",
       "role": "Fisioterapeuta Colegiado",
       "colegiado": "XXXX",
-      "description": "Especialista en fisioterapia deportiva y terapia manual con más de 7 años de experiencia ayudando a pacientes a recuperar su movilidad y calidad de vida.",
+      "description": "Especialista en fisioterapia deportiva y terapia manual con más de 5 años de experiencia ayudando a pacientes a recuperar su movilidad y calidad de vida.",
       "photo": "/images/alberto.jpg"
     }
   ],
@@ -135,7 +135,7 @@
   ],
   "seo": {
     "defaultTitle": "AMG Fisioterapia | Fisioterapia Avanzada en Valladolid Centro",
-    "defaultDescription": "Clinica de fisioterapia en Valladolid Centro. Especialistas en fisioterapia deportiva, dolor de espalda, rehabilitacion y mas. Sesiones de 45-60 min personalizadas. Pide cita.",
+    "defaultDescription": "Clinica de fisioterapia en Valladolid Centro. Especialistas en fisioterapia deportiva, dolor de espalda, rehabilitacion y mas. Sesiones de 45 min sesión personalizadas. Pide cita.",
     "defaultImage": "/images/og-default.jpg",
     "locale": "es_ES"
   }

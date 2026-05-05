@@ -2,7 +2,7 @@
 title: "Punción Seca: Qué es, Para Qué Sirve y Qué Esperar en la Sesión"
 description: "Todo lo que necesitas saber sobre la punción seca: qué es, en qué se diferencia de la acupuntura, para qué sirve y cómo es la experiencia en una sesión real."
 pubDate: 2026-04-05
-author: "Alberto Munoz Gonzalez"
+author: "Alberto Muñoz Gonzalez"
 tags: ["puncion-seca", "puntos-gatillo", "tecnicas", "fisioterapia", "valladolid"]
 category: "tecnicas"
 image: "/images/puncion-seca.jpg"

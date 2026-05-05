@@ -7,7 +7,7 @@ const blog = defineCollection({
     description: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().default('Alberto Munoz Gonzalez'),
+    author: z.string().default('Alberto Muñoz Gonzalez'),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     tags: z.array(z.string()).default([]),
