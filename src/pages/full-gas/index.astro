@@ -513,6 +513,115 @@ const config = getConfig();
       .admin__icon-btn svg { display: none; }
     }
 
+    /* Block-based content editor */
+    .block-help {
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 0.75rem;
+    }
+    .blocks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .blocks-list:empty::before {
+      content: 'Sin bloques. Añade el primero abajo.';
+      display: block;
+      padding: 1.5rem;
+      text-align: center;
+      color: #aaa;
+      font-size: 0.85rem;
+      background: #faf9f7;
+      border: 1.5px dashed #e0e0e0;
+      border-radius: 10px;
+    }
+    .block {
+      background: #faf9f7;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 0.75rem;
+    }
+    .block--image { background: #f5f3ef; }
+    .block__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .block__type {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #504573;
+      text-transform: uppercase;
+    }
+    .block__controls { display: flex; gap: 4px; }
+    .block__ctrl {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d8d4cc;
+      background: white;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #555;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .block__ctrl:hover:not(:disabled) { background: #504573; color: white; border-color: #504573; }
+    .block__ctrl:disabled { opacity: 0.35; cursor: not-allowed; }
+    .block__ctrl--danger:hover:not(:disabled) { background: #D64545; border-color: #D64545; }
+    .block__textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 10px 12px;
+      border: 1.5px solid #dbdbdb;
+      border-radius: 8px;
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    .block__textarea:focus { outline: none; border-color: #6a994d; }
+    .block__file {
+      width: 100%;
+      padding: 0.5rem 0;
+      font-size: 0.85rem;
+    }
+    .block__preview {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 8px;
+      display: block;
+      margin: 0.5rem 0;
+      object-fit: cover;
+    }
+    .block__alt {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #dbdbdb;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    .block__alt:focus { outline: none; border-color: #6a994d; }
+    .block__status {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 4px;
+    }
+    .block__status--pending { color: #b87000; }
+    .block__status--uploaded { color: #35573D; }
+    .blocks-add {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
     /* Bonos tiers */
     .bonos-tier-row {
       display: grid;
@@ -920,8 +1029,13 @@ const config = getConfig();
             <input type="text" id="editor-tags" placeholder="fisioterapia, lumbar, ejercicios" />
           </div>
           <div class="admin__field">
-            <label>Contenido Markdown</label>
-            <textarea class="admin__field--code" id="editor-content" placeholder="## Introduccion&#10;&#10;Escribe aqui el contenido en Markdown..."></textarea>
+            <label>Contenido (bloques de texto e imagen)</label>
+            <p class="block-help">Añade bloques en el orden que quieras que se muestren en el post. Texto = markdown estándar. Imagen = sube una foto desde tu ordenador.</p>
+            <div class="blocks-list" id="blocks-list"></div>
+            <div class="blocks-add">
+              <button type="button" class="admin__btn admin__btn--sm" id="btn-add-text-block">+ Bloque de texto</button>
+              <button type="button" class="admin__btn admin__btn--sm" id="btn-add-image-block">+ Bloque de imagen</button>
+            </div>
           </div>
 
           <div class="admin__editor-actions">
@@ -1087,7 +1201,7 @@ const config = getConfig();
     }
 
     // =====================================
-    // EDITOR DE POST
+    // EDITOR DE POST (block-based)
     // =====================================
     const editor = document.getElementById('post-editor');
     const editorMode = document.getElementById('editor-mode');
@@ -1098,9 +1212,184 @@ const config = getConfig();
     const editorDesc = document.getElementById('editor-description');
     const editorCategory = document.getElementById('editor-category');
     const editorTags = document.getElementById('editor-tags');
-    const editorContent = document.getElementById('editor-content');
+    const blocksList = document.getElementById('blocks-list');
     const postSpinner = document.getElementById('post-spinner');
     const postFeedback = document.getElementById('post-feedback');
+
+    // Block state
+    let blocks = []; // { id, type: 'text'|'image', content?, file?, url?, alt?, status? }
+    let nextBlockId = 1;
+    // Per-edit metadata so editing preserves original pubDate
+    let originalPubDate = '';
+
+    const escapeHtml = (s) => String(s ?? '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    const escapeAttr = escapeHtml;
+
+    function renderBlocks() {
+      if (!blocksList) return;
+      blocksList.innerHTML = blocks.map((b, i) => renderBlockHtml(b, i)).join('');
+      attachBlockHandlers();
+    }
+
+    function renderBlockHtml(block, index) {
+      const isFirst = index === 0;
+      const isLast = index === blocks.length - 1;
+      const ctrls = `
+        <div class="block__controls">
+          <button type="button" class="block__ctrl" data-action="up" aria-label="Subir bloque" ${isFirst ? 'disabled' : ''}>↑</button>
+          <button type="button" class="block__ctrl" data-action="down" aria-label="Bajar bloque" ${isLast ? 'disabled' : ''}>↓</button>
+          <button type="button" class="block__ctrl block__ctrl--danger" data-action="remove" aria-label="Quitar bloque">✕</button>
+        </div>`;
+      if (block.type === 'text') {
+        return `
+          <div class="block block--text" data-block-id="${block.id}">
+            <div class="block__header">
+              <span class="block__type">📝 Texto</span>
+              ${ctrls}
+            </div>
+            <textarea class="block__textarea" data-field="content" placeholder="Escribe markdown aquí. ## Subtitulo, **negrita**, [enlace](url), - listas...">${escapeHtml(block.content)}</textarea>
+          </div>`;
+      }
+      // image block
+      const previewSrc = block.previewUrl || block.url || '';
+      let statusHtml = '';
+      if (block.url && !block.file) {
+        statusHtml = `<p class="block__status block__status--uploaded">Imagen ya subida: <code>${escapeHtml(block.url)}</code></p>`;
+      } else if (block.file) {
+        statusHtml = `<p class="block__status block__status--pending">Pendiente — se subirá al guardar el post.</p>`;
+      }
+      return `
+        <div class="block block--image" data-block-id="${block.id}">
+          <div class="block__header">
+            <span class="block__type">🖼️ Imagen</span>
+            ${ctrls}
+          </div>
+          ${previewSrc ? `<img class="block__preview" src="${escapeAttr(previewSrc)}" alt="" />` : ''}
+          <input type="file" class="block__file" data-field="file" accept="image/png, image/jpeg, image/webp, image/gif, image/avif" />
+          <input type="text" class="block__alt" data-field="alt" placeholder="Texto alternativo (descripción accesible y SEO)" value="${escapeAttr(block.alt)}" />
+          ${statusHtml}
+        </div>`;
+    }
+
+    function attachBlockHandlers() {
+      blocksList?.querySelectorAll('.block').forEach((el) => {
+        const id = parseInt(el.dataset.blockId, 10);
+        el.querySelectorAll('[data-action]').forEach((btn) => {
+          btn.addEventListener('click', () => handleBlockAction(id, btn.dataset.action));
+        });
+        el.querySelectorAll('[data-field]').forEach((field) => {
+          const evt = field.tagName === 'INPUT' && field.type === 'file' ? 'change' : 'input';
+          field.addEventListener(evt, (e) => handleBlockFieldChange(id, field.dataset.field, e));
+        });
+      });
+    }
+
+    function handleBlockAction(id, action) {
+      const idx = blocks.findIndex((b) => b.id === id);
+      if (idx < 0) return;
+      if (action === 'remove') {
+        const removed = blocks.splice(idx, 1)[0];
+        if (removed?.previewUrl?.startsWith('blob:')) URL.revokeObjectURL(removed.previewUrl);
+      } else if (action === 'up' && idx > 0) {
+        [blocks[idx - 1], blocks[idx]] = [blocks[idx], blocks[idx - 1]];
+      } else if (action === 'down' && idx < blocks.length - 1) {
+        [blocks[idx], blocks[idx + 1]] = [blocks[idx + 1], blocks[idx]];
+      }
+      renderBlocks();
+    }
+
+    function handleBlockFieldChange(id, field, e) {
+      const block = blocks.find((b) => b.id === id);
+      if (!block) return;
+      if (field === 'content') {
+        block.content = e.target.value;
+      } else if (field === 'alt') {
+        block.alt = e.target.value;
+      } else if (field === 'file') {
+        const f = e.target.files?.[0];
+        if (f) {
+          if (block.previewUrl?.startsWith('blob:')) URL.revokeObjectURL(block.previewUrl);
+          block.file = f;
+          block.url = null;
+          block.previewUrl = URL.createObjectURL(f);
+          renderBlocks();
+        }
+      }
+    }
+
+    function addTextBlock(content = '') {
+      blocks.push({ id: nextBlockId++, type: 'text', content });
+      renderBlocks();
+      const last = blocksList?.querySelector('.block:last-child .block__textarea');
+      last?.focus();
+    }
+
+    function addImageBlock(opts = {}) {
+      blocks.push({
+        id: nextBlockId++,
+        type: 'image',
+        file: null,
+        url: opts.url || null,
+        alt: opts.alt || '',
+        previewUrl: opts.url || null,
+      });
+      renderBlocks();
+    }
+
+    function clearBlocks() {
+      blocks.forEach((b) => { if (b.previewUrl?.startsWith('blob:')) URL.revokeObjectURL(b.previewUrl); });
+      blocks = [];
+      renderBlocks();
+    }
+
+    // Parse a markdown body into ordered text/image blocks.
+    // Recognizes `![alt](src)` patterns on their own line as image blocks; everything else is text.
+    function parseBodyToBlocks(body) {
+      clearBlocks();
+      const trimmed = body.replace(/^\s+|\s+$/g, '');
+      // Match image-only lines (whitespace + ![alt](src) + whitespace) as standalone blocks.
+      const re = /(^|\n)[ \t]*!\[([^\]]*)\]\(([^)\s]+)\)[ \t]*(?=\n|$)/g;
+      let lastEnd = 0;
+      let m;
+      while ((m = re.exec(trimmed)) !== null) {
+        const before = trimmed.slice(lastEnd, m.index + (m[1] ? 1 : 0)).replace(/^\s+|\s+$/g, '');
+        if (before) addTextBlock(before);
+        addImageBlock({ url: m[3], alt: m[2] });
+        lastEnd = re.lastIndex;
+      }
+      const tail = trimmed.slice(lastEnd).replace(/^\s+|\s+$/g, '');
+      if (tail) addTextBlock(tail);
+      if (blocks.length === 0) addTextBlock('');
+    }
+
+    // Serialize current block list to a markdown body.
+    function serializeBlocksToBody() {
+      return blocks.map((b) => {
+        if (b.type === 'text') return (b.content || '').trim();
+        if (b.type === 'image' && b.url) {
+          const alt = (b.alt || '').replace(/[\[\]]/g, '');
+          return `![${alt}](${b.url})`;
+        }
+        return '';
+      }).filter((s) => s.length > 0).join('\n\n') + '\n';
+    }
+
+    async function uploadPendingImages(slug) {
+      for (const block of blocks) {
+        if (block.type === 'image' && block.file && !block.url) {
+          const fd = new FormData();
+          fd.append('file', block.file);
+          fd.append('slug', slug);
+          const res = await fetch('/full-gas/api/upload', { method: 'POST', body: fd });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.error || `Upload falló para ${block.file.name}`);
+          block.url = data.url;
+          block.file = null;
+        }
+      }
+    }
 
     function openEditor(mode = 'create') {
       if (!editor || !editorMode || !editorTitle) return;
@@ -1118,8 +1407,9 @@ const config = getConfig();
       if (editorDesc) editorDesc.value = '';
       if (editorCategory) editorCategory.value = '';
       if (editorTags) editorTags.value = '';
-      if (editorContent) editorContent.value = '';
       if (editorOriginalSlug) editorOriginalSlug.value = '';
+      originalPubDate = '';
+      clearBlocks();
     }
 
     // Nuevo post
@@ -1127,9 +1417,15 @@ const config = getConfig();
     if (btnNuevo) {
       btnNuevo.addEventListener('click', () => {
         if (editorSlug) editorSlug.removeAttribute('disabled');
+        clearBlocks();
+        addTextBlock('');
         openEditor('create');
       });
     }
+
+    // Add-block buttons
+    document.getElementById('btn-add-text-block')?.addEventListener('click', () => addTextBlock(''));
+    document.getElementById('btn-add-image-block')?.addEventListener('click', () => addImageBlock());
 
     // Cancelar
     const btnCancel = document.getElementById('btn-cancel-editor');
@@ -1142,16 +1438,17 @@ const config = getConfig();
         const data = await res.json();
         if (!res.ok) { alert('Error al cargar el post.'); return; }
 
-        // Parsear frontmatter basico
         const raw = data.content;
         const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n\n?([\s\S]*)$/);
+        let body = '';
         if (fmMatch) {
           const fm = fmMatch[1];
-          const body = fmMatch[2];
+          body = fmMatch[2];
           const titleMatch = fm.match(/title:\s*["']?(.+?)["']?\n/);
           const descMatch = fm.match(/description:\s*["']?(.+?)["']?\n/);
           const categoryMatch = fm.match(/category:\s*["']?(.+?)["']?\n/);
           const tagsMatch = fm.match(/tags:\s*(\[.*?\])/);
+          const dateMatch = fm.match(/pubDate:\s*(.+)\n/);
 
           if (editorPostTitle && titleMatch) editorPostTitle.value = titleMatch[1].trim();
           if (editorDesc && descMatch) editorDesc.value = descMatch[1].trim();
@@ -1162,10 +1459,12 @@ const config = getConfig();
               editorTags.value = tags.join(', ');
             } catch {}
           }
-          if (editorContent) editorContent.value = body;
+          originalPubDate = dateMatch ? dateMatch[1].trim() : '';
         } else {
-          if (editorContent) editorContent.value = raw;
+          body = raw;
+          originalPubDate = '';
         }
+        parseBodyToBlocks(body);
 
         if (editorSlug) {
           editorSlug.value = slug;
@@ -1206,10 +1505,19 @@ const config = getConfig();
         const description = editorDesc?.value.trim();
         const category = editorCategory?.value || '';
         const tags = editorTags?.value.split(',').map(t => t.trim()).filter(Boolean);
-        const content = editorContent?.value;
 
-        if (!slug || !title || !content) {
-          alert('Slug, titulo y contenido son obligatorios.');
+        if (!slug || !title) {
+          alert('Slug y titulo son obligatorios.');
+          return;
+        }
+        if (blocks.length === 0) {
+          alert('Añade al menos un bloque al post.');
+          return;
+        }
+        // Block-level validation
+        const incompleteImage = blocks.find((b) => b.type === 'image' && !b.url && !b.file);
+        if (incompleteImage) {
+          alert('Hay un bloque de imagen sin imagen seleccionada. Quítalo o sube una imagen.');
           return;
         }
 
@@ -1217,12 +1525,18 @@ const config = getConfig();
         if (postSpinner) postSpinner.style.display = 'inline-block';
 
         try {
+          // 1) Subir las imágenes nuevas (cada una crea un commit)
+          await uploadPendingImages(slug);
+          // 2) Re-render para reflejar el estado "uploaded"
+          renderBlocks();
+          // 3) Serializar bloques a markdown
+          const body = serializeBlocksToBody();
+
           let res;
           if (mode === 'edit') {
             const originalSlug = editorOriginalSlug?.value || slug;
-            // Reconstruir el archivo completo con frontmatter actualizado
-            const today = new Date().toISOString().split('T')[0];
-            const fullContent = `---\ntitle: "${title}"\ndescription: "${description}"\npubDate: ${today}\nauthor: "Alberto Munoz Gonzalez"\ntags: ${JSON.stringify(tags)}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${content}`;
+            const pubDate = originalPubDate || new Date().toISOString().split('T')[0];
+            const fullContent = `---\ntitle: "${title}"\ndescription: "${description}"\npubDate: ${pubDate}\nauthor: "Alberto Munoz Gonzalez"\ntags: ${JSON.stringify(tags)}\ncategory: "${category || 'consejos'}"\ndraft: false\n---\n\n${body}`;
             res = await fetch(`/full-gas/api/post/${originalSlug}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
@@ -1232,7 +1546,7 @@ const config = getConfig();
             res = await fetch('/full-gas/api/posts', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ slug, title, description, content, tags, category }),
+              body: JSON.stringify({ slug, title, description, content: body, tags, category }),
             });
           }
 
@@ -1248,7 +1562,8 @@ const config = getConfig();
             showFeedback(postFeedback, '✗ Error: ' + (data.error || 'desconocido'), false);
           }
         } catch (err) {
-          showFeedback(postFeedback, '✗ Error de red', false);
+          const msg = err instanceof Error ? err.message : 'Error de red';
+          showFeedback(postFeedback, '✗ ' + msg, false);
         } finally {
           btnSavePost.disabled = false;
           if (postSpinner) postSpinner.style.display = 'none';
