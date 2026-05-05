@@ -1773,15 +1773,27 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 .gs-reveal {
   opacity: 0;
   transform: translateY(30px);
-  /* Failsafe: if GSAP fails to load (slow network, blocked script,
-     stale HTML pointing at a missing JS hash), the CSS animation
-     below kicks in at 3s and reveals the section anyway. When GSAP
-     does run, the inline styles it sets win, so the failsafe is
-     silent in the happy path. */
-  animation: gs-reveal-failsafe 600ms 3s ease-out forwards;
 }
 
-@keyframes gs-reveal-failsafe {
+/* Failsafe: every element that starts hidden waiting for GSAP/
+   ScrollTrigger to reveal it. If the JS bundle fails to load
+   (slow network, blocked script, stale HTML pointing at a
+   missing hash), the CSS animation below kicks in at 3s and
+   reveals everything. When GSAP runs normally, the inline
+   styles it sets win, so the failsafe is silent in the happy
+   path. */
+.gs-reveal,
+.hero__word,
+.hero__eyebrow,
+.hero__subtitle,
+.hero__stats,
+.hero__ctas,
+.hero__pain-card,
+.service-card {
+  animation: home-reveal-failsafe 600ms 3s ease-out forwards;
+}
+
+@keyframes home-reveal-failsafe {
   to {
     opacity: 1;
     transform: none;
