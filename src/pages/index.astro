@@ -682,32 +682,16 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   gap: var(--space-sm);
   padding: 14px 28px;
   background: var(--color-primary);
-  color: var(--color-white);
+  color: #ffffff;
   font-size: var(--text-base);
   font-weight: 600;
   border-radius: var(--radius-full);
   box-shadow: 0 4px 4px 0 rgba(166, 201, 88, 0.45), 0 5px 29.2px 0 rgba(166, 201, 88, 0.45);
-  transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero__cta-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--color-primary-dark);
-  transform: translateX(-101%);
   transition: transform var(--duration-normal) var(--ease-out);
-  z-index: 0;
 }
-
-.hero__cta-primary:hover::before { transform: translateX(0); }
-.hero__cta-primary svg, .hero__cta-primary span { position: relative; z-index: 1; }
 
 .hero__cta-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 4px 0 rgba(166, 201, 88, 0.5), 0 5px 29.2px 0 rgba(166, 201, 88, 0.5);
+  transform: scale(1.04) rotate(-1.5deg);
 }
 
 .hero__cta-secondary {
@@ -1401,7 +1385,9 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
   font-weight: 600;
-  transition: all var(--duration-fast);
+  transition: transform var(--duration-normal) var(--ease-out),
+              border-color var(--duration-fast),
+              color var(--duration-fast);
   cursor: pointer;
   text-align: center;
   margin-bottom: var(--space-lg);
@@ -1421,14 +1407,13 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 .pricing-cta--primary {
   background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
   border: none;
-  color: #181428;
+  color: #ffffff;
   font-weight: 600;
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
 }
 
 .pricing-cta--primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  transform: scale(1.04) rotate(-1.5deg);
 }
 
 /* "Qué incluye" label — pushed to the bottom so all 3 cards align
@@ -1687,19 +1672,16 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   height: 44px;
   padding: 0 32px;
   background: linear-gradient(27deg, #8BAD44 17%, #95B44E 37%, #B1C96B 72%, #C4D87F 92%);
-  color: #181428;
+  color: #ffffff;
   font-size: var(--text-sm);
   font-weight: 600;
   border-radius: var(--radius-full);
   box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.05), 0px 5px 29.2px 0px rgba(218,211,198,0.32);
-  transition: all var(--duration-fast);
-  position: relative;
-  overflow: hidden;
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  transform: scale(1.04) rotate(-1.5deg);
 }
 
 .btn-outline {
