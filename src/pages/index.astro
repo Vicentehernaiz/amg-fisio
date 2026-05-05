@@ -1594,7 +1594,8 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  align-items: flex-start;
+  align-items: stretch;
+  max-width: 360px;
   margin-bottom: var(--space-lg);
 }
 
@@ -1666,6 +1667,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-sm);
   height: 44px;
   padding: 0 32px;
@@ -1707,22 +1709,27 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 .btn-whatsapp {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-sm);
-  padding: 16px 32px;
-  background: #25D366;
-  color: var(--color-white);
-  font-size: var(--text-base);
+  height: 44px;
+  padding: 0 32px;
+  background: var(--color-white);
+  color: var(--color-primary-dark);
+  font-size: var(--text-sm);
   font-weight: 600;
   border-radius: var(--radius-full);
-  box-shadow: 0 4px 4px 0 rgba(37, 211, 102, 0.35), 0 5px 29.2px 0 rgba(37, 211, 102, 0.35);
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.06), 0px 5px 29.2px 0px rgba(106, 153, 77, 0.22);
   transition: all var(--duration-fast);
-  margin-bottom: var(--space-md);
+}
+
+.btn-whatsapp svg {
+  flex-shrink: 0;
+  color: var(--color-primary);
 }
 
 .btn-whatsapp:hover {
-  background: #1FAD54;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 4px 0 rgba(37, 211, 102, 0.45), 0 5px 29.2px 0 rgba(37, 211, 102, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.08), 0px 5px 29.2px 0px rgba(106, 153, 77, 0.32);
 }
 
 .btn-full {
