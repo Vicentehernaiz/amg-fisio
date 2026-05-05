@@ -56,12 +56,14 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
           </div>
           <div class="hero__stat-divider" aria-hidden="true"></div>
           <div class="hero__stat">
-            <span class="hero__stat-value">{config.stats.patientsSatisfied}</span>
+            <span class="hero__stat-value" data-target={config.stats.patientsRecovered} data-prefix="+">+0</span>
             <span class="hero__stat-label">pacientes satisfechos</span>
           </div>
           <div class="hero__stat-divider" aria-hidden="true"></div>
           <div class="hero__stat">
-            <span class="hero__stat-value">{config.stats.googleRating}<span class="hero__star">★</span></span>
+            <span class="hero__stat-value-row">
+              <span class="hero__stat-value" data-target={config.stats.googleRating} data-decimal="true">0</span><span class="hero__star">★</span>
+            </span>
             <span class="hero__stat-label">valoración Google</span>
           </div>
         </div>
@@ -251,6 +253,18 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
             <a href="/tecnicas-fisioterapia/puncion-seca-valladolid/" class="technique-slide__link">Saber más →</a>
           </div>
         </div>
+
+        <div class="technique-slide" role="listitem">
+          <div class="technique-slide__img">
+            <img src="/images/fisioterapia-deportiva.jpg" alt="Fisioterapia deportiva en Valladolid" loading="lazy" width="400" height="280" />
+          </div>
+          <div class="technique-slide__body">
+            <span class="technique-slide__num font-display">06</span>
+            <h3 class="technique-slide__title">Fisioterapia Deportiva</h3>
+            <p class="technique-slide__desc">Tratamiento integral para deportistas: lesiones musculares, tendinopatías, readaptación y return to play con criterios funcionales objetivos.</p>
+            <a href="/fisioterapia-deportiva-valladolid/" class="technique-slide__link">Saber más →</a>
+          </div>
+        </div>
       </div>
 
       <div class="techniques-nav" aria-label="Navegación del carrusel">
@@ -263,6 +277,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
           <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 3"></button>
           <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 4"></button>
           <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 5"></button>
+          <button class="techniques-dot" role="tab" aria-selected="false" aria-label="Técnica 6"></button>
         </div>
         <button class="techniques-next-btn" id="tech-next" aria-label="Siguiente técnica">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
@@ -2032,16 +2047,17 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
       });
     });
 
-    // ---- Stats counter ----
-    document.querySelectorAll('.stat-value').forEach((el) => {
+    // ---- Stats counter (hero + authority stats) ----
+    document.querySelectorAll('[data-target]').forEach((el) => {
       const target = parseFloat(el.dataset.target || '0');
+      if (Number.isNaN(target)) return; // skip non-numeric data-targets
       const prefix = el.dataset.prefix || '';
       const suffix = el.dataset.suffix || '';
       const isDecimal = el.dataset.decimal === 'true';
 
       ScrollTrigger.create({
         trigger: el,
-        start: 'top 80%',
+        start: 'top 95%',
         once: true,
         onEnter: () => {
           gsap.fromTo(
