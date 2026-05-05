@@ -857,7 +857,7 @@ const config = getConfig();
         <div class="admin__blog-filter" id="cat-filter" style="display:none;">
           <button class="admin__filter-btn active" data-cat="">Todos</button>
           {config.blogCategories?.map((cat) => (
-            <button class="admin__filter-btn" data-cat={cat}>{cat}</button>
+            <button class="admin__filter-btn" data-cat={cat.slug}>{cat.label}</button>
           ))}
         </div>
 
@@ -888,7 +888,7 @@ const config = getConfig();
             <select id="editor-category">
               <option value="">— Sin categoría —</option>
               {config.blogCategories?.map((cat) => (
-                <option value={cat}>{cat}</option>
+                <option value={cat.slug}>{cat.label}</option>
               ))}
             </select>
           </div>

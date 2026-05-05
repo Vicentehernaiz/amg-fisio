@@ -77,7 +77,15 @@
     "instagram": "https://instagram.com/amgfisio",
     "googleBusiness": "https://g.page/amgfisio"
   },
-  "blogCategories": ["Consejos de salud", "Fisioterapia deportiva", "Dolor de espalda", "Neurología", "Rehabilitación", "Técnicas"],
+  "blogCategories": [
+    { "slug": "consejos", "label": "Consejos de salud" },
+    { "slug": "fisioterapia-deportiva", "label": "Fisioterapia deportiva" },
+    { "slug": "dolor-cronico", "label": "Dolor crónico" },
+    { "slug": "rehabilitacion", "label": "Rehabilitación" },
+    { "slug": "tecnicas", "label": "Técnicas" },
+    { "slug": "prevencion", "label": "Prevención" },
+    { "slug": "nutricion", "label": "Nutrición" }
+  ],
   "seo": {
     "defaultTitle": "AMG Fisioterapia | Fisioterapia Avanzada en Valladolid Centro",
     "defaultDescription": "Clinica de fisioterapia en Valladolid Centro. Especialistas en fisioterapia deportiva, dolor de espalda, rehabilitacion y mas. Sesiones de 45-60 min personalizadas. Pide cita.",

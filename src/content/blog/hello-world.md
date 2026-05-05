@@ -4,7 +4,7 @@ description: "hello world"
 pubDate: 2026-05-05
 author: "Alberto Munoz Gonzalez"
 tags: ["lumbar"]
-category: "Fisioterapia deportiva"
+category: "fisioterapia-deportiva"
 draft: false
 ---
 
