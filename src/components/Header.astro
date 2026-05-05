@@ -206,9 +206,14 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
     </a>
   </div>
   <ul class="mobile-menu__list">
-    <li>
-      <a href="/servicios-fisioterapia/" class="mobile-menu__link">Servicios</a>
-      <ul class="mobile-menu__sub">
+    <li class="mobile-menu__item">
+      <div class="mobile-menu__row">
+        <a href="/servicios-fisioterapia/" class="mobile-menu__link">Servicios</a>
+        <button type="button" class="mobile-menu__expand" aria-expanded="false" aria-controls="mm-sub-servicios" aria-label="Mostrar subcategorías de Servicios">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <ul class="mobile-menu__sub" id="mm-sub-servicios" hidden>
         <li><a href="/servicios-fisioterapia/cervicalgia-dolor-cervical-valladolid/">Dolor Cervical</a></li>
         <li><a href="/servicios-fisioterapia/dolor-lumbar-lumbalgia-valladolid/">Dolor Lumbar</a></li>
         <li><a href="/servicios-fisioterapia/rehabilitacion-rodilla-valladolid/">Rodilla</a></li>
@@ -216,9 +221,14 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
         <li><a href="/servicios-fisioterapia/rehabilitacion-neurologica-ictus-valladolid/">Neurológica</a></li>
       </ul>
     </li>
-    <li>
-      <a href="/tecnicas-fisioterapia/" class="mobile-menu__link">Técnicas</a>
-      <ul class="mobile-menu__sub">
+    <li class="mobile-menu__item">
+      <div class="mobile-menu__row">
+        <a href="/tecnicas-fisioterapia/" class="mobile-menu__link">Técnicas</a>
+        <button type="button" class="mobile-menu__expand" aria-expanded="false" aria-controls="mm-sub-tecnicas" aria-label="Mostrar subcategorías de Técnicas">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <ul class="mobile-menu__sub" id="mm-sub-tecnicas" hidden>
         <li><a href="/tecnicas-fisioterapia/terapia-manual-valladolid/">Terapia Manual</a></li>
         <li><a href="/tecnicas-fisioterapia/ejercicio-terapeutico-readaptacion/">Ejercicio Terapéutico</a></li>
         <li><a href="/tecnicas-fisioterapia/tens-electroestimulacion-valladolid/">TENS</a></li>
@@ -226,9 +236,14 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
         <li><a href="/tecnicas-fisioterapia/puncion-seca-valladolid/">Punción Seca</a></li>
       </ul>
     </li>
-    <li>
-      <a href="/fisioterapia-deportiva-valladolid/" class="mobile-menu__link">Fisio Deportiva</a>
-      <ul class="mobile-menu__sub">
+    <li class="mobile-menu__item">
+      <div class="mobile-menu__row">
+        <a href="/fisioterapia-deportiva-valladolid/" class="mobile-menu__link">Fisio Deportiva</a>
+        <button type="button" class="mobile-menu__expand" aria-expanded="false" aria-controls="mm-sub-deportiva" aria-label="Mostrar subcategorías de Fisio Deportiva">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <ul class="mobile-menu__sub" id="mm-sub-deportiva" hidden>
         <li><a href="/fisioterapia-deportiva-valladolid/fisioterapia-running-corredores/">Running</a></li>
         <li><a href="/fisioterapia-deportiva-valladolid/fisioterapia-ciclismo-ciclistas/">Ciclismo</a></li>
         <li><a href="/fisioterapia-deportiva-valladolid/readaptacion-deportiva-return-to-play/">Readaptación</a></li>
@@ -236,8 +251,8 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
         <li><a href="/fisioterapia-deportiva-valladolid/tendinopatias-valladolid/">Tendinopatías</a></li>
       </ul>
     </li>
-    <li><a href="/fisioterapia-domicilio-valladolid/" class="mobile-menu__link">A Domicilio</a></li>
-    <li><a href="/blog/" class="mobile-menu__link">Blog</a></li>
+    <li class="mobile-menu__item"><a href="/fisioterapia-domicilio-valladolid/" class="mobile-menu__link">A Domicilio</a></li>
+    <li class="mobile-menu__item"><a href="/blog/" class="mobile-menu__link">Blog</a></li>
   </ul>
   </div>
 </header>
@@ -577,20 +592,63 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
   margin: 0;
 }
 
+.mobile-menu__item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.mobile-menu__item:last-child { border-bottom: none; }
+
+.mobile-menu__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .mobile-menu__link {
   display: block;
+  flex: 1;
   padding: 14px 0;
   font-size: 1.1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   text-decoration: none;
+}
+
+.mobile-menu__expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.mobile-menu__expand:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.mobile-menu__expand svg {
+  transition: transform 0.25s ease;
+}
+
+.mobile-menu__expand[aria-expanded="true"] svg {
+  transform: rotate(180deg);
 }
 
 .mobile-menu__sub {
   list-style: none;
-  padding: 8px 0 8px 16px;
+  padding: 4px 0 12px 16px;
 }
+
+.mobile-menu__sub[hidden] { display: none; }
 
 .mobile-menu__sub li a {
   display: block;
@@ -743,6 +801,22 @@ const waNavLink = getWhatsAppLink('Hola, quiero pedir cita en AMG Fisioterapia.'
     } else {
       lines.forEach(l => { (l as HTMLElement).removeAttribute('style'); });
     }
+  });
+
+  // ── Mobile sub-menu expand/collapse ────────
+  document.querySelectorAll<HTMLButtonElement>('.mobile-menu__expand').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const subId = btn.getAttribute('aria-controls');
+      const sub = subId ? document.getElementById(subId) : null;
+      if (!sub) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (expanded) {
+        sub.setAttribute('hidden', '');
+      } else {
+        sub.removeAttribute('hidden');
+      }
+    });
   });
 
   // ── Scroll shadow ──────────────────────────
