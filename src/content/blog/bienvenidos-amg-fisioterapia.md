@@ -5,7 +5,7 @@ pubDate: 2026-04-20
 author: "Alberto Munoz Gonzalez"
 tags: ["fisioterapia", "valladolid", "presentacion"]
 category: "consejos"
-image: "/images/og-default.jpg"
+image: "/images/terapia-manual.png"
 imageAlt: "Clinica AMG Fisioterapia en Valladolid Centro"
 draft: false
 seo:

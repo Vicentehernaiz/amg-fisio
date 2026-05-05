@@ -5,6 +5,8 @@ pubDate: 2026-04-10
 author: "Alberto Munoz Gonzalez"
 tags: ["fisioterapia-deportiva", "running", "prevención", "valladolid", "deporte"]
 category: "fisioterapia-deportiva"
+image: "/images/fisioterapia-deportiva.jpg"
+imageAlt: "Fisioterapeuta deportivo tratando a un corredor en Valladolid"
 seo:
   title: "Beneficios Fisioterapia Deportiva para Amateurs | AMG Valladolid"
   description: "Cómo la fisioterapia deportiva mejora el rendimiento, previene lesiones y alarga la vida deportiva del deportista popular en Valladolid."

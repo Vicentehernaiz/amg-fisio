@@ -5,6 +5,8 @@ pubDate: 2026-04-15
 author: "Alberto Munoz Gonzalez"
 tags: ["lumbalgia", "dolor-espalda", "fisioterapia", "valladolid"]
 category: "dolor-cronico"
+image: "/images/lumbalgia.jpg"
+imageAlt: "Tratamiento del dolor lumbar en AMG Fisioterapia"
 seo:
   title: "Dolor Lumbar Causas y Tratamiento | AMG Fisioterapia Valladolid"
   description: "Descubre las causas del dolor lumbar y cómo la fisioterapia lo trata en Valladolid. Consejos del fisioterapeuta Alberto Muñoz."

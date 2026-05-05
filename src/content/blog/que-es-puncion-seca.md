@@ -5,6 +5,8 @@ pubDate: 2026-04-05
 author: "Alberto Munoz Gonzalez"
 tags: ["puncion-seca", "puntos-gatillo", "tecnicas", "fisioterapia", "valladolid"]
 category: "tecnicas"
+image: "/images/puncion-seca.jpg"
+imageAlt: "Punción seca aplicada por fisioterapeuta en Valladolid"
 seo:
   title: "Punción Seca Qué es y Para Qué Sirve | AMG Fisioterapia Valladolid"
   description: "Guía completa sobre la punción seca: diferencias con acupuntura, indicaciones, qué se siente y evidencia científica. Alberto Muñoz González, Valladolid."
