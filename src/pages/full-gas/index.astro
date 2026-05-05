@@ -14,13 +14,7 @@ if (Astro.request.method === 'POST') {
   const password = formData.get('password');
 
   if (!ADMIN_PASSWORD) {
-    // Diagnostic: list any env keys that mention pass/admin (no values),
-    // so we can spot a typo (ADM1N_PASSWORD, ADMINPASSWORD, etc.).
-    const envKeys = Object.keys(process.env || {}).filter((k) => /pass|admin/i.test(k));
-    const hint = envKeys.length
-      ? `Vars detectadas con "pass"/"admin" en el nombre: ${envKeys.join(', ')}.`
-      : 'Ninguna variable con "pass" o "admin" en el nombre está visible.';
-    loginError = `Servidor mal configurado: falta ADMIN_PASSWORD en variables de entorno. ${hint}`;
+    loginError = 'Servidor mal configurado: falta ADMIN_PASSWORD en variables de entorno.';
   } else if (typeof password === 'string' && password === ADMIN_PASSWORD) {
     Astro.cookies.set(getAdminCookieName(), ADMIN_PASSWORD, {
       path: '/full-gas',

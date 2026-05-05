@@ -4,9 +4,23 @@ const BRANCH = 'main';
 const API = 'https://api.github.com';
 
 function authHeaders() {
-  const token = import.meta.env.BLOG_GITHUB_TOKEN;
-  if (!token) {
+  // process.env first because it reflects the live runtime value on Vercel
+  // serverless functions; import.meta.env may be inlined at build time.
+  const fromProc = typeof process !== 'undefined' ? process.env?.BLOG_GITHUB_TOKEN : undefined;
+  const fromMeta = (import.meta as any)?.env?.BLOG_GITHUB_TOKEN;
+  const raw = fromProc ?? fromMeta;
+  if (typeof raw !== 'string' || raw.length === 0) {
     throw new Error('BLOG_GITHUB_TOKEN no configurado en variables de entorno');
+  }
+  // Strip surrounding whitespace and any non-ASCII characters. GitHub tokens
+  // are pure ASCII (ghp_, github_pat_, etc.). Any non-ASCII char in the value
+  // is almost certainly garbage from a paste accident.
+  const token = raw.trim();
+  const firstNonAscii = [...token].find((ch) => ch.charCodeAt(0) > 127);
+  if (firstNonAscii) {
+    throw new Error(
+      `BLOG_GITHUB_TOKEN contiene un carácter no-ASCII (${JSON.stringify(firstNonAscii)}, code ${firstNonAscii.charCodeAt(0)}). Vuelve a pegar el token sin texto extra.`
+    );
   }
   return {
     Authorization: `Bearer ${token}`,
