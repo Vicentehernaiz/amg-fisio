@@ -2070,21 +2070,22 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
       const suffix = el.dataset.suffix || '';
       const isDecimal = el.dataset.decimal === 'true';
 
+      const counter = { val: 0 };
+      const formatVal = (v) => prefix + (isDecimal ? v.toFixed(1) : Math.round(v).toLocaleString('es-ES')) + suffix;
+
       ScrollTrigger.create({
         trigger: el,
         start: 'top 95%',
         once: true,
         onEnter: () => {
-          gsap.fromTo(
-            { val: 0 },
-            { val: target, duration: 2, ease: 'power2.out',
-              onUpdate: function() {
-                const v = this.targets()[0].val;
-                el.textContent = prefix + (isDecimal ? v.toFixed(1) : Math.round(v).toLocaleString('es-ES')) + suffix;
-              }
-            }
-          );
-        }
+          gsap.to(counter, {
+            val: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => { el.textContent = formatVal(counter.val); },
+            onComplete: () => { el.textContent = formatVal(target); },
+          });
+        },
       });
     });
 
