@@ -308,3 +308,141 @@ button {
   background-color: var(--color-primary-200);
   color: var(--color-secondary-700);
 }
+
+/* ==============================================
+   UNIFIED BUTTON MICRO-INTERACTION
+   Grow + slight tilt on hover, no color or opacity change.
+   Uses !important to override per-page :hover declarations
+   that still set translateY/opacity in their own scoped styles.
+============================================== */
+.btn-primary,
+.btn-whatsapp,
+.btn-whatsapp-large,
+.btn-outline,
+.btn-sm-outline,
+.hero__cta-primary,
+.hero__cta-secondary,
+.pricing-cta,
+.pricing-cta--primary,
+.pricing-cta--outline,
+.precio-card__cta,
+.nav-cta,
+.nav-cta--contact,
+.nav-cta--reservar,
+.map-cta,
+.about-cta__btn,
+.exit-modal__cta,
+.mega-cta-btn,
+.pc__cta,
+.pc__cta--primary,
+.pc__cta--outline,
+.footer__wa-btn,
+.contact-cta__btn {
+  transition: transform var(--duration-normal) var(--ease-out) !important;
+}
+
+.btn-primary:hover,
+.btn-whatsapp:hover,
+.btn-whatsapp-large:hover,
+.btn-outline:hover,
+.btn-sm-outline:hover,
+.hero__cta-primary:hover,
+.hero__cta-secondary:hover,
+.pricing-cta--primary:hover,
+.pricing-cta--outline:hover,
+.precio-card__cta:hover,
+.nav-cta--contact:hover,
+.nav-cta--reservar:hover,
+.map-cta:hover,
+.about-cta__btn:hover,
+.exit-modal__cta:hover,
+.mega-cta-btn:hover,
+.pc__cta--primary:hover,
+.pc__cta--outline:hover,
+.footer__wa-btn:hover,
+.contact-cta__btn:hover {
+  transform: scale(1.04) rotate(-1.5deg) !important;
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-whatsapp,
+  .btn-whatsapp-large,
+  .btn-outline,
+  .btn-sm-outline,
+  .hero__cta-primary,
+  .hero__cta-secondary,
+  .pricing-cta,
+  .precio-card__cta,
+  .nav-cta,
+  .map-cta,
+  .about-cta__btn,
+  .exit-modal__cta,
+  .mega-cta-btn,
+  .pc__cta,
+  .footer__wa-btn,
+  .contact-cta__btn {
+    transition: none !important;
+  }
+  .btn-primary:hover,
+  .btn-whatsapp:hover,
+  .btn-whatsapp-large:hover,
+  .btn-outline:hover,
+  .btn-sm-outline:hover,
+  .hero__cta-primary:hover,
+  .hero__cta-secondary:hover,
+  .pricing-cta--primary:hover,
+  .pricing-cta--outline:hover,
+  .precio-card__cta:hover,
+  .nav-cta--contact:hover,
+  .nav-cta--reservar:hover,
+  .map-cta:hover,
+  .about-cta__btn:hover,
+  .exit-modal__cta:hover,
+  .mega-cta-btn:hover,
+  .pc__cta--primary:hover,
+  .pc__cta--outline:hover,
+  .footer__wa-btn:hover,
+  .contact-cta__btn:hover {
+    transform: none !important;
+  }
+}
+
+/* ==============================================
+   PHONE READABILITY OVERRIDES
+   Buyer persona skews older: bump root font back to 16px
+   on phone (desktop stays at the more compact 14px) and
+   force a 18px minimum on every CTA button.
+============================================== */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .btn-primary,
+  .btn-whatsapp,
+  .btn-whatsapp-large,
+  .btn-outline,
+  .hero__cta-primary,
+  .hero__cta-secondary,
+  .pricing-cta,
+  .pricing-cta--primary,
+  .pricing-cta--outline,
+  .precio-card__cta,
+  .nav-cta,
+  .nav-cta--contact,
+  .nav-cta--reservar,
+  .mobile-menu__cta,
+  .map-cta,
+  .about-cta__btn,
+  .exit-modal__cta,
+  .mega-cta-btn,
+  .pc__cta,
+  .pc__cta--primary,
+  .pc__cta--outline,
+  .footer__wa-btn,
+  .contact-cta__btn {
+    font-size: 18px !important;
+  }
+}
