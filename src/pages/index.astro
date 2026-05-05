@@ -1266,7 +1266,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
-  align-items: start;
+  align-items: stretch;
 }
 
 .pricing-card {
@@ -1277,6 +1277,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .pricing-card--featured {
@@ -1415,13 +1416,16 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   transform: translateY(-1px);
 }
 
-/* "Qué incluye" label */
+/* "Qué incluye" label — pushed to the bottom so all 3 cards align
+   their feature blocks regardless of how much copy is above. */
 .pricing-includes-label {
   font-size: var(--text-xs);
   font-weight: 700;
   color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
+  margin-top: auto;
+  padding-top: var(--space-lg);
   margin-bottom: var(--space-sm);
 }
 
