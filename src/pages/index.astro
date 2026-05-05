@@ -557,10 +557,14 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 ============================================== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh;        /* fallback for older browsers */
+  min-height: 100dvh;       /* iOS Safari: counts only the visible viewport,
+                               so the bottom CTA isn't hidden by the browser
+                               toolbar that 100vh ignores. */
   display: flex;
   align-items: center;
-  padding-top: 72px;
+  padding-top: 56px;
+  padding-bottom: var(--space-xl);
   overflow: hidden;
   color: var(--color-white);
   /* Solid fallback in case hero-bg.jpg is slow or fails to load,
@@ -1921,7 +1925,7 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
 }
 
 @media (max-width: 480px) {
-  .hero { padding-top: 68px; }
+  .hero { padding-top: 44px; padding-bottom: var(--space-md); }
 
   .hero__pain-card { padding: 16px; }
 
