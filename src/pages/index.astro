@@ -1824,9 +1824,16 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
   .stats,
   .pricing,
   .contact {
-    padding: 32px 20px;
+    padding: 32px 18px;
     margin: 6px;
   }
+
+  /* Cards: tighter internal padding on phone so content uses more width */
+  .service-card { padding: var(--space-lg); }
+  .technique-slide__body { padding: var(--space-lg); }
+
+  /* Pricing: featured "Reservar cita" card moves to top on phone */
+  .pricing-card--featured { order: -1; }
 
   /* Carousel: full-bleed on phone with 6px lateral fade */
   .techniques { padding-inline: 0; }
