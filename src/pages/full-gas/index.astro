@@ -96,7 +96,7 @@ const config = getConfig();
       margin-bottom: 0;
     }
 
-    .login__toggle {
+    .login__card .login__toggle {
       position: absolute;
       top: 50%;
       right: 8px;
@@ -112,15 +112,16 @@ const config = getConfig();
       color: #888;
       cursor: pointer;
       padding: 0;
+      font-weight: 400;
       transition: color 0.15s, background 0.15s;
     }
 
-    .login__toggle:hover {
+    .login__card .login__toggle:hover {
       color: #181428;
       background: rgba(0, 0, 0, 0.04);
     }
 
-    .login__toggle:focus-visible {
+    .login__card .login__toggle:focus-visible {
       outline: 2px solid #6a994d;
       outline-offset: 1px;
     }
