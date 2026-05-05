@@ -15,10 +15,6 @@ const bookingHref = getBookingLink();
 const bookingExternal = isBookingExternal();
 const bookingLinkAttrs = bookingExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
-// Bono starting price: first tier with sessions > 1
-const bonoTiers = config.pricing.bonos.tiers || [];
-const bonoMinTier = bonoTiers.find((t) => t.sessions > 1) || bonoTiers[0];
-const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSession : 0;
 ---
 
 <BaseLayout
@@ -422,52 +418,28 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
           </ul>
         </div>
 
-        <!-- Bonos — derecha con calculadora expandible -->
-        <div class="pricing-card pricing-card--bonos" data-tiers={JSON.stringify(config.pricing.bonos.tiers)} data-wa={config.contact.whatsapp}>
+        <!-- Bonos — derecha, ahora redirige a /bonos -->
+        <div class="pricing-card">
           <div class="pricing-card__header">
             <div class="pricing-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </div>
-            <h3 class="pricing-name">Bonos configurables</h3>
+            <h3 class="pricing-name">Bonos personalizados</h3>
           </div>
-          <p class="pricing-desc">Personaliza tu plan de tratamiento y ahorra en cada sesión.</p>
+          <p class="pricing-desc">Bonos de varias sesiones y programas de rehabilitación adaptados a tu lesión.</p>
           <div class="pricing-price-row">
             <span class="pricing-desde">Desde</span>
-            <span class="pricing-amount">{bonoMinPrice}</span><span class="pricing-currency">€</span>
+            <span class="pricing-amount">30</span><span class="pricing-currency">€</span>
+            <span class="pricing-period">/sesión</span>
           </div>
-
-          <button class="pricing-cta pricing-cta--outline bonos-toggle-btn" type="button" aria-expanded="false">
-            Configurar bonos
-          </button>
-
-          <!-- Calculadora expandible -->
-          <div class="bonos-calc-wrap" aria-hidden="true">
-            <div class="bonos-calc">
-              <p class="bonos-calc__label">¿Cuántas sesiones necesitas?</p>
-              <div class="bonos-calc__stepper">
-                <button class="bonos-step bonos-step--minus" type="button" aria-label="Menos sesiones">−</button>
-                <span class="bonos-calc__count">5</span>
-                <button class="bonos-step bonos-step--plus" type="button" aria-label="Más sesiones">+</button>
-              </div>
-              <div class="bonos-calc__result">
-                <div class="bonos-calc__tier-name"></div>
-                <div class="bonos-calc__price-row">
-                  <span class="bonos-calc__total"></span>
-                  <span class="bonos-calc__per-session"></span>
-                </div>
-                <div class="bonos-calc__savings"></div>
-              </div>
-              <a href="#" class="pricing-cta pricing-cta--primary bonos-wa-btn" target="_blank" rel="noopener noreferrer" style="margin-top:var(--space-md);">
-                Consultar este bono →
-              </a>
-            </div>
-          </div>
-
+          <a href="/bonos/" class="pricing-cta pricing-cta--outline">
+            Consultar bonos personalizados →
+          </a>
           <p class="pricing-includes-label">Qué incluye</p>
           <ul class="pricing-features">
-            <li>Bonos de 5, 10 o más sesiones</li>
-            <li>Ahorro de hasta un 20%</li>
-            <li>Sin fecha de caducidad</li>
+            <li>Bonos de 3 y 6 sesiones</li>
+            <li>Programas de rehabilitación 2 y 4 semanas</li>
+            <li>Precio amigo y pacientes recurrentes</li>
           </ul>
         </div>
 
@@ -2134,67 +2106,5 @@ const bonoMinPrice = bonoMinTier ? bonoMinTier.sessions * bonoMinTier.pricePerSe
     });
   }
 
-  // ---- Bonos Calculator ----
-  const bonosCard = document.querySelector('.pricing-card--bonos');
-  if (bonosCard) {
-    const tiers = JSON.parse(bonosCard.dataset.tiers || '[]');
-    let sessions = 5;
-    const MIN = 1, MAX = 30;
-
-    const calcWrap = bonosCard.querySelector('.bonos-calc-wrap');
-    const toggleBtn = bonosCard.querySelector('.bonos-toggle-btn');
-    const countEl = bonosCard.querySelector('.bonos-calc__count');
-    const tierNameEl = bonosCard.querySelector('.bonos-calc__tier-name');
-    const totalEl = bonosCard.querySelector('.bonos-calc__total');
-    const perSessionEl = bonosCard.querySelector('.bonos-calc__per-session');
-    const savingsEl = bonosCard.querySelector('.bonos-calc__savings');
-    const waBtn = bonosCard.querySelector('.bonos-wa-btn');
-    const minusBtn = bonosCard.querySelector('.bonos-step--minus');
-    const plusBtn = bonosCard.querySelector('.bonos-step--plus');
-
-    // Toggle calculator visibility
-    toggleBtn?.addEventListener('click', () => {
-      const isOpen = calcWrap?.classList.toggle('is-open');
-      if (toggleBtn) {
-        toggleBtn.setAttribute('aria-expanded', String(isOpen));
-        toggleBtn.textContent = isOpen ? 'Ocultar calculadora' : 'Configurar bonos';
-      }
-      if (calcWrap) calcWrap.setAttribute('aria-hidden', String(!isOpen));
-    });
-
-    function getActiveTier(n) {
-      let active = tiers[0];
-      for (const tier of tiers) {
-        if (n >= tier.sessions) active = tier;
-      }
-      return active;
-    }
-
-    function updateCalc() {
-      if (!countEl || !tierNameEl || !totalEl || !perSessionEl || !savingsEl || !waBtn) return;
-      const tier = getActiveTier(sessions);
-      const total = sessions * tier.pricePerSession;
-      const basePrice = tiers[0]?.pricePerSession || tier.pricePerSession;
-      const saved = sessions * (basePrice - tier.pricePerSession);
-
-      countEl.textContent = String(sessions);
-      tierNameEl.textContent = tier.label;
-      totalEl.textContent = total + ' €';
-      perSessionEl.textContent = tier.pricePerSession + ' €/sesión';
-      savingsEl.textContent = saved > 0 ? `Ahorras ${saved} € vs sesión suelta` : 'Sin descuento adicional';
-
-      const waNum = (bonosCard.dataset.wa || '+34600000000').replace(/\s/g, '');
-      const msg = encodeURIComponent(`Hola, me interesa un bono de ${sessions} sesiones (${total} €). ¿Podéis confirmar disponibilidad?`);
-      waBtn.href = `https://wa.me/${waNum}?text=${msg}`;
-
-      if (minusBtn) minusBtn.disabled = sessions <= MIN;
-      if (plusBtn) plusBtn.disabled = sessions >= MAX;
-    }
-
-    minusBtn?.addEventListener('click', () => { sessions = Math.max(MIN, sessions - 1); updateCalc(); });
-    plusBtn?.addEventListener('click', () => { sessions = Math.min(MAX, sessions + 1); updateCalc(); });
-
-    updateCalc();
-  }
 })();
 </script>

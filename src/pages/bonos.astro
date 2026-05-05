@@ -1,0 +1,330 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+const whatsappLink = getWhatsAppLink('Hola, me gustaría consultar precios y bonos en AMG Fisioterapia.');
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Bonos y Tarifas', url: '/bonos/' },
+];
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+
+const sesionesIndividuales = [
+  { titulo: 'Sesión normal', precio: '38€', sub: 'por sesión', destacado: false },
+  { titulo: 'Pacientes recurrentes', precio: '35€', sub: 'por sesión', destacado: true },
+  { titulo: 'Precio amigo / familiar', precio: '30€', sub: 'por sesión', destacado: false },
+];
+
+const bonosSueltos = [
+  { sesiones: 3, total: '108€', porSesion: '36€/sesión' },
+  { sesiones: 6, total: '204€', porSesion: '34€/sesión' },
+];
+
+const programas = [
+  { duracion: '2 semanas', frecuencia: '2 × semana', sesiones: 4, total: '140€', porSesion: '35€' },
+  { duracion: '2 semanas', frecuencia: '3 × semana', sesiones: 6, total: 'Consultar precio', porSesion: '—' },
+  { duracion: '4 semanas', frecuencia: '2 × semana', sesiones: 8, total: '248€', porSesion: '31€' },
+  { duracion: '4 semanas', frecuencia: '3 × semana', sesiones: 12, total: '360€', porSesion: '30€' },
+];
+---
+
+<BaseLayout
+  title="Bonos y Tarifas | AMG Fisioterapia Valladolid"
+  description="Precios por sesión, bonos de fisioterapia y programas de rehabilitación en AMG Fisioterapia, Valladolid. Sesión desde 30€."
+  schema={breadcrumbSchema}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li aria-hidden="true">›</li>
+          <li aria-current="page">Bonos y Tarifas</li>
+        </ol>
+      </nav>
+      <h1 class="page-hero__title font-display">Bonos y Tarifas</h1>
+      <p class="page-hero__subtitle">Precios claros para sesiones individuales, bonos de fisioterapia y programas de rehabilitación adaptados a tu lesión.</p>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="bonos-section">
+        <h2 class="bonos-section__title">Precios por sesión individual</h2>
+        <p class="bonos-section__sub">Sesión de 45 min, valoración incluida en la primera cita.</p>
+        <div class="bonos-grid bonos-grid--3">
+          {sesionesIndividuales.map((s) => (
+            <div class={`bono-card ${s.destacado ? 'bono-card--featured' : ''}`}>
+              <h3 class="bono-card__title">{s.titulo}</h3>
+              <div class="bono-card__price font-display">{s.precio}</div>
+              <p class="bono-card__sub">{s.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="bonos-section">
+        <h2 class="bonos-section__title">Bonos de sesiones</h2>
+        <p class="bonos-section__sub">Compra varias sesiones de una vez y baja el precio por sesión.</p>
+        <div class="bonos-grid bonos-grid--2">
+          {bonosSueltos.map((b) => (
+            <div class="bono-card bono-card--bono">
+              <h3 class="bono-card__title">Bono {b.sesiones} sesiones</h3>
+              <div class="bono-card__price font-display">{b.total}</div>
+              <p class="bono-card__sub">{b.porSesion}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="bonos-section">
+        <h2 class="bonos-section__title">Programa de rehabilitación</h2>
+        <p class="bonos-section__sub">Plan estructurado para procesos de recuperación que requieren continuidad. Recomendado tras cirugías, lesiones complejas o dolor crónico.</p>
+        <div class="programa-table-wrap">
+          <table class="programa-table">
+            <thead>
+              <tr>
+                <th>Duración</th>
+                <th>Frecuencia</th>
+                <th>Sesiones totales</th>
+                <th>Precio total</th>
+                <th>Precio / sesión</th>
+              </tr>
+            </thead>
+            <tbody>
+              {programas.map((p) => (
+                <tr>
+                  <td>{p.duracion}</td>
+                  <td>{p.frecuencia}</td>
+                  <td>{p.sesiones}</td>
+                  <td class={p.total === 'Consultar precio' ? 'is-quote' : ''}>{p.total}</td>
+                  <td>{p.porSesion}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿No sabes qué bono te conviene?</h2>
+      <p class="cta-section__subtitle">Cuéntanos tu caso y Alberto te recomienda el plan más adecuado, sin compromiso.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        Consultar por WhatsApp
+      </a>
+      <p class="cta-section__note">O llama al <a href={`tel:${config.contact.phone.replace(/\s/g, '')}`}>{config.contact.phoneDisplay}</a></p>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: var(--color-white);
+    padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl);
+  }
+  .page-hero__title {
+    font-size: var(--text-5xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+    max-width: 700px;
+  }
+  .page-hero__subtitle {
+    font-size: var(--text-lg);
+    color: rgba(255,255,255,0.82);
+    max-width: 620px;
+    line-height: var(--leading-relaxed);
+  }
+  .breadcrumb ol {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    list-style: none;
+    font-size: var(--text-sm);
+    color: rgba(255,255,255,0.6);
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .breadcrumb a:hover { color: var(--color-white); }
+
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+
+  .bonos-section__title {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+  }
+  .bonos-section__sub {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2xl);
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .bonos-grid {
+    display: grid;
+    gap: var(--space-lg);
+    align-items: stretch;
+  }
+  .bonos-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .bonos-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-inline: auto; }
+
+  .bono-card {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-gray-200);
+    border-radius: 20px;
+    padding: var(--space-2xl) var(--space-xl);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-xs);
+    transition: transform var(--duration-normal) var(--ease-out), border-color var(--duration-fast);
+  }
+  .bono-card:hover {
+    border-color: var(--color-primary-200);
+    transform: translateY(-3px);
+  }
+  .bono-card--featured {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary), 0 4px 4px 0 rgba(0,0,0,0.06), 0 5px 29.2px 0 rgba(166,201,88,0.18);
+  }
+  .bono-card--bono {
+    background: linear-gradient(135deg, var(--color-primary-50) 0%, rgba(255,255,255,1) 100%);
+    border-color: var(--color-primary-100);
+  }
+  .bono-card__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+  .bono-card__price {
+    font-size: var(--text-5xl);
+    color: var(--color-gray-900);
+    line-height: 1;
+    margin-bottom: var(--space-xs);
+  }
+  .bono-card__sub {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .programa-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 16px;
+  }
+  .programa-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-white);
+    font-size: var(--text-sm);
+  }
+  .programa-table th,
+  .programa-table td {
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+  .programa-table thead th {
+    background: var(--color-gray-50);
+    font-weight: 700;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-gray-700);
+  }
+  .programa-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .programa-table tbody tr:hover {
+    background: var(--color-gray-50);
+  }
+  .programa-table .is-quote {
+    color: var(--color-primary-700);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  }
+  .cta-section__title {
+    font-size: var(--text-4xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+  }
+  .cta-section__subtitle {
+    font-size: var(--text-lg);
+    color: rgba(255,255,255,0.85);
+    margin-bottom: var(--space-2xl);
+  }
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    height: 44px;
+    padding: 0 32px;
+    background: var(--color-white);
+    color: var(--color-primary-dark);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.06), 0px 5px 29.2px 0px rgba(106, 153, 77, 0.22);
+  }
+  .cta-section__note {
+    margin-top: var(--space-lg);
+    font-size: var(--text-sm);
+    color: rgba(255,255,255,0.7);
+  }
+  .cta-section__note a {
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1024px) {
+    .bonos-grid--3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .page-hero__title { font-size: var(--text-3xl); }
+    .bonos-grid--3,
+    .bonos-grid--2 { grid-template-columns: 1fr; max-width: 420px; }
+    .programa-table th,
+    .programa-table td { padding: var(--space-sm) var(--space-md); }
+  }
+</style>

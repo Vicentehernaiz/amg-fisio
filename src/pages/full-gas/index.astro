@@ -948,36 +948,6 @@ const config = getConfig();
         <span class="admin__feedback" id="precios-feedback"></span>
       </div>
 
-      <!-- BONOS -->
-      <div class="admin__section">
-        <div class="admin__section-header">
-          <h2>Bonos — Tarifas por nº de sesiones</h2>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="admin__btn admin__btn--sm" id="bono-add-btn" type="button">+ Añadir tramo</button>
-            <button class="admin__save admin__btn--sm" id="bonos-save-btn" type="button">
-              Guardar bonos
-              <span class="spinner" id="bonos-spinner"></span>
-            </button>
-          </div>
-        </div>
-        <div style="display:grid; grid-template-columns: 110px 1fr 1fr auto; gap:0.5rem; font-size:0.75rem; font-weight:700; color:#999; text-transform:uppercase; margin-bottom:0.5rem;">
-          <span>Sesiones (desde)</span><span>Etiqueta</span><span>Precio por sesión (€)</span><span></span>
-        </div>
-        <div id="bonos-tiers-list">
-          {config.pricing.bonos.tiers?.map((tier, i) => (
-            <div class="bonos-tier-row" data-index={i}>
-              <input type="number" class="bono-sessions" value={tier.sessions} min="1" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
-              <input type="text" class="bono-label" value={tier.label} placeholder="Etiqueta" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
-              <input type="number" class="bono-price" value={tier.pricePerSession} min="1" style="padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;" />
-              <button class="admin__icon-btn admin__icon-btn--danger bono-remove-btn" type="button" title="Eliminar tramo">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
-              </button>
-            </div>
-          ))}
-        </div>
-        <span class="admin__feedback" id="bonos-feedback"></span>
-      </div>
-
       <!-- BLOG POSTS -->
       <div class="admin__section">
         <div class="admin__section-header">
@@ -1599,68 +1569,6 @@ const config = getConfig();
       } finally {
         preciosSaveBtn.disabled = false;
         if (preciosSpinner) preciosSpinner.style.display = 'none';
-      }
-    });
-
-    // =====================================
-    // BONOS TIERS MANAGEMENT
-    // =====================================
-    const tiersList = document.getElementById('bonos-tiers-list');
-    const bonosAddBtn = document.getElementById('bono-add-btn');
-    const bonosSaveBtn = document.getElementById('bonos-save-btn');
-    const bonosSpinner = document.getElementById('bonos-spinner');
-    const bonosFeedback = document.getElementById('bonos-feedback');
-
-    function getTiers() {
-      const rows = tiersList?.querySelectorAll('.bonos-tier-row') || [];
-      return Array.from(rows).map((row) => ({
-        sessions: parseInt(row.querySelector('.bono-sessions')?.value) || 1,
-        label: row.querySelector('.bono-label')?.value || '',
-        pricePerSession: parseFloat(row.querySelector('.bono-price')?.value) || 0,
-      }));
-    }
-
-    function addTierRow(tier = { sessions: 1, label: '', pricePerSession: 30 }) {
-      const row = document.createElement('div');
-      row.className = 'bonos-tier-row';
-      const fieldStyle = 'padding:8px 10px; border:1.5px solid #dbdbdb; border-radius:8px; font-size:0.9rem; font-family:inherit;';
-      row.innerHTML = `
-        <input type="number" class="bono-sessions" value="${tier.sessions}" min="1" style="${fieldStyle}" />
-        <input type="text" class="bono-label" value="${tier.label}" placeholder="Etiqueta" style="${fieldStyle}" />
-        <input type="number" class="bono-price" value="${tier.pricePerSession}" min="1" style="${fieldStyle}" />
-        <button class="admin__icon-btn admin__icon-btn--danger bono-remove-btn" type="button" title="Eliminar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
-        </button>
-      `;
-      row.querySelector('.bono-remove-btn')?.addEventListener('click', () => row.remove());
-      tiersList?.appendChild(row);
-    }
-
-    // Wire up existing remove buttons
-    tiersList?.querySelectorAll('.bono-remove-btn').forEach((btn) => {
-      btn.addEventListener('click', () => btn.closest('.bonos-tier-row')?.remove());
-    });
-
-    bonosAddBtn?.addEventListener('click', () => addTierRow());
-
-    bonosSaveBtn?.addEventListener('click', async () => {
-      const tiers = getTiers();
-      bonosSaveBtn.disabled = true;
-      if (bonosSpinner) bonosSpinner.style.display = 'inline-block';
-
-      try {
-        const res = await fetch('/full-gas/api/config', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pricing: { bonos: { tiers } } }),
-        });
-        const data = await res.json();
-        showFeedback(bonosFeedback, res.ok && data.success ? '✓ Bonos guardados' : '✗ Error', res.ok && data.success);
-      } catch {
-        showFeedback(bonosFeedback, '✗ Error de red', false);
-      } finally {
-        bonosSaveBtn.disabled = false;
-        if (bonosSpinner) bonosSpinner.style.display = 'none';
       }
     });
 
