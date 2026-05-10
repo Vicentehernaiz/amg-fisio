@@ -1,0 +1,218 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisio Deportiva', url: '/fisioterapia-deportiva-valladolid/' },
+  { name: 'Distensiones musculares', url: '/fisioterapia-deportiva-valladolid/distensiones-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿La distensión muscular es lo mismo que un desgarro?',
+    answer: 'Son términos de la misma escala de lesión muscular pero de distinta gravedad. Una elongación es un sobreestiramiento sin rotura de fibras. Una distensión implica microroturas de fibras musculares (grado I-II), con dolor localizado, inflamación y leve pérdida de función. Un desgarro (grado III) es una rotura parcial o total del músculo, con dolor intenso, hematoma visible e incapacidad funcional marcada. En todos los casos el tratamiento fisioterápico es clave para guiar la cicatrización del tejido.',
+  },
+  {
+    question: '¿Qué hago en las primeras horas tras una distensión?',
+    answer: 'Aplica el protocolo POLICE: protección, carga óptima (no inmovilizar al 100%, sino evitar gestos dolorosos), hielo local los primeros días, compresión suave y elevación. Evita aplicar calor, masajear con fuerza o forzar el músculo. Lo más importante: pide cita en fisioterapia cuanto antes para empezar el tratamiento adecuado y reducir el riesgo de cicatriz fibrosa.',
+  },
+  {
+    question: '¿En qué se diferencia una distensión de un esguince?',
+    answer: 'La distensión es una lesión del músculo o de la unión miotendinosa (donde el músculo se une al tendón). El esguince, en cambio, es una lesión del ligamento (lo que conecta hueso con hueso y estabiliza la articulación). Aunque pueden parecer similares al principio, los tejidos lesionados son distintos y los tratamientos se adaptan a cada caso.',
+  },
+  {
+    question: '¿Por qué es importante tratar bien una distensión?',
+    answer: 'Cuando un músculo se rompe parcialmente, cicatriza con tejido fibroso. Si la cicatriz se forma sin guía adecuada, queda rígida, mal alineada con las fibras musculares originales y vulnerable a recaídas. La fisioterapia controla esa cicatrización para que el tejido nuevo sea funcional, elástico y bien orientado, reduciendo el riesgo de recidiva, que en lesiones musculares es muy elevado.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Tratamiento de Distensiones Musculares en Valladolid',
+  description: 'Fisioterapia para distensiones, elongaciones y roturas musculares en Valladolid. Cicatrización guiada, vuelta segura al deporte. AMG Fisioterapia.',
+  url: '/fisioterapia-deportiva-valladolid/distensiones-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, tengo una distensión muscular y me gustaría pedir cita en AMG Fisioterapia.');
+
+const grados = [
+  {
+    num: 'I',
+    titulo: 'Grado I — Elongación',
+    desc: 'Sobreestiramiento del músculo sin rotura de fibras visibles. Dolor leve, sensación de tirantez, mínima pérdida de fuerza. Permite seguir caminando con normalidad.',
+  },
+  {
+    num: 'II',
+    titulo: 'Grado II — Rotura parcial',
+    desc: 'Rotura de un número significativo de fibras musculares. Dolor moderado-intenso en el momento del gesto, hematoma posible, inflamación localizada y pérdida de fuerza evidente al contraer el músculo.',
+  },
+  {
+    num: 'III',
+    titulo: 'Grado III — Rotura completa',
+    desc: 'Rotura total o casi total del músculo. Dolor severo en el momento de la lesión, "chasquido" audible en algunos casos, hematoma extenso e incapacidad para contraer el músculo. Puede requerir valoración quirúrgica.',
+  },
+];
+
+const musculos = [
+  { nombre: 'Isquiotibiales', desc: 'La distensión más típica del corredor y del jugador de fútbol. Se produce en aceleraciones, sprints o estiramientos forzados.' },
+  { nombre: 'Cuádriceps', desc: 'Frecuente en deportes de salto y golpeo. Recto femoral es el músculo más afectado.' },
+  { nombre: 'Gemelos / sóleo', desc: '"Pedrada" típica del runner y del tenista. Dolor súbito en la pantorrilla durante el esfuerzo.' },
+  { nombre: 'Aductores', desc: 'Lesión característica del fútbol y los deportes con cambios de dirección. Dolor en la ingle al ampliar la zancada.' },
+];
+---
+
+<BaseLayout
+  title="Distensiones Musculares en Valladolid | AMG Fisioterapia"
+  description="Tratamiento de distensiones, elongaciones y roturas musculares en Valladolid. Cicatrización guiada y prevención de recaídas. AMG Fisioterapia. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/fisioterapia-deportiva-valladolid/">Fisio Deportiva</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Distensiones musculares</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Distensiones Musculares en Valladolid</h1>
+          <p class="page-hero__subtitle">Lesiones musculares tratadas con criterio: cicatrización guiada, ejercicio progresivo y vuelta al deporte sin recaídas.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/ejercicio-terapeutico.jpg" alt="Tratamiento de distensiones musculares en Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Qué es una Distensión Muscular y por Qué se Produce</h2>
+      <div class="prose">
+        <p>La distensión muscular es una lesión por sobreestiramiento o por contracción excesiva del músculo, que provoca microroturas en las fibras musculares. Se produce cuando el músculo es exigido más allá de su capacidad de carga: aceleraciones bruscas, gestos de potencia, fatiga acumulada, calentamiento insuficiente o cambios de superficie son detonantes habituales.</p>
+
+        <p>Las distensiones afectan principalmente a los músculos biarticulares (que cruzan dos articulaciones) y a los que más trabajan en alargamiento: isquiotibiales, recto femoral, gemelos y aductores son los protagonistas habituales. En deportistas amateurs y populares de Valladolid, las vemos con frecuencia en running, fútbol, pádel, baloncesto y atletismo.</p>
+
+        <p>El gran problema de las distensiones es la cicatrización. Cuando un músculo se rompe parcialmente, el organismo lo repara con tejido fibroso. Si esa cicatriz no se trata, queda rígida, mal orientada y debilita la zona, multiplicando el riesgo de recaída. Por eso el tratamiento fisioterápico es decisivo: el objetivo no es solo aliviar el dolor, sino guiar la cicatrización para que el tejido nuevo sea funcional.</p>
+
+        <h3>Cómo lo tratamos en AMG</h3>
+        <p>Aplicamos un protocolo en fases adaptado al grado de la lesión y al deporte del paciente. La fase inicial controla el dolor y la inflamación, protegiendo el músculo sin inmovilizarlo de más (la inmovilización prolongada empeora la cicatrización). En la fase intermedia trabajamos terapia manual sobre el tejido cicatricial y empezamos ejercicio terapéutico progresivo. La fase final está orientada al gesto deportivo: trabajo excéntrico, velocidad y readaptación específica al deporte.</p>
+
+        <p>El alta no se da por calendario, sino cuando el músculo recupera fuerza simétrica, soporta los gestos del deporte sin dolor y supera los tests funcionales que aplicamos en clínica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Grados de la Lesión Muscular</h2>
+      <div class="fases-grid">
+        {grados.map((grado) => (
+          <div class="fase-card">
+            <span class="fase-card__num">{grado.num}</span>
+            <h3 class="fase-card__titulo">{grado.titulo}</h3>
+            <p class="fase-card__desc">{grado.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="section__title text-center">Músculos Más Afectados</h2>
+      <div class="articulaciones-grid">
+        {musculos.map((m) => (
+          <div class="articulacion-card">
+            <h3 class="articulacion-card__title">{m.nombre}</h3>
+            <p class="articulacion-card__desc">{m.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Distensiones</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-distensiones">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes una distensión muscular?</h2>
+      <p class="cta-section__subtitle">Trátala desde el inicio para evitar recaídas. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .fases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .fase-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); text-align: center; }
+  .fase-card__num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-md); }
+  .fase-card__titulo { font-size: var(--text-lg); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .fase-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .articulaciones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .articulacion-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); }
+  .articulacion-card__title { font-size: var(--text-base); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .articulacion-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm); height: 44px; padding: 0 32px; background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-sm); border-radius: var(--radius-full); }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 1024px) { .fases-grid { grid-template-columns: repeat(2, 1fr); } .articulaciones-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .fases-grid, .articulaciones-grid { grid-template-columns: 1fr; } }
+</style>

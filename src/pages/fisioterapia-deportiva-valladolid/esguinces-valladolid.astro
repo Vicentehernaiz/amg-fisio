@@ -1,0 +1,218 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getConfig, getWhatsAppLink } from '@utils/config';
+import { generateServiceSchema, generateFAQSchema, generateBreadcrumbSchema } from '@utils/seo';
+
+const config = getConfig();
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Fisio Deportiva', url: '/fisioterapia-deportiva-valladolid/' },
+  { name: 'Esguinces', url: '/fisioterapia-deportiva-valladolid/esguinces-valladolid/' },
+];
+
+const faqs = [
+  {
+    question: '¿Hay que inmovilizar siempre un esguince?',
+    answer: 'No siempre, y en muchos casos la inmovilización prolongada es contraproducente. La evidencia científica actual apoya la movilización precoz controlada en los esguinces de grado I y muchos de grado II: moverse dentro de los límites del dolor favorece la cicatrización correcta del ligamento y mantiene el tono muscular. La inmovilización estricta (escayola, bota rígida) se reserva para esguinces de grado III o cuando hay lesiones asociadas que lo requieran. En AMG evaluamos cada caso individualmente y aplicamos el protocolo más adecuado.',
+  },
+  {
+    question: '¿Cuándo puedo volver al deporte tras un esguince?',
+    answer: 'El retorno al deporte no debe basarse únicamente en el tiempo transcurrido, sino en criterios funcionales objetivos: ausencia de dolor durante los gestos deportivos, recuperación completa del rango de movimiento, simetría de fuerza entre ambos lados y respuesta propioceptiva adecuada. Volver antes de cumplir estos criterios multiplica el riesgo de re-esguince, que suele ser más grave que el original. En AMG realizamos una valoración funcional antes del alta deportiva para garantizar una vuelta segura.',
+  },
+  {
+    question: '¿En qué se diferencia un esguince de una distensión?',
+    answer: 'El esguince es una lesión del ligamento (la estructura que conecta hueso con hueso y estabiliza la articulación). La distensión, en cambio, es una lesión del músculo o de su unión con el tendón. Ambas lesiones se clasifican por grados y comparten algunos principios de tratamiento, pero el tejido lesionado es distinto y los protocolos terapéuticos se adaptan en consecuencia.',
+  },
+  {
+    question: '¿Qué hago en las primeras horas tras un esguince?',
+    answer: 'Aplica el protocolo POLICE: protección con vendaje funcional o férula si el dolor es importante, carga óptima (no inmovilizar al 100%, sino evitar gestos dolorosos), hielo local, compresión suave y elevación de la zona. Evita aplicar calor o forzar la articulación. Cuanto antes acudas a fisioterapia, antes empezamos el tratamiento adecuado.',
+  },
+];
+
+const serviceSchema = generateServiceSchema({
+  name: 'Tratamiento de Esguinces en Valladolid',
+  description: 'Fisioterapia para esguinces de tobillo, rodilla, muñeca y dedos en Valladolid. Recuperación rápida y vuelta segura al deporte. AMG Fisioterapia.',
+  url: '/fisioterapia-deportiva-valladolid/esguinces-valladolid/',
+});
+
+const faqSchema = generateFAQSchema(faqs);
+const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
+const whatsappLink = getWhatsAppLink('Hola, tengo un esguince y me gustaría pedir cita en AMG Fisioterapia.');
+
+const grados = [
+  {
+    num: 'I',
+    titulo: 'Grado I — Elongación ligamentosa',
+    desc: 'Sobreestiramiento del ligamento sin rotura de fibras. Dolor leve, inflamación moderada, articulación estable y movilidad conservada. Es el esguince más común.',
+  },
+  {
+    num: 'II',
+    titulo: 'Grado II — Rotura parcial',
+    desc: 'Rotura de un número significativo de fibras ligamentosas. Dolor moderado-intenso, hematoma evidente, inflamación marcada y leve inestabilidad articular.',
+  },
+  {
+    num: 'III',
+    titulo: 'Grado III — Rotura completa',
+    desc: 'Rotura total del ligamento con pérdida de la función estabilizadora. Dolor severo en el momento de la lesión, hematoma extenso e inestabilidad clara. Puede requerir valoración quirúrgica.',
+  },
+];
+
+const articulaciones = [
+  { nombre: 'Tobillo', desc: 'La localización más frecuente. Suele lesionarse el ligamento peroneo-astragalino anterior por inversión forzada.' },
+  { nombre: 'Rodilla', desc: 'Esguinces de los ligamentos colaterales (interno o externo) o del cruzado anterior, frecuentes en deportes de contacto.' },
+  { nombre: 'Muñeca', desc: 'Lesiones de los ligamentos del carpo por caídas con la mano extendida.' },
+  { nombre: 'Dedos', desc: 'Esguinces interfalángicos típicos de deportes de balón y artes marciales.' },
+];
+---
+
+<BaseLayout
+  title="Tratamiento de Esguinces en Valladolid | AMG Fisioterapia"
+  description="Fisioterapia para esguinces de tobillo, rodilla, muñeca y dedos en Valladolid. Tratamiento personalizado y vuelta segura a la actividad. AMG Fisioterapia. Pide cita."
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <Header slot="header" />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero__inner">
+        <div class="page-hero__text">
+          <nav class="breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="/">Inicio</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/fisioterapia-deportiva-valladolid/">Fisio Deportiva</a></li>
+              <li aria-hidden="true">›</li>
+              <li aria-current="page">Esguinces</li>
+            </ol>
+          </nav>
+          <h1 class="page-hero__title font-display">Tratamiento de Esguinces en Valladolid</h1>
+          <p class="page-hero__subtitle">Lesiones ligamentosas tratadas con rigor: cicatrización guiada, recuperación funcional y vuelta segura al deporte.</p>
+        </div>
+        <div class="page-hero__image">
+          <img src="/images/rehabilitacion.jpg" alt="Tratamiento de esguinces en Valladolid" width="800" height="500" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container content-narrow">
+      <h2 class="section__title">Qué es un Esguince y por Qué Hay que Tratarlo Bien</h2>
+      <div class="prose">
+        <p>El esguince es una lesión de los ligamentos, las estructuras que conectan los huesos entre sí y dan estabilidad a las articulaciones. Se produce cuando la articulación se fuerza más allá de su rango normal de movimiento, estirando o rompiendo las fibras del ligamento. Es una de las lesiones más frecuentes tanto en deportistas como en personas activas en su día a día.</p>
+
+        <p>Aunque muchas personas tratan el esguince como una "torcedura sin importancia", la realidad clínica es muy distinta: un esguince mal tratado deja una articulación inestable, propensa a recaídas y, a medio plazo, a desgaste articular. La inmovilización excesiva tampoco es la solución, porque debilita el ligamento y la musculatura que lo protege. La clave es un tratamiento progresivo, individualizado y guiado por un fisioterapeuta.</p>
+
+        <p>En AMG Fisioterapia abordamos los esguinces con un protocolo en fases adaptado al grado de la lesión. La fase aguda se centra en el control del dolor y la inflamación, y en proteger el ligamento sin inmovilizarlo de más. Después incorporamos terapia manual, ejercicio terapéutico progresivo y trabajo propioceptivo para devolver a la articulación toda su función y prevenir recaídas.</p>
+
+        <h3>La importancia de no saltarse las fases</h3>
+        <p>El error más común en la recuperación de un esguince es volver a la actividad cuando el dolor desaparece, antes de que la articulación esté funcionalmente preparada. El ligamento puede tardar más en cicatrizar de lo que el dolor sugiere, y forzar la zona en ese momento aumenta exponencialmente el riesgo de recidiva.</p>
+
+        <p>En AMG no damos el alta hasta que el rango de movimiento es completo, la fuerza es simétrica respecto al lado sano, y la respuesta propioceptiva permite ejecutar los gestos deportivos sin compensaciones. La salida es funcional, no por calendario.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container">
+      <h2 class="section__title text-center">Grados del Esguince</h2>
+      <div class="fases-grid">
+        {grados.map((grado) => (
+          <div class="fase-card">
+            <span class="fase-card__num">{grado.num}</span>
+            <h3 class="fase-card__titulo">{grado.titulo}</h3>
+            <p class="fase-card__desc">{grado.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="section__title text-center">Articulaciones Más Afectadas</h2>
+      <div class="articulaciones-grid">
+        {articulaciones.map((a) => (
+          <div class="articulacion-card">
+            <h3 class="articulacion-card__title">{a.nombre}</h3>
+            <p class="articulacion-card__desc">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-cream">
+    <div class="container content-narrow">
+      <h2 class="section__title text-center">Preguntas sobre Esguinces</h2>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" name="faq-esguinces">
+            <summary class="faq-item__question">{faq.question}</summary>
+            <div class="faq-item__answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-section">
+    <div class="container text-center">
+      <h2 class="cta-section__title font-display">¿Tienes un esguince?</h2>
+      <p class="cta-section__subtitle">Trátalo bien desde el principio. Pide cita en AMG Fisioterapia en Valladolid.</p>
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+        Pedir cita por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-hero { background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%); color: var(--color-white); padding: calc(72px + var(--space-4xl)) 0 var(--space-4xl); }
+  .page-hero__title { font-size: var(--text-5xl); color: var(--color-white); margin-bottom: var(--space-lg); max-width: 700px; }
+  .page-hero__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.8); max-width: 580px; line-height: var(--leading-relaxed); }
+  .breadcrumb ol { display: flex; align-items: center; gap: var(--space-sm); list-style: none; font-size: var(--text-sm); color: rgba(255,255,255,0.6); margin-bottom: var(--space-xl); flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,0.7); }
+  .bg-white { background: var(--color-white); }
+  .bg-cream { background: var(--color-cream); }
+  .section { padding-block: var(--space-4xl); }
+  .text-center { text-align: center; }
+  .content-narrow { max-width: 800px; margin-inline: auto; }
+  .section__title { font-size: var(--text-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-xl); }
+  .prose p { font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--text-secondary); margin-bottom: var(--space-lg); }
+  .prose h3 { font-size: var(--text-xl); font-weight: 700; color: var(--color-gray-900); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+  .fases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .fase-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); text-align: center; }
+  .fase-card__num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--color-primary); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-md); }
+  .fase-card__titulo { font-size: var(--text-lg); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .fase-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .articulaciones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-lg); margin-top: var(--space-2xl); }
+  .articulacion-card { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-xl); padding: var(--space-xl); }
+  .articulacion-card__title { font-size: var(--text-base); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--space-sm); }
+  .articulacion-card__desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .faq-list { display: flex; flex-direction: column; gap: var(--space-md); }
+  .faq-item { background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .faq-item__question { padding: var(--space-lg) var(--space-xl); font-size: var(--text-base); font-weight: 600; color: var(--color-gray-900); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md); }
+  .faq-item__question::-webkit-details-marker { display: none; }
+  .faq-item__question::after { content: '+'; font-size: var(--text-xl); color: var(--color-primary); flex-shrink: 0; transition: transform var(--duration-fast); }
+  .faq-item[open] .faq-item__question::after { transform: rotate(45deg); }
+  .faq-item__answer { padding: 0 var(--space-xl) var(--space-lg); }
+  .faq-item__answer p { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .cta-section { background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); }
+  .cta-section__title { font-size: var(--text-4xl); color: var(--color-white); margin-bottom: var(--space-md); }
+  .cta-section__subtitle { font-size: var(--text-lg); color: rgba(255,255,255,0.85); margin-bottom: var(--space-2xl); }
+  .btn-whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm); height: 44px; padding: 0 32px; background: var(--color-white); color: var(--color-primary-dark); font-weight: 700; font-size: var(--text-sm); border-radius: var(--radius-full); }
+  .page-hero__inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: center; }
+  .page-hero__image { border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .page-hero__image img { width: 100%; height: 360px; object-fit: cover; display: block; }
+  @media (max-width: 1024px) { .fases-grid { grid-template-columns: repeat(2, 1fr); } .articulaciones-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) { .page-hero__inner { grid-template-columns: 1fr; } .page-hero__image { display: none; } }
+  @media (max-width: 640px) { .page-hero__title { font-size: var(--text-3xl); } .fases-grid, .articulaciones-grid { grid-template-columns: 1fr; } }
+</style>
