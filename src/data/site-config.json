@@ -91,12 +91,12 @@
   },
   "team": [
     {
-      "id": "alberto",
+      "id": "member-1782366130488-0",
       "name": "Alberto Muñoz González",
       "role": "Fisioterapeuta Colegiado",
-      "colegiado": "XXXX",
-      "description": "Especialista en fisioterapia deportiva y terapia manual con más de 5 años de experiencia ayudando a pacientes a recuperar su movilidad y calidad de vida.",
-      "photo": "/images/alberto.jpg"
+      "colegiado": "4059",
+      "photo": "/images/alberto.jpg",
+      "description": "Especialista en fisioterapia deportiva y terapia manual con más de 5 años de experiencia ayudando a pacientes a recuperar su movilidad y calidad de vida."
     }
   ],
   "social": {
