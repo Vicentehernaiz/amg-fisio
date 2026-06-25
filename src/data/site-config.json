@@ -9,10 +9,10 @@
     "bookingUrl": "https://amg-fisio.vercel.app/servicios-fisioterapia/rehabilitacion-rodilla-valladolid/"
   },
   "contact": {
-    "phone": "+34 600 000 000",
-    "phoneDisplay": "600 000 000",
-    "whatsapp": "+34600000000",
-    "email": "info@amgfisio.es",
+    "phone": "",
+    "phoneDisplay": "614753559",
+    "whatsapp": "+34614753559",
+    "email": "contacto@amgfisio.com",
     "address": {
       "street": "Calle Ejemplo, 1",
       "postalCode": "47001",
@@ -39,7 +39,7 @@
         "hours": "Cerrado"
       }
     ],
-    "whatsappHours": "Lunes a Viernes 09:00 - 20:00",
+    "whatsappHours": "Lunes a Viernes\n09:00 - 14:00 / 16:00 - 20:00",
     "callHours": "Lunes a Viernes 09:00 - 14:00 / 16:00 - 20:00"
   },
   "pricing": {
